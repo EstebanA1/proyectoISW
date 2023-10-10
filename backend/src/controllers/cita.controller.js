@@ -124,7 +124,7 @@ async function deleteCita(req, res) {
 }
 
 module.exports = {
-    getCita,
+    getCitas,
     createCita,
     getCitaById,
     updateCita,
