@@ -4,12 +4,14 @@ const { respondSuccess, respondError } = require("../utils/resHandler");
 const CitaService = require("../services/cita.service");
 const { citaBodySchema, citaIdSchema } = require("../schema/cita.schema");
 const { handleError } = require("../utils/errorHandler");
+/*FALTA ASIGNAR VALIDACIONES, QUIENES PUEDEN USAR LAS FUNCIONALIDADES SON EL ADMIN Y EL DE LAS VISITAS, ESTE ULTIMO SOLO PUEDE VER LAS VISITAS EXISTENTES*/
 
 /**
  * Obtiene todas las citas
  * @param {Object} req - Objeto de petición
  * @param {Object} res - Objeto de respuesta
  */
+
 async function getCitas(req, res) {
     try {
         const [citasiones, errorCitasiones] = await CitaService.getCitas();
