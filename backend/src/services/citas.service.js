@@ -105,9 +105,9 @@ async function deleteCita(id) {
 }
 
 module.exports = {
-    getUsers,
-    createUser,
-    getUserById,
-    updateUser,
-    deleteUser,
+    getCitas,
+    createCita,
+    getCitaById,
+    updateCita,
+    deleteCita,
 };
