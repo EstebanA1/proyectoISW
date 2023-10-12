@@ -14,7 +14,7 @@ const citaSchema = new mongoose.Schema(
             required: true,
         },
         date: {
-            type: date,
+            type: String,
             required: true
         }
     },
@@ -24,7 +24,7 @@ const citaSchema = new mongoose.Schema(
 );
 
 /** Modelo de datos 'Cita' */
-const Cita = mongoose.model("Cita", diarySchema);
+const Cita = mongoose.model("Cita", citaSchema);
 
 // Exporta el modelo de datos 'Cita'
 module.exports = Cita;
