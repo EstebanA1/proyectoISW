@@ -55,7 +55,9 @@ async function createCita(req, res) {
  * Obtiene una cita por su id
  * @param {Object} req - Objeto de petición
  * @param {Object} res - Objeto de respuesta
- */
+
+Se deja en caso de implementar un buscador
+
 async function getCitaById(req, res) {
     try {
         const { params } = req;
@@ -72,7 +74,7 @@ async function getCitaById(req, res) {
         respondError(req, res, 500, "No se pudo obtener la cita");
     }
 }
-
+*/
 /**
  * Actualiza una cita por su id
  * @param {Object} req - Objeto de petición
@@ -128,7 +130,7 @@ async function deleteCita(req, res) {
 module.exports = {
     getCitas,
     createCita,
-    getCitaById,
+    /*getCitaById,*/
     updateCita,
     deleteCita,
 };

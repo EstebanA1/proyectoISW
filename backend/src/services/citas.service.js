@@ -48,7 +48,7 @@ async function createCita(cita) {
  * Obtiene una cita por su id de la base de datos
  * @param {string} Id de la cita
  * @returns {Promise} Promesa con el objeto de cita
- * ESTA FUNCIONALIDAD ES OPTATIVA, POR VER SI SE AGREGA O TERMINA ELIMINANDO */
+ * ESTA FUNCIONALIDAD ES OPTATIVA, POR VER SI SE AGREGA O TERMINA ELIMINANDO 
 async function getCitaById(id) {
     try {
         const cita = await Cita.findById({ _id: id })
@@ -61,6 +61,7 @@ async function getCitaById(id) {
         handleError(error, "cita.service -> getCitaById");
     }
 }
+*/
 
 /**
  * Actualiza una cita por su id en la base de datos
