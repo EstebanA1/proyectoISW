@@ -28,7 +28,7 @@ async function createCita(cita) {
     try {
         const { name, typeOfRequest, date } = cita;
 
-        const userFound = await Cita.findOne({ name: cita.name });
+        const citaFound = await Cita.findOne({ name: cita.name });
         if (citaFound) return [null, "La cita ya existe"];
 
         const newCita = new Cita({
@@ -108,7 +108,7 @@ async function deleteCita(id) {
 module.exports = {
     getCitas,
     createCita,
-    getCitaById,
+    /*getCitaById,*/
     updateCita,
     deleteCita,
 };
