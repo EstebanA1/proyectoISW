@@ -71,19 +71,16 @@ async function getCitaById(id) {
  * @param {Object} cita Objeto de cita
  * @returns {Promise} Promesa con el objeto de cita actualizado
  */
-async function putCita(_id, cita) {
-    console.log("Prueba: ", cita);
+async function updateCita(id, cita) {
     try {
-        console.log("Id Servicio 1: ", _id);
-        console.log("Id Servicio 1: ", cita._id);
-        // console.log("Id Servicio 1: ", params._id); NO Funciona
-        const citaFound = await Cita.findById(_id);
-        console.log("Id Servicio 2: ", _id);
+
+        const citaFound = await Cita.findById(id);
         if (!citaFound) return [null, "La cita no existe"];
 
-        const { name, typeOfRequest, date } = body;
+        const { name, typeOfRequest, date } = cita;
+
         const citaUpdated = await Cita.findByIdAndUpdate(
-            _id,
+            id,
             {
                 name,
                 typeOfRequest,
@@ -115,6 +112,6 @@ module.exports = {
     getCitas,
     createCita,
     getCitaById,
-    putCita,
+    updateCita,
     deleteCita,
 };
