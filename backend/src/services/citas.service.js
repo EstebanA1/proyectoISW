@@ -20,7 +20,7 @@ async function getCitas() {
 }
 
 /**
- * Crea un nuevo usuario en la base de datos
+ * Crea una nueva cita en la base de datos
  * @param {Object} cita Objeto de usuario
  * @returns {Promise} Promesa con el objeto de cita creado
  */
@@ -48,9 +48,6 @@ async function createCita(cita) {
  * Obtiene una cita por su id de la base de datos
  * @param {string} Id de la cita
  * @returns {Promise} Promesa con el objeto de cita
- * ESTA FUNCIONALIDAD NO ESTOY SEGURO DE DEJARLA, PERO DE MOMENTO SIRVE
- * PARA PROBAR EL CORRECTO PASO DE LOS DATOS DESDE EL CONTROLLER AL SERVICE
-
 */
 async function getCitaById(id) {
 

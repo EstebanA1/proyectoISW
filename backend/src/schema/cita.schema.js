@@ -7,11 +7,6 @@ const Joi = require("joi");
  * @constant {Object}
  */
 const citaBodySchema = Joi.object({
-    // id: Joi.string().required().messages({
-    //     "number.empty": "El id de la cita no puede estar vacío.",
-    //     "any.required": "El id de la cita es obligatorio.",
-    //     "number.base": "El id de la cita debe ser de tipo number.",
-    // }),
     name: Joi.string().required().messages({
         "string.empty": "El nombre del solicitante de la cita no puede estar vacío.",
         "any.required": "El nombre del solicitante de la cita es obligatorio.",

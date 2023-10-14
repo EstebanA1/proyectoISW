@@ -55,8 +55,6 @@ async function createCita(req, res) {
  * Obtiene una cita por su id
  * @param {Object} req - Objeto de petición
  * @param {Object} res - Objeto de respuesta
-
-Se deja en caso de implementar un buscador HASTA AQUI VAMOS BIEN
 */
 async function getCitaById(req, res) {
     try {
