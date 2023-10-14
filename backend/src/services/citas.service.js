@@ -1,5 +1,5 @@
 "use strict";
-// Importa el modelo de datos 'User'
+// Importa el modelo de datos 'Cita'
 const Cita = require("../models/cita.model.js");
 const { handleError } = require("../utils/errorHandler");
 
@@ -26,9 +26,9 @@ async function getCitas() {
  */
 async function createCita(cita) {
     try {
-        const { name, typeOfRequest, date } = cita;
+        const {  name, typeOfRequest, date } = cita;
 
-        const citaFound = await Cita.findOne({ name: cita.name });
+        const citaFound = await Cita.findOne({ _id: cita._id });
         if (citaFound) return [null, "La cita ya existe"];
 
         const newCita = new Cita({
@@ -48,12 +48,14 @@ async function createCita(cita) {
  * Obtiene una cita por su id de la base de datos
  * @param {string} Id de la cita
  * @returns {Promise} Promesa con el objeto de cita
- * ESTA FUNCIONALIDAD ES OPTATIVA, POR VER SI SE AGREGA O TERMINA ELIMINANDO 
-async function getCitaById(id) {
-    try {
-        const cita = await Cita.findById({ _id: id })
-            .exec();
+ * ESTA FUNCIONALIDAD NO ESTOY SEGURO DE DEJARLA, PERO DE MOMENTO SIRVE
+ * PARA PROBAR EL CORRECTO PASO DE LOS DATOS DESDE EL CONTROLLER AL SERVICE
 
+*/
+async function getCitaById(id) {
+
+    try {
+        const cita = await Cita.findById( id ).exec();
         if (!cita) return [null, "La cita no existe"];
 
         return [cita, null];
@@ -61,7 +63,7 @@ async function getCitaById(id) {
         handleError(error, "cita.service -> getCitaById");
     }
 }
-*/
+
 
 /**
  * Actualiza una cita por su id en la base de datos
@@ -69,21 +71,25 @@ async function getCitaById(id) {
  * @param {Object} cita Objeto de cita
  * @returns {Promise} Promesa con el objeto de cita actualizado
  */
-async function updateCita(id, cita) {
+async function putCita(_id, cita) {
+    console.log("Prueba: ", cita);
     try {
-        const citaFound = await Cita.findById(id);
+        console.log("Id Servicio 1: ", _id);
+        console.log("Id Servicio 1: ", cita._id);
+        // console.log("Id Servicio 1: ", params._id); NO Funciona
+        const citaFound = await Cita.findById(_id);
+        console.log("Id Servicio 2: ", _id);
         if (!citaFound) return [null, "La cita no existe"];
 
-        const { name, typeOfRequest, date} = cita;
-
+        const { name, typeOfRequest, date } = body;
         const citaUpdated = await Cita.findByIdAndUpdate(
-            id,
+            _id,
             {
                 name,
                 typeOfRequest,
                 date,
             },
-            {new: true},
+            { new: true },
         );
 
         return [citaUpdated, null];
@@ -97,9 +103,9 @@ async function updateCita(id, cita) {
  * @param {string} Id de la cita
  * @returns {Promise} Promesa con el objeto de la cita eliminada
  */
-async function deleteCita(id) {
+async function deleteCita(_id) {
     try {
-        return await Cita.findByIdAndDelete(id);
+        return await Cita.findByIdAndDelete(_id).message("Eliminado con exito");
     } catch (error) {
         handleError(error, "cita.service -> deleteCita");
     }
@@ -108,7 +114,7 @@ async function deleteCita(id) {
 module.exports = {
     getCitas,
     createCita,
-    /*getCitaById,*/
-    updateCita,
+    getCitaById,
+    putCita,
     deleteCita,
 };

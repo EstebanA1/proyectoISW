@@ -56,12 +56,13 @@ async function createCita(req, res) {
  * @param {Object} req - Objeto de petición
  * @param {Object} res - Objeto de respuesta
 
-Se deja en caso de implementar un buscador
-
+Se deja en caso de implementar un buscador HASTA AQUI VAMOS BIEN
+*/
 async function getCitaById(req, res) {
     try {
         const { params } = req;
-        const { error: paramsError } = citaIdSchema.validate(params);
+        const { error: paramsError } = citaIdSchema.validate(params.id);
+        console.log("Controller 1:", params.id);
         if (paramsError) return respondError(req, res, 400, paramsError.message);
 
         const [cita, errorCita] = await CitaService.getCitaById(params.id);
@@ -74,28 +75,30 @@ async function getCitaById(req, res) {
         respondError(req, res, 500, "No se pudo obtener la cita");
     }
 }
-*/
+
 /**
  * Actualiza una cita por su id
  * @param {Object} req - Objeto de petición
  * @param {Object} res - Objeto de respuesta
  */
-async function updateCita(req, res) {
+async function putCita(req, res) {
     try {
-        const { params, body } = req;
-        const { error: paramsError } = citaIdSchema.validate(params);
-        if (paramsError) return respondError(req, res, 400, paramsError.message);
+        const { _id } = req.params;
+        const { body } = req; //Se elimino params
 
         const { error: bodyError } = citaBodySchema.validate(body);
         if (bodyError) return respondError(req, res, 400, bodyError.message);
 
-        const [cita, citaError] = await CitaService.updateCita(params.id, body);
+        console.log("Algo 1: ", body);
+        // console.log("Algo 2: ", params);
+
+        const [cita, citaError] = await CitaService.putCita(_id, body);
 
         if (citaError) return respondError(req, res, 400, citaError);
 
         respondSuccess(req, res, 200, cita);
     } catch (error) {
-        handleError(error, "cita.controller -> updateCita");
+        handleError(error, "cita.controller -> putCita");
         respondError(req, res, 500, "No se pudo actualizar la cita");
     }
 }
@@ -108,18 +111,12 @@ async function updateCita(req, res) {
 async function deleteCita(req, res) {
     try {
         const { params } = req;
-        const { error: paramsError } = citaIdSchema.validate(params);
-        if (paramsError) return respondError(req, res, 400, paramsError.message);
+        // const { error: paramsError } = citaIdSchema.validate(params);
+        // if (paramsError) return respondError(req, res, 400, paramsError.message);
 
-        const cita = await CitaService.deleteCita(params.id);
+        const cita = await CitaService.deleteCita(params._id);
         !cita
-            ? respondError(
-                req,
-                res,
-                404,
-                "No se encontro la cita solicitada",
-                "Verifique el id ingresado",
-            )
+            ? respondError(req, res, 404, "No se encontro la cita solicitada", "Verifique el id ingresado")
             : respondSuccess(req, res, 200, cita);
     } catch (error) {
         handleError(error, "cita.controller -> deleteCita");
@@ -130,7 +127,7 @@ async function deleteCita(req, res) {
 module.exports = {
     getCitas,
     createCita,
-    /*getCitaById,*/
-    updateCita,
+    getCitaById,
+    putCita,
     deleteCita,
 };
