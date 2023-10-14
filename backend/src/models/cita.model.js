@@ -8,14 +8,16 @@ const citaSchema = new mongoose.Schema(
         name: {
             type: String,
             required: true,
+            minLenght: 2
         },
         typeOfRequest: {
             type: String,
             required: true,
+            minLenght: 5
         },
         date: {
             type: String,
-            required: true
+            required: true,
         }
     },
     {

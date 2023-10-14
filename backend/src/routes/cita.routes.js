@@ -8,8 +8,9 @@ const router = express.Router();
 
 router.get('/', citaController.getCitas);
 router.post('/', citaController.createCita);
-// router.update('/', citaController.updateCita);
-router.delete('/', citaController.deleteCita);
+router.get('/:id', citaController.getCitaById);
+router.put('/:id', citaController.putCita);
+router.delete('/:id', citaController.deleteCita);
 
 
 module.exports = router;
