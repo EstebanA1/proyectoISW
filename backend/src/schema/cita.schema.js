@@ -7,6 +7,11 @@ const Joi = require("joi");
  * @constant {Object}
  */
 const citaBodySchema = Joi.object({
+    // id: Joi.string().required().messages({
+    //     "number.empty": "El id de la cita no puede estar vacío.",
+    //     "any.required": "El id de la cita es obligatorio.",
+    //     "number.base": "El id de la cita debe ser de tipo number.",
+    // }),
     name: Joi.string().required().messages({
         "string.empty": "El nombre del solicitante de la cita no puede estar vacío.",
         "any.required": "El nombre del solicitante de la cita es obligatorio.",
@@ -27,19 +32,13 @@ const citaBodySchema = Joi.object({
 });
 
 /**
- * Esquema de validación para el id de usuario.
+ * Esquema de validación para el id de la cita
  * @constant {Object}
  */
-const citaIdSchema = Joi.object({
-    id: Joi.string()
-        .required()
-        .pattern(/^(?:[0-9a-fA-F]{24}|[0-9a-fA-F]{12})$/)
-        .messages({
+const citaIdSchema = Joi.string().required().messages({
             "string.empty": "El id no puede estar vacío.",
             "any.required": "El id es obligatorio.",
-            "string.base": "El id debe ser de tipo string.",
-            "string.pattern.base": "El id proporcionado no es un ObjectId válido.",
-        }),
-});
+            "string.length": "El id debe tener 24 caracteres.",
+        });
 
 module.exports = { citaBodySchema, citaIdSchema };
