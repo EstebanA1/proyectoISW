@@ -103,9 +103,9 @@ async function putCita(_id, cita) {
  * @param {string} Id de la cita
  * @returns {Promise} Promesa con el objeto de la cita eliminada
  */
-async function deleteCita(_id) {
+async function deleteCita(id) {
     try {
-        return await Cita.findByIdAndDelete(_id).message("Eliminado con exito");
+        return await Cita.findByIdAndDelete(id);
     } catch (error) {
         handleError(error, "cita.service -> deleteCita");
     }

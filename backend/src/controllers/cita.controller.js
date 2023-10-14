@@ -62,7 +62,6 @@ async function getCitaById(req, res) {
     try {
         const { params } = req;
         const { error: paramsError } = citaIdSchema.validate(params.id);
-        console.log("Controller 1:", params.id);
         if (paramsError) return respondError(req, res, 400, paramsError.message);
 
         const [cita, errorCita] = await CitaService.getCitaById(params.id);
@@ -111,10 +110,13 @@ async function putCita(req, res) {
 async function deleteCita(req, res) {
     try {
         const { params } = req;
-        // const { error: paramsError } = citaIdSchema.validate(params);
-        // if (paramsError) return respondError(req, res, 400, paramsError.message);
+        const { error: paramsError } = citaIdSchema.validate(params.id);
+        if (paramsError) return respondError(req, res, 400, paramsError.message);
 
-        const cita = await CitaService.deleteCita(params._id);
+        const [ cita, errorCita ] = await CitaService.deleteCita(params.id);
+
+        if (errorCita) return respondError(req, res, 404, errorCita);
+
         !cita
             ? respondError(req, res, 404, "No se encontro la cita solicitada", "Verifique el id ingresado")
             : respondSuccess(req, res, 200, cita);
