@@ -5,7 +5,7 @@
 
 2. El solicitante envia solicitud de forma online, con los planos adjuntos
 
-3. El administrador recepciona y responde a la solicitud (La aprueban o rechazan)
+3. El administrador recepciona y responde a la solicitud estableciendo un estado 1 (La aprueban o rechazan)
 
 4. En caso de ser rechazada, se actualiza el estado de la solicitud, de modo que el solicitante podra verlo al ingresar a la plataforma e ingresar su rut.
 En cambio si es aprobada el administrador debe asignar una cita en la agenda del encargado de visita y se notifica al solicitante indicandole cuando tendrá la cita, para ver las condiciones del lugar donde se quiere realizar el tramite.
