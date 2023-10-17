@@ -22,6 +22,16 @@ const citaBodySchema = Joi.object({
         "any.required": "La fecha de la cita es obligatorio.",
         "string.base": "La fecha de la cita debe ser de tipo string.",
     }),
+    status1: Joi.string().required().messages({
+        "string.empty": "El estado 1 de la cita no puede estar vacío.",
+        "any.required": "El estado 1 de la cita es obligatorio.",
+        "string.base": "El estado 1 de la cita debe ser de tipo string.",
+    }),
+    status2: Joi.string().required().messages({
+        "string.empty": "El estado 2 de la cita no puede estar vacío.",
+        "any.required": "El estado 2  de la cita es obligatorio.",
+        "string.base": "El estado 2  de la cita debe ser de tipo string.",
+    }),
 }).messages({
     "object.unknown": "No se permiten propiedades adicionales.",
 });
