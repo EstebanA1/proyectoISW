@@ -26,7 +26,7 @@ async function getCitas() {
  */
 async function createCita(cita) {
     try {
-        const {  name, typeOfRequest, date } = cita;
+        const {  name, typeOfRequest, date, status1, status2 } = cita;
 
         const citaFound = await Cita.findOne({ _id: cita._id });
         if (citaFound) return [null, "La cita ya existe"];
@@ -35,6 +35,8 @@ async function createCita(cita) {
             name,
             typeOfRequest,
             date,
+            status1,
+            status2,
         });
         await newCita.save();
 
@@ -74,7 +76,7 @@ async function updateCita(id, cita) {
         const citaFound = await Cita.findById(id);
         if (!citaFound) return [null, "La cita no existe"];
 
-        const { name, typeOfRequest, date } = cita;
+        const { name, typeOfRequest, date, status1, status2 } = cita;
 
         const citaUpdated = await Cita.findByIdAndUpdate(
             id,
@@ -82,6 +84,8 @@ async function updateCita(id, cita) {
                 name,
                 typeOfRequest,
                 date,
+                status1,
+                status2,
             },
             { new: true },
         );
