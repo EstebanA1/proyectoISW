@@ -15,8 +15,6 @@ async function isAdmin(req, res, next) {
   try {
     console.log("Pase por la autorización");
     const user = await User.findOne({ email: req.email });
-    console.log("El email es ", req.email);
-    console.log("Los roles son ", user.roles);
     const roles = await Role.find({ _id: { $in: user.roles } });
 
     for (const role of roles) {
