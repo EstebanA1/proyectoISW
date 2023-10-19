@@ -15,6 +15,10 @@ const citaSchema = new mongoose.Schema(
             required: true,
             minLenght: 5
         },
+        address: {
+            type: String,
+            required: true,
+        },
         date: {
             type: String,
             required: true,
