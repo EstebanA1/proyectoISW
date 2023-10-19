@@ -19,11 +19,7 @@ const citaSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        status1: {
-            type: String,
-            required: true,
-        },
-        status2: {
+        status: {
             type: String,
             required: true,
         }
