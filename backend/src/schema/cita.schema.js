@@ -2,6 +2,7 @@
 
 const Joi = require("joi");
 const ESTADOS = require("../constants/estados.constants");
+const TYPE = require("../constants/tipoCitas.constants");
 
 /**
  * Esquema de validación para el cuerpo de la solicitud de la cita.
@@ -13,10 +14,11 @@ const citaBodySchema = Joi.object({
         "any.required": "El nombre del solicitante de la cita es obligatorio.",
         "string.base": "El nombre del solicitante de la cita debe ser de tipo string.",
     }),
-    typeOfRequest: Joi.string().required().messages({
+    typeOfRequest: Joi.string().valid(...TYPE).required().messages({
         "string.empty": "El tipo de solicitud de la cita no puede estar vacío.",
         "any.required": "El tipo de solicitud de la cita es obligatorio.",
         "string.base": "El tipo de solicitud de la cita debe ser de tipo string.",
+        "any.only": "El tipo de solicitud proporcionado no es válido.",
     }),
     date: Joi.string().required().messages({
         "string.empty": "La fecha de la cita no puede estar vacío.",
