@@ -28,7 +28,7 @@ async function createCita(cita) {
     try {
         const {  name, typeOfRequest, date, status1, status2 } = cita;
 
-        const citaFound = await Cita.findOne({ _id: cita._id });
+        const citaFound = await Cita.findOne({ name: cita.name });
         if (citaFound) return [null, "La cita ya existe"];
 
         const newCita = new Cita({
