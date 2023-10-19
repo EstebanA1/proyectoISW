@@ -13,12 +13,11 @@ const { handleError } = require("../utils/errorHandler.js");
  */
 async function isAdmin(req, res, next) {
   try {
-    console.log("Pase por la autorización");
     const user = await User.findOne({ email: req.email });
     const roles = await Role.find({ _id: { $in: user.roles } });
 
     for (const role of roles) {
-      if (role.name === "administrador") {
+      if (role.name === "Administrador") {
         next();
         return;
       }
@@ -43,12 +42,11 @@ async function isAdmin(req, res, next) {
  */
 async function isSolicitante(req, res, next) {
   try {
-    console.log("Pase por la autorización");
     const user = await User.findOne({ email: req.email });
     const roles = await Role.find({ _id: { $in: user.roles } });
 
     for (const role of roles) {
-      if (role.name === "solicitante") {
+      if (role.name === "Solicitante") {
         next();
         return;
       }
@@ -66,19 +64,18 @@ async function isSolicitante(req, res, next) {
 }
 
 /**
- * Comprueba si el usuario es encargado
+ * Comprueba si el usuario es encargado de visitas
  * @param {Object} req - Objeto de petición
  * @param {Object} res - Objeto de respuesta
  * @param {Function} next - Función para continuar con la siguiente función
  */
 async function isEncargadoVis(req, res, next) {
   try {
-    console.log("Pase por la autorización");
     const user = await User.findOne({ email: req.email });
     const roles = await Role.find({ _id: { $in: user.roles } });
 
     for (const role of roles) {
-      if (role.name === "encargado") {
+      if (role.name === "Encargado") {
         next();
         return;
       }
