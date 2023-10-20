@@ -85,7 +85,7 @@ async function updateCita(req, res) {
         if ( paramsError ) return respondError(req, res, 400, paramsError.message)
 
         const { error: bodyError } = citaBodySchema.validate(body);
-        if (bodyError) return respondError(req, res, 400, bodyError.message);
+        if (bodyError) return respondError(req, res, 400, "Faltan datos para actualizar la cita");
 
         const [cita, citaError] = await CitaService.updateCita( params.id, body);
 
