@@ -35,7 +35,7 @@ async function createCita(req, res) {
     try {
         const { body } = req;
         const { error: bodyError } = citaBodySchema.validate(body);
-        if (bodyError) return respondError(req, res, 400, bodyError.message);
+        if (bodyError) return respondError(req, res, 400, "Faltan datos para poder crear la cita");
 
         const [newCita, citaError] = await CitaService.createCita(body);
 
