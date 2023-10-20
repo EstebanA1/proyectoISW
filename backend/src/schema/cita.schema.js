@@ -44,7 +44,7 @@ const citaBodySchema = Joi.object({
  * Esquema de validación para el id de la cita
  * @constant {Object}
  */
-const citaIdSchema = Joi.string().required().messages({
+const citaIdSchema = Joi.string().length(24).required().messages({
             "string.empty": "El id no puede estar vacío.",
             "any.required": "El id es obligatorio.",
             "string.length": "El id debe tener 24 caracteres.",
