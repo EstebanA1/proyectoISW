@@ -37,8 +37,8 @@ async function setupServer() {
     server.use("/api", indexRoutes);
 
     server.use((err, req, res, next) => {
+      // Error de análisis JSON (contenido incorrecto)
       if (err instanceof SyntaxError && err.status === 400 && "body" in err) {
-        // Error de análisis JSON (contenido incorrecto)
         return res.status(400).json({ message: "Error en formato de JSON" });
       }
       // Otros manejadores de errores aquí
