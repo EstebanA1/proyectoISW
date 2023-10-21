@@ -6,5 +6,3 @@
 
 ## [Ver el backend](./backend/Backend.md)
 ## [Ver el frontend](./frontend/Frontend.md)
-
-### Prueba2
