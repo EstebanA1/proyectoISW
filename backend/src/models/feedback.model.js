@@ -1,12 +1,18 @@
 "use strict";
 
 const { default: mongoose } = require("mongoose");
-const Joi = require("joi");
+const ESTADOS = require("../constants/estados.constants");
 
 // Esquema Feedback
 const feedbackSchema = new mongoose.Schema({
-    Fecha: {
+    Solicitante: {
         type: String,
+        required: true,
+        minLenght: 3,
+        maxLenght: 50
+    },
+    Fecha: {
+        type: Date,
         required: true,
     },
     informe: {
@@ -19,13 +25,14 @@ const feedbackSchema = new mongoose.Schema({
         required: true,
         minLenght: 10
     },
-    Imagenes: {
+    Imagenes: {//schema arreglar
         type: [String],
         required: true,
     },
-    estado: {
+    ESTADOS: {
         type: String,
         required: true,
+        enum: ESTADOS
     }
 });
 
