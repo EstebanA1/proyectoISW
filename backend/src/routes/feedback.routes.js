@@ -1,5 +1,6 @@
 "use strict";
 
+// exporta el módulo de rutas de cita
 const express = require("express");
 
 /** Middlewares de autorización */
