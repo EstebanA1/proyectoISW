@@ -20,7 +20,6 @@ async function getCitas(req, res) {
             ? respondSuccess(req, res, 204)
             : respondSuccess(req, res, 200, citasiones);
     } catch (error) {
-        // handleError(error, "cita.controller -> getCitas");
         respondError(req, res, 400, error.message);
     }
 }
@@ -89,7 +88,6 @@ async function updateCita(req, res) {
         const [cita, citaError] = await CitaService.updateCita(params.id, body);
 
         if (citaError) return respondError(req, res, 404, citaError);
-        // if (!cita) return respondError(req, res, 404, "La cita no existe, intente con otro ID");
 
         respondSuccess(req, res, 200, cita);
     } catch (error) {
