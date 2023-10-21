@@ -18,23 +18,24 @@ const citaBodySchema = Joi.object({
         "string.empty": "El tipo de solicitud de la cita no puede estar vacío.",
         "any.required": "El tipo de solicitud de la cita es obligatorio.",
         "string.base": "El tipo de solicitud de la cita debe ser de tipo string.",
-        "any.only": "El tipo de solicitud proporcionado no es válido.",
+        "any.only": 'El tipo de solicitud debe ser Ampliacion o Construccion.',
     }),
     address: Joi.string().required().messages({
         "string.empty": "La dirreccion de la cita no puede estar vacío.",
         "any.required": "La dirreccion de la cita es obligatorio.",
         "string.base": "La dirreccion de la cita debe ser de tipo string.",
     }),
-    date: Joi.string().required().messages({
+    date: Joi.string().regex(/^\d{2}\/\d{2}\/\d{4}$/).required().messages({
         "string.empty": "La fecha de la cita no puede estar vacío.",
         "any.required": "La fecha de la cita es obligatorio.",
         "string.base": "La fecha de la cita debe ser de tipo string.",
+        "string.pattern.base": "El formato de la fecha es xx/xx/xxxx"
     }),
     status: Joi.string().valid(...ESTADOS).required().messages({
         "string.empty": "El estado de la cita no puede estar vacío.",
         "any.required": "El estado de la cita es obligatorio.",
         "string.base": "El estado de la cita debe ser de tipo string.",
-        "any.only": "El estado proporcionado no es válido.",
+        "any.only": "El estado proporcionado debe ser rechazado, pendiente o aprobado.",
     })
 }).messages({
     "object.unknown": "No se permiten propiedades adicionales.",
@@ -44,10 +45,10 @@ const citaBodySchema = Joi.object({
  * Esquema de validación para el id de la cita
  * @constant {Object}
  */
-const citaIdSchema = Joi.string().required().messages({
-            "string.empty": "El id no puede estar vacío.",
-            "any.required": "El id es obligatorio.",
-            "string.length": "El id debe tener 24 caracteres.",
-        });
+const citaIdSchema = Joi.string().length(24).required().messages({
+    "string.empty": "El id no puede estar vacío.",
+    "any.required": "El id es obligatorio.",
+    "string.length": "El id debe tener 24 caracteres.",
+});
 
 module.exports = { citaBodySchema, citaIdSchema };

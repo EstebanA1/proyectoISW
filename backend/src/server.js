@@ -14,8 +14,8 @@ const indexRoutes = require("./routes/index.routes.js");
 const { setupDB } = require("./config/configDB.js");
 // Importa el handler de errores
 const { handleFatalError, handleError } = require("./utils/errorHandler.js");
+// Importa archivos para crear roles y usuarios
 const { createRoles, createUsers } = require("./config/initialSetup");
-
 /**
  * Inicia el servidor web
  */
@@ -35,6 +35,14 @@ async function setupServer() {
     server.use(express.urlencoded({ extended: true }));
     // Agrega el enrutador principal al servidor
     server.use("/api", indexRoutes);
+
+    server.use((err, req, res, next) => {
+      // Error de análisis JSON (contenido incorrecto)
+      if (err instanceof SyntaxError && err.status === 400 && "body" in err) {
+        return res.status(400).json({ message: "Error en formato de JSON" });
+      }
+      // Otros manejadores de errores aquí
+    });
 
     // Inicia el servidor en el puerto especificado
     server.listen(PORT, () => {
