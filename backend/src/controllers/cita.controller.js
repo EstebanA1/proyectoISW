@@ -4,7 +4,6 @@ const { respondSuccess, respondError } = require("../utils/resHandler");
 const CitaService = require("../services/citas.service");
 const { citaBodySchema, citaIdSchema } = require("../schema/cita.schema");
 const { handleError } = require("../utils/errorHandler");
-/*FALTA ASIGNAR VALIDACIONES, QUIENES PUEDEN USAR LAS FUNCIONALIDADES SON EL ADMIN Y EL DE LAS VISITAS, ESTE ULTIMO SOLO PUEDE VER LAS VISITAS EXISTENTES*/
 
 /**
  * Obtiene todas las citas
@@ -21,7 +20,7 @@ async function getCitas(req, res) {
             ? respondSuccess(req, res, 204)
             : respondSuccess(req, res, 200, citasiones);
     } catch (error) {
-        handleError(error, "cita.controller -> getCitas");
+        // handleError(error, "cita.controller -> getCitas");
         respondError(req, res, 400, error.message);
     }
 }
@@ -35,7 +34,7 @@ async function createCita(req, res) {
     try {
         const { body } = req;
         const { error: bodyError } = citaBodySchema.validate(body);
-        if (bodyError) return respondError(req, res, 400, "Faltan datos para poder crear la cita");
+        if (bodyError) return respondError(req, res, 400, bodyError.message);
 
         const [newCita, citaError] = await CitaService.createCita(body);
 
@@ -81,15 +80,16 @@ async function getCitaById(req, res) {
 async function updateCita(req, res) {
     try {
         const { params, body } = req;
-        const { error : paramsError } = citaIdSchema.validate(params.id);
-        if ( paramsError ) return respondError(req, res, 400, paramsError.message)
+        const { error: paramsError } = citaIdSchema.validate(params.id);
+        if (paramsError) return respondError(req, res, 400, paramsError.message)
 
         const { error: bodyError } = citaBodySchema.validate(body);
-        if (bodyError) return respondError(req, res, 400, "Faltan datos para actualizar la cita");
+        if (bodyError) return respondError(req, res, 400, bodyError.message);
 
-        const [cita, citaError] = await CitaService.updateCita( params.id, body);
+        const [cita, citaError] = await CitaService.updateCita(params.id, body);
 
-        if (citaError) return respondError(req, res, 400, citaError);
+        if (citaError) return respondError(req, res, 404, citaError);
+        // if (!cita) return respondError(req, res, 404, "La cita no existe, intente con otro ID");
 
         respondSuccess(req, res, 200, cita);
     } catch (error) {
@@ -106,18 +106,27 @@ async function updateCita(req, res) {
 async function deleteCita(req, res) {
     try {
         const { params } = req;
+
         const { error: paramsError } = citaIdSchema.validate(params.id);
         if (paramsError) return respondError(req, res, 400, paramsError.message);
 
         const cita = await CitaService.deleteCita(params.id);
 
         !cita
-            ? respondError(req, res, 404, "No se encontro la cita solicitada")
-            : respondSuccess(req, res, 200, cita);
+            ? respondError(req, res, 404, "No se encontro la cita indicada", "Verifique el id ingresado")
+            : respondSuccess(req, res, 200, "La cita fue eliminada con exito");
     } catch (error) {
         handleError(error, "cita.controller -> deleteCita");
         respondError(req, res, 500, "No se pudo eliminar la cita");
     }
+}
+
+function handleMissingId(req, res) {
+    respondError(req, res, 400, 'El ID de la cita es requerido');
+}
+
+function handleId(req, res) {
+    respondError(req, res, 400, 'No se debe proporcionar un ID');
 }
 
 module.exports = {
@@ -126,4 +135,6 @@ module.exports = {
     getCitaById,
     updateCita,
     deleteCita,
+    handleMissingId,
+    handleId
 };
