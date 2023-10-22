@@ -3,7 +3,7 @@
 // Importa el modulo 'mongoose' para crear la conexion a la base de datos
 const mongoose = require("mongoose");
 
-// Se crea el esquema de la coleccion 'solicitudes' 
+// Crea el esquema de la coleccion 'solicitudes' 
 
 const solicitudSchema = new mongoose.Schema(
     {
