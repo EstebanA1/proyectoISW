@@ -33,3 +33,9 @@ async function createSolicitud(solicitud) {
     }
 }
 
+module.exports = {
+    getSolicitudes,
+    createSolicitud,
+};
+
+
