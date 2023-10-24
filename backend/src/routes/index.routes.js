@@ -11,6 +11,9 @@ const authRoutes = require("./auth.routes.js");
 /** Enrutador de citas */
 const citasRoutes = require("./cita.routes.js");
 
+/** Enrutador de solicitudes */
+const solicitudesRoutes = require("./solicitud.routes.js");
+
 /** Middleware de autenticación */
 const authenticationMiddleware = require("../middlewares/authentication.middleware.js");
 
