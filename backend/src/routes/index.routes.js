@@ -23,6 +23,8 @@ router.use("/users", authenticationMiddleware, userRoutes);
 router.use("/auth", authRoutes);
 // Define las rutas para las citas /api/citas
 router.use("/citas", citasRoutes)
+// Define las rutas para las solicitudes /api/solicitudes
+router.use("/solicitudes", solicitudesRoutes)
 
 // Exporta el enrutador
 module.exports = router;
