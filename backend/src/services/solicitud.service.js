@@ -33,9 +33,45 @@ async function createSolicitud(solicitud) {
     }
 }
 
+async function updateSolicitud(solicitudId, solicitud) {
+    try {
+        const solicitudFound = await Solicitud.findById(solicitudId);
+        if (!solicitudFound) return [null, "La solicitud no existe"];
+
+        const { name, typeOfRequest, address, date, status } = solicitud;
+
+        await Solicitud.findByIdAndUpdate(solicitudId, {
+            name,
+            typeOfRequest,
+            address,
+            date,
+            status,
+        });
+
+        return [true, null];
+    } catch (error) {
+        handleError(error, "solicitud.service -> updateSolicitud");
+    }
+}
+
+async function deleteSolicitud(solicitudId) {
+    try {
+        const solicitudFound = await Solicitud.findById(solicitudId);
+        if (!solicitudFound) return [null, "La solicitud no existe"];
+
+        await Solicitud.findByIdAndDelete(solicitudId);
+
+        return [true, null];
+    } catch (error) {
+        handleError(error, "solicitud.service -> deleteSolicitud");
+    }
+}
+
 module.exports = {
     getSolicitudes,
     createSolicitud,
+    updateSolicitud,
+    deleteSolicitud,
 };
 
 
