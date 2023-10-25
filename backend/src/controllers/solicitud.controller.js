@@ -2,7 +2,7 @@
 
 const { respondSuccess, respondError } = require("../utils/resHandler");
 const {handleError} = require('../utils/errorHandler');
-// const {solicitudBodySchema, solicitudIdSchema} = require('../schema/solicitud.schema');
+const {solicitudBodySchema, solicitudIdSchema} = require('../schema/solicitud.schema');
 const SolicitudService = require('../services/solicitud.service');
 
 /**
@@ -32,8 +32,8 @@ async function getSolicitudes(req, res) {
 async function createSolicitud(req, res) {
     try {
         const {body} = req;
-        // const {error: bodyError} = solicitudBodySchema.validate(body);
-        // if (bodyError) return respondError(req, res, 400, bodyError.message);
+        const {error: bodyError} = solicitudBodySchema.validate(body);
+        if (bodyError) return respondError(req, res, 400, bodyError.message);
 
         const [newSolicitud, solicitudError] = await SolicitudService.createSolicitud(body);
 
@@ -52,11 +52,11 @@ async function createSolicitud(req, res) {
 async function updateSolicitud(req, res) {
     try {
         const {body, params} = req;
-        // const {error: bodyError} = solicitudBodySchema.validate(body);
-        // if (bodyError) return respondError(req, res, 400, bodyError.message);
+        const {error: bodyError} = solicitudBodySchema.validate(body);
+        if (bodyError) return respondError(req, res, 400, bodyError.message);
 
-        // const {error: paramsError} = solicitudIdSchema.validate(params);
-        // if (paramsError) return respondError(req, res, 400, paramsError.message);
+        const {error: paramsError} = solicitudIdSchema.validate(params);
+        if (paramsError) return respondError(req, res, 400, paramsError.message);
 
         const [solicitudUpdated, solicitudError] = await SolicitudService.updateSolicitud(params.id, body);
 
@@ -75,8 +75,8 @@ async function updateSolicitud(req, res) {
 async function deleteSolicitud(req, res) {
     try {
         const {params} = req;
-        // const {error: paramsError} = solicitudIdSchema.validate(params);
-        // if (paramsError) return respondError(req, res, 400, paramsError.message);
+        const {error: paramsError} = solicitudIdSchema.validate(params);
+        if (paramsError) return respondError(req, res, 400, paramsError.message);
 
         const [solicitudDeleted, solicitudError] = await SolicitudService.deleteSolicitud(params.id);
 
@@ -92,9 +92,32 @@ async function deleteSolicitud(req, res) {
     }
 }
 
+async function getSolicitudById(req, res) {
+    try {
+        const {params} = req;
+        const {error: paramsError} = solicitudIdSchema.validate(params);
+        if (paramsError) return respondError(req, res, 400, paramsError.message);
+
+        const [solicitud, solicitudError] = await SolicitudService.getSolicitudById(params.id);
+
+        if (solicitudError) return respondError(req, res, 400, solicitudError);
+        if (!solicitud) {
+            return respondError(req, res, 400, 'No se encontro la solicitud');
+        }
+
+        respondSuccess(req, res, 200, solicitud);
+    } catch (error) {
+        handleError(error, 'solicitud.controller -> getSolicitudById');
+        respondError(req, res, 500, 'No se encontro la solicitud');
+    }
+}
+
 module.exports = {
     getSolicitudes,
     createSolicitud,
+    updateSolicitud,
+    deleteSolicitud,
+    getSolicitudById,
 };
 
 
