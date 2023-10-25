@@ -18,7 +18,7 @@ async function getCitas(req, res) {
 
         citasiones.length === 0
             ? respondSuccess(req, res, 204)
-            : respondSuccess(req, res, 200, citasiones);
+            : respondSuccess(req, res, 200, ["Las citas son: ",citasiones]);
     } catch (error) {
         respondError(req, res, 400, error.message);
     }
@@ -42,7 +42,7 @@ async function createCita(req, res) {
             return respondError(req, res, 400, "No se creo la cita");
         }
 
-        respondSuccess(req, res, 201, newCita);
+        respondSuccess(req, res, 201, ["La cita fue creada con exito", cita]);
     } catch (error) {
         handleError(error, "cita.controller -> createCita");
         respondError(req, res, 500, "No se creo la cita");
@@ -64,7 +64,7 @@ async function getCitaById(req, res) {
 
         if (errorCita) return respondError(req, res, 404, errorCita);
 
-        respondSuccess(req, res, 200, cita);
+        respondSuccess(req, res, 200, ["La cita solicitada es: ",cita]);
     } catch (error) {
         handleError(error, "cita.controller -> getCitaById");
         respondError(req, res, 500, "No se pudo obtener la cita");
@@ -89,7 +89,7 @@ async function updateCita(req, res) {
 
         if (citaError) return respondError(req, res, 404, citaError);
 
-        respondSuccess(req, res, 200, cita);
+        respondSuccess(req, res, 200, ["La cita fue actualizada con exito", cita]);
     } catch (error) {
         handleError(error, "cita.controller -> updateCita");
         respondError(req, res, 500, "No se pudo actualizar la cita");
