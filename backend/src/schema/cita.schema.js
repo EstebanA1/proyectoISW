@@ -45,10 +45,14 @@ const citaBodySchema = Joi.object({
  * Esquema de validación para el id de la cita
  * @constant {Object}
  */
-const citaIdSchema = Joi.string().length(24).required().messages({
-    "string.empty": "El id no puede estar vacío.",
-    "any.required": "El id es obligatorio.",
-    "string.length": "El id debe tener 24 caracteres.",
-});
+const citaIdSchema = Joi.string()
+    .required()
+    .pattern(/^(?:[0-9a-fA-F]{24}|[0-9a-fA-F]{12})$/)
+    .messages({
+        "string.empty": "El ID no puede estar vacío.",
+        "any.required": "El ID es obligatorio.",
+        "string.base": "El ID de la cita debe ser de tipo string.",
+        "string.pattern.base": "El ID proporcionado no es válido.",
+    });
 
 module.exports = { citaBodySchema, citaIdSchema };
