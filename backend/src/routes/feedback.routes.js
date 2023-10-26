@@ -19,11 +19,11 @@ const router = express.Router();
 router.use(authenticationMiddleware);
 
 // Define las rutas para las citas
-router.get('/feedback',  authorizationMiddleware.isEncargadoVis, FeedbackController.getFeedback);
-router.post('/feedback', authorizationMiddleware.isEncargadoVis, FeedbackController.createFeedback);
-router.get('/feedback/:id', authorizationMiddleware.isEncargadoVis, FeedbackController.getFeedbackById);
-router.put('/feedback/:id', authorizationMiddleware.isEncargadoVis, FeedbackController.updateFeedback);
-router.delete('/feedback/:id', authorizationMiddleware.isEncargadoVis, FeedbackController.deleteFeedback);
+router.get('/',  authorizationMiddleware.isAdminEncargado, FeedbackController.getFeedback);
+router.post('/', authorizationMiddleware.isEncargadoVis, FeedbackController.createFeedback);
+router.get('/:id', authorizationMiddleware.isEncargadoVis, FeedbackController.getFeedbackById);
+router.put('/:id', authorizationMiddleware.isEncargadoVis, FeedbackController.updateFeedback);
+router.delete('/:id', authorizationMiddleware.isEncargadoVis, FeedbackController.deleteFeedback);
 
 
 module.exports = router;
