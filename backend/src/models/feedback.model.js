@@ -5,14 +5,14 @@ const ESTADOS = require("../constants/estados.constants");
 
 // Esquema Feedback
 const feedbackSchema = new mongoose.Schema({
-    Solicitante: {
+    solicitante: {
         type: String,
         required: true,
         minLenght: 3,
         maxLenght: 50
     },
-    Fecha: {
-        type: Date,
+    fecha: {
+        type: String,
         required: true,
     },
     informe: {
@@ -25,11 +25,11 @@ const feedbackSchema = new mongoose.Schema({
         required: true,
         minLenght: 10
     },
-    Imagenes: {//schema arreglar
-        type: [String],
+    imagenes: {//schema arreglar
+        type: String,
         required: true,
     },
-    ESTADOS: {
+    estado: {
         type: String,
         required: true,
         enum: ESTADOS
