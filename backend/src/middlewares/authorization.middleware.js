@@ -33,6 +33,29 @@ async function isAdmin(req, res, next) {
   }
 }
 
+async function isAdminEncargado(req, res, next) {
+  try {
+    const user = await User.findOne({ email: req.email });
+    const roles = await Role.find({ _id: { $in: user.roles } });
+
+    for (const role of roles) {
+      if (role.name === "Administrador" || role.name === "Encargado") {
+        next();
+        return;
+      }
+    }
+
+    return respondError(
+      req,
+      res,
+      401,
+      "Se requiere un rol de administrador para realizar esta acción"
+    );
+  } catch (error) {
+    handleError(error, "authorization.middleware -> isAdmin");
+  }
+}
+
 /**
  * Comprueba si el usuario es solicitante
  * @param {Object} req - Objeto de petición
@@ -94,5 +117,6 @@ async function isEncargadoVis(req, res, next) {
 module.exports = {
   isAdmin,
   isSolicitante,
-  isEncargadoVis
+  isEncargadoVis,
+  isAdminEncargado
 };
