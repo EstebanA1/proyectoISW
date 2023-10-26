@@ -2,7 +2,7 @@
 
 // Importa el modulo 'mongoose' para crear la conexion a la base de datos
 const mongoose = require("mongoose");
-const ESTADOS = require("../constants/estados.constants");
+const ESTADO2 = require("../constants/estadosSolicitud.constants");
 
 // Crea el esquema de la coleccion 'solicitudes' 
 

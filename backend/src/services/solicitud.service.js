@@ -13,7 +13,7 @@ async function getSolicitudes() {
 
 async function createSolicitud(solicitud) {
     try {
-        const { name, typeOfRequest, address, date, status } = solicitud;
+        const { name, typeOfRequest, address, status, status2 } = solicitud;
 
         const solicitudFound = await Solicitud.findOne({ name: solicitud.name });
         if (solicitudFound) return [null, "La solicitud ya existe"];
@@ -22,8 +22,8 @@ async function createSolicitud(solicitud) {
             name,
             typeOfRequest,
             address,
-            date,
             status,
+            status2,
         });
         await newSolicitud.save();
 
@@ -38,14 +38,14 @@ async function updateSolicitud(solicitudId, solicitud) {
         const solicitudFound = await Solicitud.findById(solicitudId);
         if (!solicitudFound) return [null, "La solicitud no existe"];
 
-        const { name, typeOfRequest, address, date, status } = solicitud;
+        const { name, typeOfRequest, address, status, status2 } = solicitud;
 
         await Solicitud.findByIdAndUpdate(solicitudId, {
             name,
             typeOfRequest,
             address,
-            date,
             status,
+            status2,
         });
 
         return [true, null];
