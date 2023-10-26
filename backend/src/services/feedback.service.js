@@ -7,7 +7,7 @@ const { handleError } = require("../utils/errorHandler");
  * Obtener Feedbacks de Visitas a Terreno
  * @returns
  */
-async function getFeedbacks() {
+async function getFeedback() {
     try {
         const feedbacks = await Feedback.find();
         if (!feedbacks) return [null, "No hay Retroalimentaciones de Visitas a Terreno"];
@@ -47,8 +47,9 @@ async function createFeedback(feedback) {
 
 /**
  * Obtener Feedbacks de Visitas a Terreno por Id
- * @param {*} id
- * @returns
+ * @param {string} id Id del feedback
+ * @param {Object} feedback Objeto de feedback
+ * @returns {Promise} Promesa con el objeto de feedback actualizado
  */
 async function getFeedbackById(id) {
     try {
@@ -63,9 +64,9 @@ async function getFeedbackById(id) {
 
 /**
  * Actualizar Feedbacks de Visitas a Terreno por Id
- * @param {*} id
- * @param {*} feedback
- * @returns
+ * @param {string} id Id del feedback
+ * @param {Object} feedback Objeto de feedback
+ * @returns {Promise} Promesa con el objeto de feedback actualizado
  */
 async function updateFeedback(id, feedback) {
     try {
@@ -89,20 +90,17 @@ async function updateFeedback(id, feedback) {
 
         return [updatedFeedback, null];
     } catch (error) {
-        handleError(error, "feedback.service -> updateFeedback");
+        handleError(error, "El Feedback no existe, pruebe otro ID");
     }
 }
 
 /**
  * Eliminar Feedbacks de Visitas a Terreno por Id
- * @param {*} id
- * @returns
+ * @param {string} id
+ * @returns {Promise}
  */
 async function deleteFeedback(id) {
     try {
-        const feedbackFound = await Feedback.findById(id);
-        if (!feedbackFound) return [null, "La Retroalimentación de Visita a Terreno no existe"];
-
         await Feedback.findByIdAndDelete(id);
 
         return ["Retroalimentación de Visita a Terreno eliminada", null];
@@ -112,7 +110,7 @@ async function deleteFeedback(id) {
 }
 
 module.exports = {
-    getFeedbacks,
+    getFeedback,
     createFeedback,
     getFeedbackById,
     updateFeedback,

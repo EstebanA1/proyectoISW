@@ -9,9 +9,9 @@ const {feedbackBodySchema, feedbackIdSchema} = require("../schema/feedback.schem
  * Controlador de Feedback
  * @module FeedbackController
  */
-async function getFeedbacks(req, res) {
+async function getFeedback(req, res) {
     try {
-        const [feedbacks, errorFeedbacks] = await FeedbackService.getFeedbacks();
+        const [feedbacks, errorFeedbacks] = await FeedbackService.getFeedback();
         if (errorFeedbacks) return respondError(req, res, 404, errorFeedbacks);
 
         feedbacks.length === 0
@@ -25,7 +25,8 @@ async function getFeedbacks(req, res) {
 
 /**
  * Crea un nuevo feedback
- * 
+ * @param {Object} req - Objeto de petición
+ * @param {Object} res - Objeto de respuesta
  */
 async function createFeedback(req, res) {
     try {
@@ -78,7 +79,7 @@ async function updateFeedback(req, res) {
         const {error: idError} = feedbackIdSchema.validate(id);
         if (idError) return respondError(req, res, 400, idError.message);
 
-        const [updatedFeedback, errorUpdateFeedback] = await FeedbackService.updateFeedbackById(id, body);
+        const [updatedFeedback, errorUpdateFeedback] = await FeedbackService.updateFeedback(id, body);
         if (errorUpdateFeedback) return respondError(req, res, 404, errorUpdateFeedback);
 
         respondSuccess(req, res, 200, updatedFeedback);
@@ -98,7 +99,7 @@ async function deleteFeedback(req, res) {
         const {error: idError} = feedbackIdSchema.validate(id);
         if (idError) return respondError(req, res, 400, idError.message);
 
-        const [deletedFeedback, errorDeleteFeedback] = await FeedbackService.deleteFeedbackById(id);
+        const [deletedFeedback, errorDeleteFeedback] = await FeedbackService.deleteFeedback(id);
         if (errorDeleteFeedback) return respondError(req, res, 404, errorDeleteFeedback);
 
         respondSuccess(req, res, 200, deletedFeedback);
@@ -109,7 +110,7 @@ async function deleteFeedback(req, res) {
 }
 
 module.exports = {
-    getFeedbacks,
+    getFeedback,
     createFeedback,
     getFeedbackById,
     updateFeedback,
