@@ -12,10 +12,10 @@ const router = express.Router();
 
 router.use(authenticationMiddleware);
 
-// router.get('/', authorizationMiddleware.isAdmin, solicitudController.getSolicitudes);
-// router.post('/', authorizationMiddleware.isAdmin, solicitudController.createSolicitud);
-// router.get('/:id', authorizationMiddleware.isAdmin, solicitudController.getSolicitudById);
-// router.put('/:id', authorizationMiddleware.isAdmin, solicitudController.updateSolicitud);
-// router.delete('/:id', authorizationMiddleware.isAdmin, solicitudController.deleteSolicitud);
+router.get('/', solicitudController.getSolicitudes);
+router.post('/', solicitudController.createSolicitud);
+router.get('/:id', solicitudController.getSolicitudById);
+router.put('/:id',  solicitudController.updateSolicitud);
+router.delete('/:id', solicitudController.deleteSolicitud);
 
 module.exports = router;
