@@ -2,8 +2,9 @@
 
 // Importa el modulo 'mongoose' para crear la conexion a la base de datos
 const mongoose = require("mongoose");
+const ESTADOS = require("../constants/estados.constants");
 
-// Se crea el esquema de la coleccion 'solicitudes' 
+// Crea el esquema de la coleccion 'solicitudes' 
 
 const solicitudSchema = new mongoose.Schema(
     {
@@ -21,14 +22,14 @@ const solicitudSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        date: {
-            type: String,
-            required: true,
-        },
         status: {
             type: String,
             required: true,
-        }
+        },
+        status2: {
+            type: String,
+            required: true,
+        },
     },
     {
         versionKey: false,
