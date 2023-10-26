@@ -18,7 +18,7 @@ async function getFeedback(req, res) {
             ? respondSuccess(req, res, 204)
             : respondSuccess(req, res, 200, feedbacks);
     } catch (error) {
-        handleError(error, "feedback.controller -> getFeedbacks");
+        handleError(error, "feedback.controller -> getFeedback");
         respondError(req, res, 400, error.message);
     }
 }
