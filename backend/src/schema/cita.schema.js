@@ -1,7 +1,7 @@
 "use strict";
 
 const Joi = require("joi");
-const ESTADOS = require("../constants/estados.constants");
+const ESTADOS = require("../constants/estadosSolicitud.constants");
 const TYPE = require("../constants/tipoCitas.constants");
 
 /**
@@ -35,7 +35,7 @@ const citaBodySchema = Joi.object({
         "string.empty": "El estado de la cita no puede estar vacío.",
         "any.required": "El estado de la cita es obligatorio.",
         "string.base": "El estado de la cita debe ser de tipo string.",
-        "any.only": "El estado proporcionado debe ser rechazado, pendiente o aprobado.",
+        "any.only": "El estado proporcionado debe ser rechazado o aprobado.",
     })
 }).messages({
     "object.unknown": "No se permiten propiedades adicionales.",
