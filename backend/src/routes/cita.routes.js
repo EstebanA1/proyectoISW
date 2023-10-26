@@ -18,9 +18,9 @@ const router = express.Router();
 router.use(authenticationMiddleware);
 
 // Define las rutas para las citas
-router.get('/',  [authorizationMiddleware.isAdmin, authorizationMiddleware.isEncargadoVis], citaController.getCitas);
+router.get('/',  authorizationMiddleware.isAdminEncargado, citaController.getCitas);
 router.post('/', authorizationMiddleware.isAdmin, citaController.createCita);
-router.get('/:id', [authorizationMiddleware.isAdmin, authorizationMiddleware.isEncargadoVis], citaController.getCitaById);
+router.get('/:id', authorizationMiddleware.isAdminEncargado, citaController.getCitaById);
 router.put('/:id', authorizationMiddleware.isAdmin, citaController.updateCita);
 router.delete('/:id', authorizationMiddleware.isAdmin, citaController.deleteCita);
 
