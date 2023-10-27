@@ -14,12 +14,17 @@ const upload = multer({ storage: storage });
  * @constant {Object}
  */
 const feedbackBodySchema = Joi.object({
+    IDCita: Joi.string().required().messages({
+        "string.empty": "El solicitante de la retroalimentación no puede estar vacío.",
+        "any.required": "El solicitante de la retroalimentación es obligatorio.",
+        "string.base": "El solicitante de la retroalimentación debe ser de tipo string.",
+    }),
     solicitante: Joi.string().required().messages({
         "string.empty": "El solicitante de la retroalimentación no puede estar vacío.",
         "any.required": "El solicitante de la retroalimentación es obligatorio.",
         "string.base": "El solicitante de la retroalimentación debe ser de tipo string.",
     }),
-    fecha: Joi.string().regex(/^\d{2}\/\d{2}\/\d{4}$/).required().messages({
+    fechaVisita: Joi.string().regex(/^\d{2}\/\d{2}\/\d{4}$/).required().messages({
         "string.empty": "La fecha de la retroalimentación no puede estar vacío.",
         "any.required": "La fecha de la retroalimentación es obligatorio.",
         "string.base": "La fecha de la retroalimentación debe ser de tipo string.",

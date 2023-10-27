@@ -24,14 +24,15 @@ async function getFeedback() {
  */
 async function createFeedback(feedback) {
     try {
-        const { solicitante, fecha, informe, comentarios, imagenes, estado } = feedback;
+        const { IDCita, solicitante, fechaVisita, informe, comentarios, imagenes, estado } = feedback;
 
-        const feedbackFound = await Feedback.findOne({ solicitante: feedback.solicitante });
+        const feedbackFound = await Feedback.findOne({ IDCita: feedback.IDCita });
         if (feedbackFound) return [null, "La Retroalimentación de Visita a Terreno ya existe"];
 
         const newFeedback = new Feedback({
+            IDCita,
             solicitante,
-            fecha,
+            fechaVisita,
             informe,
             comentarios,
             imagenes,
@@ -73,13 +74,14 @@ async function updateFeedback(id, feedback) {
         const feedbackFound = await Feedback.findById(id);
         if (!feedbackFound) return [null, "La Retroalimentación de Visita a Terreno no existe"];
         
-        const { solicitante, fecha, informe, comentarios, imagenes, estado } = feedback;
+        const { IDCita, solicitante, fechaVisita, informe, comentarios, imagenes, estado } = feedback;
 
         const updatedFeedback = await Feedback.findByIdAndUpdate(
             id,
             {
+                IDCita,
                 solicitante,
-                fecha,
+                fechaVisita,
                 informe,
                 comentarios,
                 imagenes,
