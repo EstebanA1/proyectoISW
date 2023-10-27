@@ -5,13 +5,18 @@ const ESTADOS = require("../constants/estados.constants");
 
 // Esquema Feedback
 const feedbackSchema = new mongoose.Schema({
-    solicitante: {
+    IDCita: {
         type: String,
         required: true,
         minLenght: 3,
         maxLenght: 50
     },
-    fecha: {
+    solicitante: {
+        type: String,
+        required: true,
+        minLenght: 3,
+    },
+    fechaVisita: {
         type: String,
         required: true,
     },
@@ -23,7 +28,6 @@ const feedbackSchema = new mongoose.Schema({
     comentarios: {
         type: String,
         required: true,
-        minLenght: 10
     },
     imagenes: {//schema arreglar
         type: String,
