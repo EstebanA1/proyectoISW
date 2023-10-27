@@ -26,7 +26,7 @@ async function createFeedback(feedback) {
     try {
         const { IDCita, solicitante, fechaVisita, informe, comentarios, imagenes, estado } = feedback;
 
-        const feedbackFound = await Feedback.findOne({ solicitante: feedback.solicitante });
+        const feedbackFound = await Feedback.findOne({ IDCita: feedback.IDCita });
         if (feedbackFound) return [null, "La Retroalimentación de Visita a Terreno ya existe"];
 
         const newFeedback = new Feedback({
