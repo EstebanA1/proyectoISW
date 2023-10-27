@@ -1,8 +1,9 @@
 "use strict";
 
 const Joi = require("joi");
-const ESTADOS = require("../constants/estadosSolicitud.constants");
+const ESTADOS = require("../constants/estados.constants");
 const TYPE = require("../constants/tipoCitas.constants");
+const REALIZADO = require("../constants/realizatedCitas.constants");
 
 /**
  * Esquema de validación para el cuerpo de la solicitud de la cita.
@@ -35,8 +36,15 @@ const citaBodySchema = Joi.object({
         "string.empty": "El estado de la cita no puede estar vacío.",
         "any.required": "El estado de la cita es obligatorio.",
         "string.base": "El estado de la cita debe ser de tipo string.",
-        "any.only": "El estado proporcionado debe ser rechazado o aprobado.",
-    })
+        "any.only": "El estado proporcionado debe ser rechazado, pendiente o aprobado.",
+    }),
+    visitRealizated: Joi.string().valid(...REALIZADO).required().messages({
+        "string.empty": "La visita de la cita no puede estar vacío.",
+        "any.required": "la visita de la cita es obligatorio.",
+        "string.base": "La visita de la cita debe ser de tipo string.",
+        "any.only": "La visita de la cita debe ser Si o No.",
+    }),
+
 }).messages({
     "object.unknown": "No se permiten propiedades adicionales.",
 });
