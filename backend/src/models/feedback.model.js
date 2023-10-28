@@ -32,6 +32,9 @@ const feedbackSchema = new mongoose.Schema({
     imagenes: {//schema arreglar
         type: String,
         required: true,
+        //data: Buffer,
+        //contentType: String,
+        //originalname: String,
     },
     estado: {
         type: String,

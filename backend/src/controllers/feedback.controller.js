@@ -86,6 +86,10 @@ async function updateFeedback(req, res) {
         const {error: idError} = feedbackIdSchema.validate(id);
         if (idError) return respondError(req, res, 400, idError.message);
 
+        //Verificar ID de la cita
+        const [citas, errorCitas] = await CitaService.getCitaById(body.IDCita);
+        if (errorCitas) return respondError(req, res, 404, "No Existe Cita Asociada Con Ese ID Para Retroalimentacion, Revise ID de Cita");
+
         const [updatedFeedback, errorUpdateFeedback] = await FeedbackService.updateFeedback(id, body);
         if (errorUpdateFeedback) return respondError(req, res, 404, errorUpdateFeedback);
 

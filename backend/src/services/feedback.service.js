@@ -2,6 +2,9 @@
 
 const Feedback = require("../models/feedback.model");
 const { handleError } = require("../utils/errorHandler");
+const multer = require("multer");
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 /**
  * Obtener Feedbacks de Visitas a Terreno
@@ -103,6 +106,9 @@ async function updateFeedback(id, feedback) {
  */
 async function deleteFeedback(id) {
     try {
+        const feedbackFound = await Feedback.findById(id);
+        if (!feedbackFound) return [null, "La Retroalimentación de Visita a Terreno no existe"];
+
         await Feedback.findByIdAndDelete(id);
 
         return ["Retroalimentación de Visita a Terreno eliminada", null];

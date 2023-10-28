@@ -46,13 +46,16 @@ const feedbackBodySchema = Joi.object({
         "string.base": "Las imagenes de la retroalimentación debe ser de tipo string.",
     }),
     
-    /*
-    imagenes: Joi.object({
+    /* 
+    imagenes: Joi.array().items(Joi.object({
         buffer: Joi.binary().required(),
-        originalname: Joi.string().required()
-        }).required().messages({
-        "any.required": "Las imágenes de la retroalimentación son obligatorias.",
-        "object.base": "Las imágenes de la retroalimentación deben ser un archivo de imagen."
+        contentType: Joi.string().required(),
+        originalname: Joi.string().required(),
+    })).required().messages({
+        "array.base": "Las imagenes de la retroalimentación debe ser arreglo de objetos.",
+        "array.empty": "Las imagenes de la retroalimentación no puede estar vacío.",
+        "any.required": "Las imagenes de la retroalimentación es obligatorio.",
+        "object.unknown": "No se permiten propiedades adicionales.",
     }),
     */
     estado: Joi.string().valid(...ESTADOS).required().messages({
