@@ -42,7 +42,7 @@ async function createCita(req, res) {
             return respondError(req, res, 400, "No se creo la cita");
         }
 
-        respondSuccess(req, res, 201, ["La cita fue creada con exito", cita]);
+        respondSuccess(req, res, 201, ["La cita fue creada con exito", newCita]);
     } catch (error) {
         handleError(error, "cita.controller -> createCita");
         respondError(req, res, 500, "No se creo la cita");
