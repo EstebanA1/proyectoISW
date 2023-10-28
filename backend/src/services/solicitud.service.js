@@ -13,17 +13,18 @@ async function getSolicitudes() {
 
 async function createSolicitud(solicitud) {
     try {
-        const { name, typeOfRequest, address, status, status2 } = solicitud;
+        const { nombre, tipo, rut, firma, fecha, logo } = solicitud;
 
         const solicitudFound = await Solicitud.findOne({ name: solicitud.name });
         if (solicitudFound) return [null, "La solicitud ya existe"];
 
         const newSolicitud = new Solicitud({
-            name,
-            typeOfRequest,
-            address,
-            status,
-            status2,
+            nombre,
+            tipo,
+            rut,
+            firma,
+            fecha,
+            logo,
         });
         await newSolicitud.save();
 
@@ -38,14 +39,15 @@ async function updateSolicitud(solicitudId, solicitud) {
         const solicitudFound = await Solicitud.findById(solicitudId);
         if (!solicitudFound) return [null, "La solicitud no existe"];
 
-        const { name, typeOfRequest, address, status, status2 } = solicitud;
+        const { nombre, tipo, rut, firma, fecha, logo } = solicitud;
 
         await Solicitud.findByIdAndUpdate(solicitudId, {
-            name,
-            typeOfRequest,
-            address,
-            status,
-            status2,
+            nombre,
+            tipo,
+            rut,
+            firma,
+            fecha,
+            logo,
         });
 
         return [true, null];
@@ -67,11 +69,23 @@ async function deleteSolicitud(solicitudId) {
     }
 }
 
+async function getSolicitudById(solicitudId) {
+    try {
+        const solicitud = await Solicitud.findById(solicitudId).exec();
+        if (!solicitud) return [null, "La solicitud no existe"];
+
+        return [solicitud, null];
+    } catch (error) {
+        handleError(error, "solicitud.service -> getSolicitudById");
+    }
+}
+
 module.exports = {
     getSolicitudes,
     createSolicitud,
     updateSolicitud,
     deleteSolicitud,
+    getSolicitudById,
 };
 
 

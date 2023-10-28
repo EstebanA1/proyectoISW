@@ -6,39 +6,35 @@ const ESTADO2 = require("../constants/estadosSolicitud.constants");
 
 // Crea el esquema de la coleccion 'solicitudes' 
 
-const solicitudSchema = new mongoose.Schema(
-    {
-        name: {
-            type: String,
-            required: true,
-            minLenght: 2
-        },
-        typeOfRequest: {
-            type: String,
-            required: true,
-            minLenght: 5
-        },
-        address: {
-            type: String,
-            required: true,
-        },
-        status: {
-            type: String,
-            required: true,
-        },
-        status2: {
-            type: String,
-            required: true,
-        },
+const solicitudSchema = new mongoose.Schema({
+    nombre: {
+        type: String,
+        required: true,
     },
-    {
-        versionKey: false,
+    tipo: {
+        type: String,
+        required: true,
     },
-);
+    rut: {
+        type: String,
+        required: true,
+    },
+    firma: {
+        type: String,
+        required: true,
+    },
+    fecha: {
+        type: String,
+        required: true
+    },
+    logo: {
+        type: String,
+        required: true,
+    },
+});
 
 /** Modelo de datos 'Solicitud' */
 const Solicitud = mongoose.model("Solicitud", solicitudSchema);
 
 // Exporta el modelo de datos 'Solicitud'
 module.exports = Solicitud;
-

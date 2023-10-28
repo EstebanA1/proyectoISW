@@ -9,37 +9,42 @@ const ESTADO2 = require("../constants/estadosSolicitud.constants");
  * @constant {Object}
  */
 const solicitudBodySchema = Joi.object({
-    name: Joi.string().required().messages({
+    nombre: Joi.string().required().messages({
         "string.empty": "El nombre de la solicitud no puede estar vacío.",
         "any.required": "El nombre de la solicitud es obligatorio.",
         "string.base": "El nombre de la solicitud debe ser de tipo string.",
     }),
-    typeOfRequest: Joi.string().valid(...TYPE).required().messages({
+    tipo: Joi.string().valid(...TYPE).required().messages({
         "string.empty": "El tipo de la solicitud no puede estar vacío.",
         "any.required": "El tipo de la solicitud es obligatorio.",
         "string.base": "El tipo de la solicitud debe ser de tipo string.",
-        "any.only": 'El tipo de solicitud debe ser Ampliacion o Construccion.',
+        "any.only": "El tipo proporcionado debe ser Construccion o Ampliacion.",
     }),
-    address: Joi.string().required().messages({
-        "string.empty": "La direccion de la solicitud no puede estar vacío.",
-        "any.required": "La direccion de la solicitud es obligatorio.",
-        "string.base": "La direccion de la solicitud debe ser de tipo string.",
+    rut: Joi.string().required().regex(/^\d{1,2}\.\d{3}\.\d{3}[-][0-9kK]{1}$/).messages({
+        "string.empty": "El rut de la solicitud no puede estar vacío.",
+        "any.required": "El rut de la solicitud es obligatorio.",
+        "string.base": "El rut de la solicitud debe ser de tipo string.",
     }),
-    status: Joi.string().valid(...ESTADO2).required().messages({
-        "string.empty": "El estado de la solicitud no puede estar vacío.",
-        "any.required": "El estado de la solicitud es obligatorio.",
-        "string.base": "El estado de la solicitud debe ser de tipo string.",
-        "any.only": "El estado proporcionado debe ser pendiente o aprobado.",
+    firma: Joi.string().required().messages({
+        "string.empty": "La firma de la solicitud no puede estar vacío.",
+        "any.required": "La firma de la solicitud es obligatorio.",
+        "string.base": "La firma de la solicitud debe ser de tipo string.",
     }),
-    status2: Joi.string().valid(...ESTADO2).required().messages({
-        "string.empty": "El estado de la solicitud no puede estar vacío.",
-        "any.required": "El estado de la solicitud es obligatorio.",
-        "string.base": "El estado de la solicitud debe ser de tipo string.",
-        "any.only": "El estado proporcionado debe ser pendiente o aprobado.",
+    fecha: Joi.string().regex(/^\d{2}\/\d{2}\/\d{4}$/).required().messages({
+        "string.empty": "La fecha de la solicitud no puede estar vacío.",
+        "any.required": "La fecha de la solicitud es obligatorio.",
+        "string.base": "La fecha de la solicitud debe ser de tipo string.",
+        "string.pattern.base": "El formato de la fecha es xx/xx/xxxx"
+    }),
+    logo: Joi.string().required().messages({
+        "string.empty": "El logo de la solicitud no puede estar vacío.",
+        "any.required": "El logo de la solicitud es obligatorio.",
+        "string.base": "El logo de la solicitud debe ser de tipo string.",
     })
 }).messages({
     "object.unknown": "No se permiten propiedades adicionales.",
 });
+
 
 /**
  * Esquema de validación para el id de la solicitud
