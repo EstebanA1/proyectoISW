@@ -17,12 +17,13 @@ const router = express.Router();
 // Define el middleware de autenticacion para todas las rutas
 router.use(authenticationMiddleware);
 
-// Define las rutas para las solicitudes
-router.get('/', solicitudController.getSolicitudes);
-router.post('/',authorizationMiddleware.isSolicitante, solicitudController.createSolicitud);
-router.get('/:id', solicitudController.getSolicitudById);
-router.put('/:id',  solicitudController.updateSolicitud);
-router.delete('/:id', solicitudController.deleteSolicitud);
+router.get('/', authorizationMiddleware.isAdmin, solicitudController.getSolicitudes);
+router.post('/', authorizationMiddleware.isSolicitante, solicitudController.createSolicitud);
+router.get('/:id', authorizationMiddleware.isSolicitanteAdmin, solicitudController.getSolicitudById);
+router.put('/:id',  authorizationMiddleware.isAdmin, solicitudController.updateSolicitud);
+router.delete('/:id', authorizationMiddleware.isAdmin, solicitudController.deleteSolicitud);
+
+router.get('/buscar/:rut', authorizationMiddleware.isSolicitante, solicitudController.getSolicitudByRut);
 
 
 // Hacer quien ve las solicitudes.

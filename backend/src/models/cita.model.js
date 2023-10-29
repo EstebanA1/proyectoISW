@@ -26,6 +26,10 @@ const citaSchema = new mongoose.Schema(
         status: {
             type: String,
             required: true,
+        },
+        visitRealizated:{
+            type: String,
+            required: true,
         }
     },
     {

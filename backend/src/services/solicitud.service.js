@@ -1,3 +1,5 @@
+"use strict";
+
 const Solicitud = require("../models/solicitud.model");
 const handleError = require("../utils/errorHandler");
 
@@ -13,18 +15,18 @@ async function getSolicitudes() {
 
 async function createSolicitud(solicitud) {
     try {
-        const { nombreSolicitante, rutSolicitante, firma, fechaEmicionDocumento, logoInstitucion, archivoPlanos } = solicitud;
+        const { nombre, tipo, rut, firma, fecha, logo } = solicitud;
 
-        const solicitudFound = await Solicitud.findOne({ name: solicitud.name });
+        const solicitudFound = await Solicitud.findOne({ nombre: solicitud.nombre });
         if (solicitudFound) return [null, "La solicitud ya existe"];
 
         const newSolicitud = new Solicitud({
-            nombreSolicitante,
-            rutSolicitante,
+            nombre,
+            tipo,
+            rut,
             firma,
-            fechaEmicionDocumento,
-            logoInstitucion,
-            archivoPlanos,
+            fecha,
+            logo,
         });
         await newSolicitud.save();
 
@@ -39,15 +41,16 @@ async function updateSolicitud(solicitudId, solicitud) {
         const solicitudFound = await Solicitud.findById(solicitudId);
         if (!solicitudFound) return [null, "La solicitud no existe"];
 
-        const { nombreSolicitante, rutSolicitante, firma, fechaEmicionDocumento, logoInstitucion, archivoPlanos } = solicitud;
+        const { nombre, tipo, rut, firma, fecha, logo, estado } = solicitud;
 
         await Solicitud.findByIdAndUpdate(solicitudId, {
-            nombreSolicitante,
-            rutSolicitante,
+            nombre,
+            tipo,
+            rut,
             firma,
-            fechaEmicionDocumento,
-            logoInstitucion,
-            archivoPlanos,
+            fecha,
+            logo,
+            estado,
         });
 
         return [true, null];
@@ -69,11 +72,35 @@ async function deleteSolicitud(solicitudId) {
     }
 }
 
+async function getSolicitudById(solicitudId) {
+    try {
+        const solicitud = await Solicitud.findById(solicitudId).exec();
+        if (!solicitud) return [null, "La solicitud no existe"];
+
+        return [solicitud, null];
+    } catch (error) {
+        handleError(error, "solicitud.service -> getSolicitudById");
+    }
+}
+
+async function getSolicitudByRut(rut) {
+    try {
+        const solicitud = await Solicitud.findOne({ rut }).exec();
+        if (!solicitud) return [null, "No se encontró ninguna solicitud para este RUT"];
+        return [solicitud, null];
+    } catch (error) {
+        handleError(error, "solicitud.service -> getSolicitudByRut");
+        return [null, "Error al buscar por RUT"];
+    }
+}
+
 module.exports = {
     getSolicitudes,
     createSolicitud,
     updateSolicitud,
     deleteSolicitud,
+    getSolicitudById,
+    getSolicitudByRut,
 };
 
 
