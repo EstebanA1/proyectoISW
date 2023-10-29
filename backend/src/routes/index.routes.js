@@ -17,6 +17,9 @@ const feedbackRoutes = require("./feedback.routes.js");
 /** Enrutador de solicitudes */
 const solicitudesRoutes = require("./solicitud.routes.js");
 
+/** Enrutador de respuestas */
+const respuestaDoc = require("./respuestaDoc.routes.js");
+
 /** Middleware de autenticación */
 const authenticationMiddleware = require("../middlewares/authentication.middleware.js");
 
@@ -33,6 +36,8 @@ router.use("/citas", citasRoutes)
 router.use("/solicitud", solicitudesRoutes)
 // Define las rutas para las feedbacks /api/feedbacks
 router.use("/feedback", feedbackRoutes);
+// Define las rutas para las respuestas /api/respuestas
+router.use("/respuesta", respuestaDoc);
 
 // Exporta el enrutador
 module.exports = router;
