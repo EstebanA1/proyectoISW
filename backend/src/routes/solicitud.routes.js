@@ -19,7 +19,7 @@ router.use(authenticationMiddleware);
 
 // Define las rutas para las solicitudes
 router.get('/', solicitudController.getSolicitudes);
-router.post('/', solicitudController.createSolicitud);
+router.post('/',authorizationMiddleware.isSolicitante, solicitudController.createSolicitud);
 router.get('/:id', solicitudController.getSolicitudById);
 router.put('/:id',  solicitudController.updateSolicitud);
 router.delete('/:id', solicitudController.deleteSolicitud);

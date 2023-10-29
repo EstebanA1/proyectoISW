@@ -4,31 +4,34 @@
 const mongoose = require("mongoose");
 const ESTADO2 = require("../constants/estadosSolicitud.constants");
 
-// Crea el esquema de la coleccion 'solicitudes' 
+// Crea el esquema de la coleccion 'solicitudes'
 
 const solicitudSchema = new mongoose.Schema(
     {
-        name: {
+        nombreSolicitante: {
             type: String,
             required: true,
             minLenght: 2
         },
-        typeOfRequest: {
-            type: String,
-            required: true,
-            minLenght: 5
-        },
-        address: {
+        rutSolicitante: {
             type: String,
             required: true,
         },
-        status: {
+        firma: {
             type: String,
             required: true,
         },
-        status2: {
+        fechaEmicionDocumento: {
+            type: Date,
+            required: true,
+        },
+        logoInstitucion: {
             type: String,
             required: true,
+        },
+        archivoPlanos: {
+            type: Boolean,
+            required: false, //Se deja en falso por duda a que se adjunte un archivo o no
         },
     },
     {

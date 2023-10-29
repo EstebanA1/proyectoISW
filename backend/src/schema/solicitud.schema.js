@@ -9,29 +9,29 @@ const ESTADO2 = require("../constants/estadosSolicitud.constants");
  * @constant {Object}
  */
 const solicitudBodySchema = Joi.object({
-    name: Joi.string().required().messages({
+    nombreSolicitante: Joi.string().required().messages({
         "string.empty": "El nombre de la solicitud no puede estar vacío.",
         "any.required": "El nombre de la solicitud es obligatorio.",
         "string.base": "El nombre de la solicitud debe ser de tipo string.",
     }),
-    typeOfRequest: Joi.string().valid(...TYPE).required().messages({
+    rutSolicitante: Joi.string().valid(...TYPE).required().messages({
         "string.empty": "El tipo de la solicitud no puede estar vacío.",
         "any.required": "El tipo de la solicitud es obligatorio.",
         "string.base": "El tipo de la solicitud debe ser de tipo string.",
         "any.only": 'El tipo de solicitud debe ser Ampliacion o Construccion.',
     }),
-    address: Joi.string().required().messages({
+    firma: Joi.string().required().messages({
         "string.empty": "La direccion de la solicitud no puede estar vacío.",
         "any.required": "La direccion de la solicitud es obligatorio.",
         "string.base": "La direccion de la solicitud debe ser de tipo string.",
     }),
-    status: Joi.string().valid(...ESTADO2).required().messages({
+    fechaEmicionDocumento: Joi.string().valid(...ESTADO2).required().messages({
         "string.empty": "El estado de la solicitud no puede estar vacío.",
         "any.required": "El estado de la solicitud es obligatorio.",
         "string.base": "El estado de la solicitud debe ser de tipo string.",
         "any.only": "El estado proporcionado debe ser pendiente o aprobado.",
     }),
-    status2: Joi.string().valid(...ESTADO2).required().messages({
+    logoInstitucion: Joi.string().valid(...ESTADO2).required().messages({
         "string.empty": "El estado de la solicitud no puede estar vacío.",
         "any.required": "El estado de la solicitud es obligatorio.",
         "string.base": "El estado de la solicitud debe ser de tipo string.",
