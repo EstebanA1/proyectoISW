@@ -81,12 +81,24 @@ async function getSolicitudById(solicitudId) {
     }
 }
 
+async function getSolicitudByRut(rut) {
+    try {
+        const solicitud = await Solicitud.findOne({ rut }).exec();
+        if (!solicitud) return [null, "No se encontró ninguna solicitud para este RUT"];
+        return [solicitud, null];
+    } catch (error) {
+        handleError(error, "solicitud.service -> getSolicitudByRut");
+        return [null, "Error al buscar por RUT"];
+    }
+}
+
 module.exports = {
     getSolicitudes,
     createSolicitud,
     updateSolicitud,
     deleteSolicitud,
     getSolicitudById,
+    getSolicitudByRut,
 };
 
 

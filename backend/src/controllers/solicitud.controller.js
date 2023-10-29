@@ -4,6 +4,7 @@ const { respondSuccess, respondError } = require("../utils/resHandler");
 const {handleError} = require('../utils/errorHandler');
 const {solicitudBodySchema, solicitudIdSchema} = require('../schema/solicitud.schema');
 const SolicitudService = require('../services/solicitud.service');
+const Joi = require('joi');
 
 /**
  * Controlador de Solicitudes
@@ -109,11 +110,33 @@ async function getSolicitudById(req, res) {
     }
 }
 
+async function getSolicitudByRut(req, res) {
+    try {
+        const { params } = req;
+        const { error: rutError } = Joi.string().regex(/^\d{1,2}\.\d{3}\.\d{3}[-][0-9kK]{1}$/).validate(params.rut);
+
+        if (rutError) return respondError(req, res, 400, "RUT inválido");
+
+        const [solicitud, solicitudError] = await SolicitudService.getSolicitudByRut(params.rut);
+
+        if (solicitudError) return respondError(req, res, 400, solicitudError);
+        if (!solicitud) {
+            return respondError(req, res, 404, 'No se encontró ninguna solicitud para este RUT');
+        }
+
+        respondSuccess(req, res, 200, solicitud);
+    } catch (error) {
+        handleError(error, 'solicitud.controller -> getSolicitudByRut');
+        respondError(req, res, 500, 'Error al buscar por RUT');
+    }
+}
+
 module.exports = {
     getSolicitudes,
     createSolicitud,
     updateSolicitud,
     deleteSolicitud,
     getSolicitudById,
+    getSolicitudByRut,
 };
 

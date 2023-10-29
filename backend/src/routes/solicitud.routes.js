@@ -18,4 +18,6 @@ router.get('/:id', authorizationMiddleware.isSolicitanteAdmin, solicitudControll
 router.put('/:id',  authorizationMiddleware.isAdmin, solicitudController.updateSolicitud);
 router.delete('/:id', authorizationMiddleware.isAdmin, solicitudController.deleteSolicitud);
 
+router.get('/buscar/:rut', authorizationMiddleware.isSolicitante, solicitudController.getSolicitudByRut);
+
 module.exports = router;
