@@ -1,3 +1,5 @@
+"use strict";
+
 const Solicitud = require("../models/solicitud.model");
 const handleError = require("../utils/errorHandler");
 
