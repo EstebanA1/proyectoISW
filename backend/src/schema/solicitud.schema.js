@@ -40,7 +40,11 @@ const solicitudBodySchema = Joi.object({
         "string.empty": "El logo de la solicitud no puede estar vacío.",
         "any.required": "El logo de la solicitud es obligatorio.",
         "string.base": "El logo de la solicitud debe ser de tipo string.",
-    })
+    }),
+    estado: Joi.string().valid(...ESTADO2).messages({
+        "string.base": "El estado de la solicitud debe ser de tipo string.",
+        "any.only": "El estado proporcionado debe ser Pendiente, Aprobado o Rechazado.",
+    }),
 }).messages({
     "object.unknown": "No se permiten propiedades adicionales.",
 });

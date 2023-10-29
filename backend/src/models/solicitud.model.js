@@ -31,6 +31,10 @@ const solicitudSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    estado: {
+        type: String,
+        default: "Pendiente",
+    },
 });
 
 /** Modelo de datos 'Solicitud' */

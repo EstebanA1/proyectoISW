@@ -51,24 +51,21 @@ async function createSolicitud(req, res) {
 
 async function updateSolicitud(req, res) {
     try {
-        const {body, params} = req;
-        const {error: bodyError} = solicitudBodySchema.validate(body);
+        const { params, body } = req;
+        const { error: paramsError } = solicitudIdSchema.validate(params.id);
+        if (paramsError) return respondError(req, res, 400, paramsError.message)
+
+        const { error: bodyError } = solicitudBodySchema.validate(body);
         if (bodyError) return respondError(req, res, 400, bodyError.message);
 
-        const {error: paramsError} = solicitudIdSchema.validate(params);
-        if (paramsError) return respondError(req, res, 400, paramsError.message);
+        const [solicitud, solicitudError] = await SolicitudService.updateSolicitud(params.id, body);
 
-        const [solicitudUpdated, solicitudError] = await SolicitudService.updateSolicitud(params.id, body);
+        if (solicitudError) return respondError(req, res, 404, solicitudError);
 
-        if (solicitudError) return respondError(req, res, 400, solicitudError);
-        if (!solicitudUpdated) {
-            return respondError(req, res, 400, 'No se actualizo la solicitud');
-        }
-
-        respondSuccess(req, res, 200, solicitudUpdated);
+        respondSuccess(req, res, 200, ["La solicitud fue actualizada con exito", solicitud]);
     } catch (error) {
-        handleError(error, 'solicitud.controller -> updateSolicitud');
-        respondError(req, res, 500, 'No se actualizo la solicitud');
+        handleError(error, "solicitud.controller -> updateSolicitud");
+        respondError(req, res, 500, "No se pudo actualizar la solicitud");
     }
 }
 
@@ -119,6 +116,4 @@ module.exports = {
     deleteSolicitud,
     getSolicitudById,
 };
-
-
 
