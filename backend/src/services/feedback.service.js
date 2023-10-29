@@ -3,8 +3,7 @@
 const Feedback = require("../models/feedback.model");
 const { handleError } = require("../utils/errorHandler");
 const multer = require("multer");
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+const mongoose = require("mongoose");
 
 /**
  * Obtener Feedbacks de Visitas a Terreno
