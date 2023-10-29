@@ -2,7 +2,7 @@
 
 const { respondSuccess, respondError } = require("../utils/resHandler");
 const {handleError} = require('../utils/errorHandler');
-const {solicitudBodySchema, solicitudIdSchema} = require('../schema/solicitud.schema');
+const {solicitudBodySchema, solicitudIdSchema, solicitudModBodySchema} = require('../schema/solicitud.schema');
 const SolicitudService = require('../services/solicitud.service');
 const Joi = require('joi');
 
@@ -56,7 +56,7 @@ async function updateSolicitud(req, res) {
         const { error: paramsError } = solicitudIdSchema.validate(params.id);
         if (paramsError) return respondError(req, res, 400, paramsError.message)
 
-        const { error: bodyError } = solicitudBodySchema.validate(body);
+        const { error: bodyError } = solicitudModBodySchema.validate(body);
         if (bodyError) return respondError(req, res, 400, bodyError.message);
 
         const [solicitud, solicitudError] = await SolicitudService.updateSolicitud(params.id, body);

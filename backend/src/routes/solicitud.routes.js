@@ -19,7 +19,7 @@ router.use(authenticationMiddleware);
 
 router.get('/', authorizationMiddleware.isAdmin, solicitudController.getSolicitudes);
 router.post('/', authorizationMiddleware.isSolicitante, solicitudController.createSolicitud);
-router.get('/:id', authorizationMiddleware.isSolicitanteAdmin, solicitudController.getSolicitudById);
+router.get('/:id', authorizationMiddleware.isAdmin, solicitudController.getSolicitudById);
 router.put('/:id',  authorizationMiddleware.isAdmin, solicitudController.updateSolicitud);
 router.delete('/:id', authorizationMiddleware.isAdmin, solicitudController.deleteSolicitud);
 

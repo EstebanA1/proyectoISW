@@ -37,7 +37,7 @@ const solicitudSchema = new mongoose.Schema({
     },
     archivoPDF: {
         type: String,
-        required: false,
+        required: true,
     },
 });
 
