@@ -21,7 +21,7 @@ router.use(authenticationMiddleware);
 // Define las rutas para las citas
 router.get('/',  authorizationMiddleware.isAdminEncargado, FeedbackController.getFeedback);
 router.post('/', authorizationMiddleware.isEncargadoVis, FeedbackController.createFeedback);
-router.get('/:id', authorizationMiddleware.isEncargadoVis, FeedbackController.getFeedbackById);
+router.get('/:id', authorizationMiddleware.isAdminEncargado, FeedbackController.getFeedbackById);
 router.put('/:id', authorizationMiddleware.isEncargadoVis, FeedbackController.updateFeedback);
 router.delete('/:id', authorizationMiddleware.isEncargadoVis, FeedbackController.deleteFeedback);
 

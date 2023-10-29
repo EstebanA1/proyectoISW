@@ -5,6 +5,8 @@ const FeedbackService = require("../services/feedback.service");
 const {handleError} = require("../utils/errorHandler");
 const {feedbackBodySchema, feedbackIdSchema} = require("../schema/feedback.schema");
 
+const CitaService = require("../services/citas.service");
+
 /**
  * Controlador de Feedback
  * @module FeedbackController
@@ -32,7 +34,12 @@ async function createFeedback(req, res) {
     try {
         const {body} = req;
         const {error: bodyError} = feedbackBodySchema.validate(body);
+
         if (bodyError) return respondError(req, res, 400, bodyError.message);
+
+        //Verificar ID de la cita
+        const [citas, errorCitas] = await CitaService.getCitaById(body.IDCita);
+        if (errorCitas) return respondError(req, res, 404, "No Existe Cita Asociada Con Ese ID Para Retroalimentacion, Revise ID de Cita");
 
         const [newFeedback, feedbackError] = await FeedbackService.createFeedback(body);
 
@@ -78,6 +85,10 @@ async function updateFeedback(req, res) {
         const {body} = req;
         const {error: idError} = feedbackIdSchema.validate(id);
         if (idError) return respondError(req, res, 400, idError.message);
+
+        //Verificar ID de la cita
+        const [citas, errorCitas] = await CitaService.getCitaById(body.IDCita);
+        if (errorCitas) return respondError(req, res, 404, "No Existe Cita Asociada Con Ese ID Para Retroalimentacion, Revise ID de Cita");
 
         const [updatedFeedback, errorUpdateFeedback] = await FeedbackService.updateFeedback(id, body);
         if (errorUpdateFeedback) return respondError(req, res, 404, errorUpdateFeedback);
