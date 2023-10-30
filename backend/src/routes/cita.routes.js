@@ -21,7 +21,7 @@ router.use(authenticationMiddleware);
 router.get('/',  authorizationMiddleware.isAdminEncargado, citaController.getCitas);
 router.post('/', authorizationMiddleware.isAdmin, citaController.createCita);
 router.get('/:id', authorizationMiddleware.isAdminEncargado, citaController.getCitaById);
-router.put('/:id', authorizationMiddleware.isAdmin, citaController.updateCita);
+router.put('/:id', authorizationMiddleware.isAdminEncargado, citaController.updateCita);
 router.delete('/:id', authorizationMiddleware.isAdmin, citaController.deleteCita);
 
 // Muestran mensajes cuando se necesita enviar ID pero esta vacio

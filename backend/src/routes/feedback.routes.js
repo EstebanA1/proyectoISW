@@ -18,6 +18,9 @@ const router = express.Router();
 // Define el middleware de autenticación para todas las rutas
 router.use(authenticationMiddleware);
 
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
+
 // Define las rutas para las citas
 router.get('/',  authorizationMiddleware.isAdminEncargado, FeedbackController.getFeedback);
 router.post('/', authorizationMiddleware.isEncargadoVis, FeedbackController.createFeedback);
