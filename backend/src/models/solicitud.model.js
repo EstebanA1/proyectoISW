@@ -4,7 +4,7 @@
 const mongoose = require("mongoose");
 const ESTADO2 = require("../constants/estadosSolicitud.constants");
 
-// Crea el esquema de la coleccion 'solicitudes' 
+// Crea el esquema de la coleccion 'solicitudes'
 
 const solicitudSchema = new mongoose.Schema({
     nombre: {
@@ -34,6 +34,10 @@ const solicitudSchema = new mongoose.Schema({
     estado: {
         type: String,
         default: "Pendiente",
+    },
+    archivoPDF: {
+        type: String,
+        required: true,
     },
 });
 

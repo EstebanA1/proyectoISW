@@ -4,9 +4,6 @@ const Joi = require("joi");
 const multer = require('multer');
 const ESTADOS = require("../constants/estados.constants");
 
-// Configura Multer para manejar archivos de imagen
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
 
 /**
  * Esquema de validación para el cuerpo de la solicitud del feedback.
@@ -40,15 +37,16 @@ const feedbackBodySchema = Joi.object({
         "any.required": "Los comentarios de la retroalimentación es obligatorio.",
         "string.base": "Los comentarios de la retroalimentación debe ser de tipo string.",
     }),
+    ///*
     imagenes: Joi.string().required().messages({
         "string.empty": "Las imagenes de la retroalimentación no puede estar vacío.",
         "any.required": "Las imagenes de la retroalimentación es obligatorio.",
         "string.base": "Las imagenes de la retroalimentación debe ser de tipo string.",
     }),
-    
-    /* 
+    //*/
+    /*
     imagenes: Joi.array().items(Joi.object({
-        buffer: Joi.binary().required(),
+        data: Joi.binary().required(),
         contentType: Joi.string().required(),
         originalname: Joi.string().required(),
     })).required().messages({

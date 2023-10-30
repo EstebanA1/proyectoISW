@@ -1,9 +1,9 @@
 "use strict";
 
-const {respondSuccess, respondError} = require("../utils/resHandler");
+const { respondSuccess, respondError } = require("../utils/resHandler");
 const FeedbackService = require("../services/feedback.service");
-const {handleError} = require("../utils/errorHandler");
-const {feedbackBodySchema, feedbackIdSchema} = require("../schema/feedback.schema");
+const { handleError } = require("../utils/errorHandler");
+const { feedbackBodySchema, feedbackIdSchema } = require("../schema/feedback.schema");
 
 const CitaService = require("../services/citas.service");
 
@@ -18,7 +18,7 @@ async function getFeedback(req, res) {
 
         feedbacks.length === 0
             ? respondSuccess(req, res, 204)
-            : respondSuccess(req, res, 200, feedbacks);
+            : respondSuccess(req, res, 200, ["Las Retroalimentaciones son: ", feedbacks]);
     } catch (error) {
         handleError(error, "feedback.controller -> getFeedback");
         respondError(req, res, 400, error.message);
@@ -32,8 +32,8 @@ async function getFeedback(req, res) {
  */
 async function createFeedback(req, res) {
     try {
-        const {body} = req;
-        const {error: bodyError} = feedbackBodySchema.validate(body);
+        const { body } = req;
+        const { error: bodyError } = feedbackBodySchema.validate(body);
 
         if (bodyError) return respondError(req, res, 400, bodyError.message);
 
@@ -61,8 +61,8 @@ async function createFeedback(req, res) {
  */
 async function getFeedbackById(req, res) {
     try {
-        const {id} = req.params;
-        const {error: idError} = feedbackIdSchema.validate(id);
+        const { id } = req.params;
+        const { error: idError } = feedbackIdSchema.validate(id);
         if (idError) return respondError(req, res, 400, idError.message);
 
         const [feedback, errorFeedback] = await FeedbackService.getFeedbackById(id);
@@ -81,9 +81,11 @@ async function getFeedbackById(req, res) {
  */
 async function updateFeedback(req, res) {
     try {
-        const {id} = req.params;
-        const {body} = req;
-        const {error: idError} = feedbackIdSchema.validate(id);
+        const { id } = req.params;
+        const { body } = req;
+        const { error: bodyError } = feedbackBodySchema.validate(body);
+        if (bodyError) return respondError(req, res, 400, bodyError.message);
+        const { error: idError } = feedbackIdSchema.validate(id);
         if (idError) return respondError(req, res, 400, idError.message);
 
         //Verificar ID de la cita
@@ -106,8 +108,8 @@ async function updateFeedback(req, res) {
  */
 async function deleteFeedback(req, res) {
     try {
-        const {id} = req.params;
-        const {error: idError} = feedbackIdSchema.validate(id);
+        const { id } = req.params;
+        const { error: idError } = feedbackIdSchema.validate(id);
         if (idError) return respondError(req, res, 400, idError.message);
 
         const [deletedFeedback, errorDeleteFeedback] = await FeedbackService.deleteFeedback(id);
