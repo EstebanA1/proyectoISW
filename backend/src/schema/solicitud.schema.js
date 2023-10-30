@@ -36,10 +36,9 @@ const solicitudBodySchema = Joi.object({
         "string.base": "La fecha de la solicitud debe ser de tipo string.",
         "string.pattern.base": "El formato de la fecha es xx/xx/xxxx"
     }),
-    logo: Joi.string().required().messages({
-        "string.empty": "El logo de la solicitud no puede estar vacío.",
-        "any.required": "El logo de la solicitud es obligatorio.",
-        "string.base": "El logo de la solicitud debe ser de tipo string.",
+    estadoDeRespuesta: Joi.string().messages({
+        "string.base": "El estado de la visita debe ser de tipo string.",
+        "any.only": "El estado proporcionado debe ser Pendiente, Aprobado o Rechazado.",
     }),
     estado: Joi.string().messages({
         "string.base": "El estado de la solicitud debe ser de tipo string.",
@@ -93,10 +92,9 @@ const solicitudModBodySchema = Joi.object({
         "string.base": "La fecha de la solicitud debe ser de tipo string.",
         "string.pattern.base": "El formato de la fecha es xx/xx/xxxx"
     }),
-    logo: Joi.string().required().messages({
-        "string.empty": "El logo de la solicitud no puede estar vacío.",
-        "any.required": "El logo de la solicitud es obligatorio.",
-        "string.base": "El logo de la solicitud debe ser de tipo string.",
+    estadoDeRespuesta: Joi.string().valid(...ESTADOS).messages({
+        "string.base": "El estado de la visita debe ser de tipo string.",
+        "any.only": "El estado proporcionado debe ser Pendiente, Aprobado o Rechazado.",
     }),
     estado: Joi.string().valid(...ESTADOS).messages({
         "string.base": "El estado de la solicitud debe ser de tipo string.",
