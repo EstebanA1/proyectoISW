@@ -27,9 +27,9 @@ const solicitudSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    logo: {
+    estadoDeRespuesta: {
         type: String,
-        required: true,
+        default: "Pendiente",
     },
     estado: {
         type: String,
