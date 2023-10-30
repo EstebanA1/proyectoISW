@@ -105,19 +105,38 @@ async function updateRespuestaDoc(req, res) {
 
 async function deleteRespuestaDoc(req, res) {
     try {
-        const { params } = req;
+        const { id } = req.params;
+        const { error: idError } = respuestaDocIdSchema.validate(id);
+        if (idError) return respondError(req, res, 400, idError.message);
 
-        const { error: paramsError } = respuestaDocIdSchema.validate(params.id);
-        if (paramsError) return respondError(req, res, 400, paramsError.message);
+        const [deletedRespuestaDoc, errorDeleteRespuestaDoc] = await RespuestaDocService.deleteRespuestaDoc(id);
+        if (errorDeleteRespuestaDoc) return respondError(req, res, 404, errorDeleteRespuestaDoc);
 
-        const respuestaDoc = await RespuestaDocService.deleteRespuestaDoc(params.id);
-
-        !respuestaDoc
-            ? respondError(req, res, 404, "No se encontro el documento indicado", "Verifique el id ingresado")
-            : respondSuccess(req, res, 200, "El documento fue eliminado con exito");
+        respondSuccess(req, res, 200, deletedRespuestaDoc);
     } catch (error) {
         handleError(error, "respuestaDoc.controller -> deleteRespuestaDoc");
-        respondError(req, res, 500, "No se pudo eliminar el documento");
+        respondError(req, res, 400, "No se pudo eliminar la Respuesta");
+    }
+}
+
+async function getRespuestaDocByRut(req, res) {
+    try {
+        const { params } = req;
+        const { error: rutError } = Joi.string().regex(/^\d{1,2}\.\d{3}\.\d{3}[-][0-9kK]{1}$/).validate(params.rut);
+
+        if (rutError) return respondError(req, res, 400, "RUT inválido");
+
+        const [respuestaDoc, respuestaDocError] = await RespuestaDocService.getRespuestaDocByRut(params.rut);
+
+        if (respuestaDocError) return respondError(req, res, 400, respuestaDocError);
+        if (!respuestaDoc) {
+            return respondError(req, res, 404, 'No se encontró ninguna respuesta para este RUT');
+        }
+
+        respondSuccess(req, res, 200, respuestaDoc);
+    } catch (error) {
+        handleError(error, 'respuestaDoc.controller -> getRespuestaDocByRut');
+        respondError(req, res, 500, 'Error al buscar por RUT');
     }
 }
 
@@ -127,4 +146,5 @@ module.exports = {
     createRespuestaDoc,
     updateRespuestaDoc,
     deleteRespuestaDoc,
+    getRespuestaDocByRut,
 };

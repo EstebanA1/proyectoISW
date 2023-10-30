@@ -10,6 +10,22 @@ const respuestaDocSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    rut: {
+        type: String,
+        required: true,
+    },    
+    firma: {
+        type: String,
+        required: true,
+    },
+    fecha: {
+        type: String,
+        required: true,
+    },
+    logo: {
+        type: String,
+        required: true,
+    },
     descripcion: {
         type: String,
         required: true,

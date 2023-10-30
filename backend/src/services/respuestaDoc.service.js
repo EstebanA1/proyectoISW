@@ -15,14 +15,18 @@ async function getRespuestasDoc() {
 
 async function createRespuestaDoc(respuestaDoc) {
     try {
-        const { nombre, descripcion } = respuestaDoc;
+        const { nombre, rut, firma, fecha, logo, descripcion } = respuestaDoc;
 
         const respuestaDocFound = await RespuestaDoc.findOne({ nombre: respuestaDoc.nombre });
         if (respuestaDocFound) return [null, "La respuesta ya existe"];
 
         const newRespuestaDoc = new RespuestaDoc({
             nombre,
-            descripcion,
+            rut,
+            firma,
+            fecha,
+            logo,
+            descripcion
         });
         await newRespuestaDoc.save();
 
@@ -37,10 +41,14 @@ async function updateRespuestaDoc(respuestaDocId, respuestaDoc) {
         const respuestaDocFound = await RespuestaDoc.findById(respuestaDocId);
         if (!respuestaDocFound) return [null, "La respuesta no existe"];
 
-        const { nombre, descripcion } = respuestaDoc;
+        const { nombre, rut, firma, fecha, logo, descripcion } = respuestaDoc;
 
         await RespuestaDoc.findByIdAndUpdate(respuestaDocId, {
             nombre,
+            rut,
+            firma,
+            fecha,
+            logo,
             descripcion,
         });
 
@@ -52,10 +60,10 @@ async function updateRespuestaDoc(respuestaDocId, respuestaDoc) {
 
 async function deleteRespuestaDoc(respuestaDocId) {
     try {
-        const solicitudFound = await Solicitud.findById(respuestaDocId);
-        if (!solicitudFound) return [null, "La solicitud no existe"];
+        const respuestaDocFound = await RespuestaDoc.findById(respuestaDocId);
+        if (!respuestaDocFound) return [null, "La respuesta no existe"];
 
-        await Solicitud.findByIdAndDelete(respuestaDocId);
+        await RespuestaDoc.findByIdAndDelete(respuestaDocId);
 
         return [true, null];
     } catch (error) {
@@ -73,6 +81,16 @@ async function getRespuestaDocById(respuestaDocId) {
     }
 }
 
+async function getRespuestaDocByRut(rut) {
+    try {
+        const respuestaDoc = await RespuestaDoc.findOne({ rut }).exec();
+        if (!respuestaDoc) return [null, "No se encontró ninguna respuesta para este RUT"];
+        return [respuestaDoc, null];
+    } catch (error) {
+        handleError(error, "respuestaDoc.service -> getRespuestaDocByRut");
+        return [null, "Error al buscar por RUT"];
+    }
+}
 
 module.exports = {
     getRespuestasDoc,
@@ -80,4 +98,5 @@ module.exports = {
     updateRespuestaDoc,
     deleteRespuestaDoc,
     getRespuestaDocById,
+    getRespuestaDocByRut,
 };

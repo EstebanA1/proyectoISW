@@ -72,41 +72,33 @@ async function updateSolicitud(req, res) {
 
 async function deleteSolicitud(req, res) {
     try {
-        const {params} = req;
-        const {error: paramsError} = solicitudIdSchema.validate(params);
-        if (paramsError) return respondError(req, res, 400, paramsError.message);
+        const { id } = req.params;
+        const { error: idError } = solicitudIdSchema.validate(id);
+        if (idError) return respondError(req, res, 400, idError.message);
 
-        const [solicitudDeleted, solicitudError] = await SolicitudService.deleteSolicitud(params.id);
+        const [deletedSolicitud, errorDeleteSolicitud] = await SolicitudService.deleteSolicitud(id);
+        if (errorDeleteSolicitud) return respondError(req, res, 404, errorDeleteSolicitud);
 
-        if (solicitudError) return respondError(req, res, 400, solicitudError);
-        if (!solicitudDeleted) {
-            return respondError(req, res, 400, 'No se elimino la solicitud');
-        }
-
-        respondSuccess(req, res, 200, solicitudDeleted);
+        respondSuccess(req, res, 200, deletedSolicitud);
     } catch (error) {
-        handleError(error, 'solicitud.controller -> deleteSolicitud');
-        respondError(req, res, 500, 'No se elimino la solicitud');
+        handleError(error, "solicitud.controller -> deleteSolicitud");
+        respondError(req, res, 400, "No se pudo eliminar la solicitud");
     }
 }
 
 async function getSolicitudById(req, res) {
     try {
-        const {params} = req;
-        const {error: paramsError} = solicitudIdSchema.validate(params);
-        if (paramsError) return respondError(req, res, 400, paramsError.message);
+        const { id } = req.params;
+        const { error: idError } = solicitudIdSchema.validate(id);
+        if (idError) return respondError(req, res, 400, idError.message);
 
-        const [solicitud, solicitudError] = await SolicitudService.getSolicitudById(params.id);
-
-        if (solicitudError) return respondError(req, res, 400, solicitudError);
-        if (!solicitud) {
-            return respondError(req, res, 400, 'No se encontro la solicitud');
-        }
+        const [solicitud, errorSolicitud] = await SolicitudService.getSolicitudById(id);
+        if (errorSolicitud) return respondError(req, res, 404, errorSolicitud);
 
         respondSuccess(req, res, 200, solicitud);
     } catch (error) {
         handleError(error, 'solicitud.controller -> getSolicitudById');
-        respondError(req, res, 500, 'No se encontro la solicitud');
+        respondError(req, res, 400, error.message);
     }
 }
 
