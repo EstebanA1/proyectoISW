@@ -29,7 +29,7 @@ const citaSchema = new mongoose.Schema(
         },
         visitRealizated:{
             type: String,
-            required: true,
+            default: "No",
         }
     },
     {

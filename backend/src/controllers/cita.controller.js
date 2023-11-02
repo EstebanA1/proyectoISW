@@ -2,7 +2,7 @@
 
 const { respondSuccess, respondError } = require("../utils/resHandler");
 const CitaService = require("../services/citas.service");
-const { citaBodySchema, citaIdSchema } = require("../schema/cita.schema");
+const { citaBodySchema, citaIdSchema, citaModBodySchema } = require("../schema/cita.schema");
 const { handleError } = require("../utils/errorHandler");
 
 /**
@@ -31,7 +31,12 @@ async function getCitas(req, res) {
  */
 async function createCita(req, res) {
     try {
+        const fechaActual = new Date();
+        console.log(fechaActual.toLocaleDateString())
         const { body } = req;
+        console.log(body.date)
+        if (fechaActual.toLocaleDateString() > body.date) return  respondError(req, res, 400, "La fecha de la cita debe ser posterior a la fecha actual");
+
         const { error: bodyError } = citaBodySchema.validate(body);
         if (bodyError) return respondError(req, res, 400, bodyError.message);
 
@@ -82,7 +87,7 @@ async function updateCita(req, res) {
         const { error: paramsError } = citaIdSchema.validate(params.id);
         if (paramsError) return respondError(req, res, 400, paramsError.message)
 
-        const { error: bodyError } = citaBodySchema.validate(body);
+        const { error: bodyError } = citaModBodySchema.validate(body);
         if (bodyError) return respondError(req, res, 400, bodyError.message);
 
         const [cita, citaError] = await CitaService.updateCita(params.id, body);
