@@ -31,11 +31,24 @@ async function getCitas(req, res) {
  */
 async function createCita(req, res) {
     try {
-        const fechaActual = new Date();
-        console.log(fechaActual.toLocaleDateString())
+        const aux = new Date();
+        const fechaActual = aux.toLocaleDateString();
         const { body } = req;
-        console.log(body.date)
-        if (fechaActual.toLocaleDateString() > body.date) return  respondError(req, res, 400, "La fecha de la cita debe ser posterior a la fecha actual");
+        const fechaInput = body.date;
+
+        let fecha1 = fechaActual.split("-");
+        let fecha2 = fechaInput.split("/");
+
+        if (fecha1[2] > fecha2[2]) return respondError (req, res, 400, "La fecha de la cita debe ser posterior a la fecha actual");
+
+        if (fecha1[2] === fecha2[2])
+            {
+                if (fecha1[1] > fecha2[1]) return respondError (req, res, 400, "La fecha de la cita debe ser posterior a la fecha actual");
+
+                if (fecha1[1] === fecha2[1]) {
+                    if ((fecha1[0]+1) > fecha2[0]) return respondError (req, res, 400, "La fecha de la cita debe ser posterior a la fecha actual");
+                }
+            }
 
         const { error: bodyError } = citaBodySchema.validate(body);
         if (bodyError) return respondError(req, res, 400, bodyError.message);
@@ -86,6 +99,24 @@ async function updateCita(req, res) {
         const { params, body } = req;
         const { error: paramsError } = citaIdSchema.validate(params.id);
         if (paramsError) return respondError(req, res, 400, paramsError.message)
+
+        const aux = new Date();
+        const fechaActual = aux.toLocaleDateString();
+        const fechaInput = body.date;
+
+        let fecha1 = fechaActual.split("-");
+        let fecha2 = fechaInput.split("/");
+
+        if (fecha1[2] > fecha2[2]) return respondError (req, res, 400, "La fecha de la cita debe ser posterior a la fecha actual");
+
+        if (fecha1[2] === fecha2[2])
+            {
+                if (fecha1[1] > fecha2[1]) return respondError (req, res, 400, "La fecha de la cita debe ser posterior a la fecha actual");
+
+                if (fecha1[1] === fecha2[1]) {
+                    if ((fecha1[0]+1) > fecha2[0]) return respondError (req, res, 400, "La fecha de la cita debe ser posterior a la fecha actual");
+                }
+            }
 
         const { error: bodyError } = citaModBodySchema.validate(body);
         if (bodyError) return respondError(req, res, 400, bodyError.message);
