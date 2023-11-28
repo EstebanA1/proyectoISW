@@ -5,6 +5,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Root from './routes/Root.jsx';
 import ErrorPage from './routes/ErrorPage.jsx';
 import Login from './routes/Login.jsx';
+import Citas from './routes/Citas/Citas.jsx';
+import CreateCita from './routes/Citas/CreateCita.jsx';
 
 const router = createBrowserRouter([
   {
@@ -15,6 +17,14 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <App />,
+      },
+      {
+        path: '/citas',
+        element: <Citas />,
+      },
+      {
+        path: '/citas/create',
+        element: <CreateCita />,
       },
     ],
   },

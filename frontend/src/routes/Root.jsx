@@ -1,5 +1,4 @@
-import { Outlet } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { Outlet as Children, useNavigate} from 'react-router-dom';
 import { logout } from '../services/auth.service';
 import { AuthProvider, useAuth } from '../context/AuthContext';
 
@@ -9,7 +8,7 @@ function Root() {
       <PageRoot />
     </AuthProvider>
   );
-}
+};
 
 function PageRoot() {
   const navigate = useNavigate();
@@ -24,13 +23,19 @@ function PageRoot() {
   return (
     <div>
       <div>
-        <h1>Aqui deberia ir un header</h1>
+        <button
+          style = {{ marginRight: '5px'}}
+          onClick={ () => navigate( '/citas') }
+        >
+          Ver citas
+          </button>
+        <button onClick={() => navigate('/')}>Home</button>
         <p>Estas logeado como: {user.email}</p>
         <button onClick={handleLogout}>Cerrar sesion</button>
       </div>
-      <Outlet />
+      <Children />
     </div>
-  );
+  )
 }
 
 export default Root;
