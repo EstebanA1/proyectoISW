@@ -32,7 +32,7 @@ const citaBodySchema = Joi.object({
         "string.base": "La fecha de la cita debe ser de tipo string.",
         "string.pattern.base": "El formato de la fecha es xx/xx/xxxx"
     }),
-    status: Joi.string().valid(...ESTADOS).required().messages({
+    status: Joi.string().valid(...ESTADOS).messages({
         "string.empty": "El estado de la cita no puede estar vacío.",
         "any.required": "El estado de la cita es obligatorio.",
         "string.base": "El estado de la cita debe ser de tipo string.",
@@ -74,7 +74,8 @@ const citaIdSchema = Joi.string()
             "any.only": 'El tipo de solicitud debe ser Ampliacion o Construccion.',
         }),
         address: Joi.string().messages({
-            "string.empty": "La dirreccion de la cita no puede estar vacío.",            "any.required": "La dirreccion de la cita es obligatorio.",
+            "string.empty": "La dirreccion de la cita no puede estar vacío.",
+            "any.required": "La dirreccion de la cita es obligatorio.",
             "string.base": "La dirreccion de la cita debe ser de tipo string.",
         }),
         date: Joi.string().regex(/^\d{2}\/\d{2}\/\d{4}$/).messages({
@@ -92,10 +93,8 @@ const citaIdSchema = Joi.string()
             "string.base": "La visita de la cita debe ser de tipo string.",
             "any.only": "La visita de la cita debe ser Si o No.",
         }),
-    
     }).messages({
         "object.unknown": "No se permiten propiedades adicionales.",
     });
-    
 
 module.exports = { citaBodySchema, citaIdSchema, citaModBodySchema };

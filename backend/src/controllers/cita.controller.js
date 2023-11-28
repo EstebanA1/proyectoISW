@@ -100,6 +100,7 @@ async function updateCita(req, res) {
         const { error: paramsError } = citaIdSchema.validate(params.id);
         if (paramsError) return respondError(req, res, 400, paramsError.message)
 
+        if (body.date){
         const aux = new Date();
         const fechaActual = aux.toLocaleDateString();
         const fechaInput = body.date;
@@ -117,6 +118,7 @@ async function updateCita(req, res) {
                     if ((fecha1[0]+1) > fecha2[0]) return respondError (req, res, 400, "La fecha de la cita debe ser posterior a la fecha actual");
                 }
             }
+        }
 
         const { error: bodyError } = citaModBodySchema.validate(body);
         if (bodyError) return respondError(req, res, 400, bodyError.message);
