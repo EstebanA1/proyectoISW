@@ -7,13 +7,11 @@ const citaSchema = new mongoose.Schema(
     {
         name: {
             type: String,
-            required: true,
-            minLenght: 2
+            required: true
         },
         typeOfRequest: {
             type: String,
             required: true,
-            minLenght: 5
         },
         address: {
             type: String,
