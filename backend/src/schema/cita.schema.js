@@ -55,7 +55,7 @@ const citaBodySchema = Joi.object({
  */
 const citaIdSchema = Joi.string()
     .required()
-    .pattern(/^(?:[0-9a-fA-F]{24}|[0-9a-fA-F]{12})$/)
+    .pattern(/^(?:[0-9a-fA-F]+)$/)
     .messages({
         "string.empty": "El ID no puede estar vacío.",
         "any.required": "El ID es obligatorio.",
