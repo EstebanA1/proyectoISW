@@ -7,6 +7,8 @@ import ErrorPage from './routes/ErrorPage.jsx';
 import Login from './routes/Login.jsx';
 import Citas from './routes/Citas/Citas.jsx';
 import CreateCita from './routes/Citas/CreateCita.jsx';
+import DeleteCita from './routes/Citas/DeleteCita.jsx';
+import DetailsCita from './routes/Citas/DetailsCita.jsx';
 
 const router = createBrowserRouter([
   {
@@ -23,9 +25,17 @@ const router = createBrowserRouter([
         element: <Citas />,
       },
       {
+        path: '/citas/:id',
+        element: <DetailsCita />,
+      },
+      {
         path: '/citas/create',
         element: <CreateCita />,
       },
+      {
+        path: '/citas/delete',
+        element: <DeleteCita />,
+      }
     ],
   },
   {
