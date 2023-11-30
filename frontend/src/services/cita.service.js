@@ -59,5 +59,6 @@ export const deleteCita = async (id) => {
         return {};
     } catch (error){
         console.log(error);
+        console.log(error.response);
     }
 }

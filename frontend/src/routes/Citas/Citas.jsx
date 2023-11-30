@@ -23,8 +23,6 @@ const Citas = () => {
                 {citas.map((cita) => (
                     <li key={cita._id}>
                         <Link to={`${cita._id}`}>{cita.name}</Link>
-
-                        {/* <Link to="delete"> Eliminar</Link> */}
                     </li>
                 ))}
             </ul>

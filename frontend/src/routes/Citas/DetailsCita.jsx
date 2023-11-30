@@ -25,6 +25,8 @@ const DetailsCita = () => {
                 <h5>Visita realizada: {cita.visitRealizated} </h5>
 
                 <button type="button" onClick={() => router('/citas')}>Volver</button>
+                <button type="button" onClick={() => router(`/citas/delete/${cita._id}`)}>Eliminar</button>
+                <button type="button" onClick={() => router('/citas/update')}>Modificar</button> 
             </div>
         </>
     );

@@ -33,7 +33,7 @@ const router = createBrowserRouter([
         element: <CreateCita />,
       },
       {
-        path: '/citas/delete',
+        path: '/citas/delete/:id',
         element: <DeleteCita />,
       }
     ],

@@ -5,13 +5,20 @@ import { deleteCita } from '../../services/cita.service';
 const DeleteCita = () => {
     const router = useNavigate();
     const { id } = useParams();
-    const [cita, setCita] = useState([]);
+    const [citaDeleted, setCitaDeleted] = useState(null);
 
     const borrarRegistro = async () => {
-        const res = await deleteCita(id);
-        setCita(res);
-        router('/citas');
+        try {
+            const res = await deleteCita(id);
+            if (res) {
+                setCitaDeleted(res);
+                router('/citas'); 
+            }
+        } catch (error) {
+            console.log('Error al borrar el registro:', error.response); 
+        }
     }
+    
 
     return (
         <>
@@ -24,4 +31,4 @@ const DeleteCita = () => {
     )
 }
 
-export default DeleteCita
+export default DeleteCita;
