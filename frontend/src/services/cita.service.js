@@ -9,7 +9,7 @@ export const getCitas = async () => {
         }
         return [];
     } catch (error) {
-        console.log(error);
+        console.log(error.response);
     }
 };
 
@@ -47,9 +47,10 @@ export const createCita = async (cita) => {
         }
         return {};
     } catch (error) {
-        console.log(error);
+        console.log(error.response);
     }
 }
+
 export const deleteCita = async (id) => {
     try {
         const response = await axios.delete(`/citas/${id}`);
@@ -58,7 +59,27 @@ export const deleteCita = async (id) => {
         }
         return {};
     } catch (error){
-        console.log(error);
+        console.log(error.response);
+    }
+}
+
+export const updateCita = async (id, cita) => {
+    try {
+        let fecha = new Date(cita.date);
+        let dia = String(fecha.getDate()).padStart(2, '0');
+        let mes = String(fecha.getMonth() + 1).padStart(2, '0'); 
+        let ano = fecha.getFullYear(); 
+
+        let fechaFormateada = `${dia}/${mes}/${ano}`;
+        
+        cita.date = fechaFormateada;
+
+        const response = await axios.put(`/citas/${id}`, cita);
+        if (response.status === 200) {
+            return response.data;
+        }
+        return {};
+    } catch (error){
         console.log(error.response);
     }
 }

@@ -1,23 +1,32 @@
 import { useForm } from "react-hook-form";
-import { createCita } from '../services/cita.service';
-import { useNavigate} from 'react-router-dom';
+import { createCita, updateCita } from '../services/cita.service';
+import { useNavigate, useParams } from 'react-router-dom';
 
-export default function CitaForm() {
+export default function CitaForm({ cita }) {
     const {
         register,
         handleSubmit,
         formState: { errors }
-    } = useForm();
+    } = useForm({
+        defaultValues: cita ? cita : {}
+    });
 
     const router = useNavigate();
-    const mostrarPorConsola = async (data) => {
-        const res = await createCita(data);
-        console.log(res);
+    const { id } = useParams();
+
+    const onSubmit = async (data) => {
+        if (cita) {
+            const res = await updateCita(id, data);
+            console.log(res);
+        } else {
+            const res = await createCita(data);
+            console.log(res);
+        }
         router('/citas');
-}
+    }
 
     return (
-        <form onSubmit={handleSubmit(mostrarPorConsola)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
             <div>
                 <label htmlFor="name">Nombre</label>
                 <input autoComplete='on' {...register('name', { required: true })} />
@@ -37,7 +46,7 @@ export default function CitaForm() {
             {errors.exampleRequired && <span>Este campo es obligatorio</span>}
 {/* Llamar a JOI para ver los errores */}
             <br />
-            <input type="submit" />
+            <input type="submit" value="Guardar" />
             <button type="button" onClick={() => router('/citas')}>Cancelar</button>
         </form>
     );

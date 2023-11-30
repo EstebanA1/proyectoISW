@@ -26,7 +26,7 @@ const DetailsCita = () => {
 
                 <button type="button" onClick={() => router('/citas')}>Volver</button>
                 <button type="button" onClick={() => router(`/citas/delete/${cita._id}`)}>Eliminar</button>
-                <button type="button" onClick={() => router('/citas/update')}>Modificar</button> 
+                <button type="button" onClick={() => router(`/citas/update/${cita._id}`)}>Modificar</button> 
             </div>
         </>
     );

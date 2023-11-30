@@ -9,6 +9,7 @@ import Citas from './routes/Citas/Citas.jsx';
 import CreateCita from './routes/Citas/CreateCita.jsx';
 import DeleteCita from './routes/Citas/DeleteCita.jsx';
 import DetailsCita from './routes/Citas/DetailsCita.jsx';
+import UpdateCita from './routes/Citas/UpdateCita.jsx';
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: '/citas/delete/:id',
         element: <DeleteCita />,
+      },
+      {
+        path: '/citas/update/:id',
+        element: <UpdateCita />,
       }
     ],
   },
