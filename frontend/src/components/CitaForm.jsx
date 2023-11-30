@@ -20,28 +20,20 @@ export default function CitaForm() {
         <form onSubmit={handleSubmit(mostrarPorConsola)}>
             <div>
                 <label htmlFor="name">Nombre</label>
-                <input autoComplete='off' {...register('name', { required: true })} />
+                <input autoComplete='on' {...register('name', { required: true })} />
                 </div>
             <div>
                 <label htmlFor="typeOfRequest">Tipo</label>
-                <input autoComplete='off' {...register('typeOfRequest', { required: true })} />
+                <input autoComplete='on' {...register('typeOfRequest', { required: true })} />
             </div>
             <div>
                 <label htmlFor="address">Direccion</label>
-                <input autoComplete='off' {...register('address', { required: true })} />
+                <input autoComplete='on' {...register('address', { required: true })} />
             </div>
             <div>
                 <label htmlFor="date">Fecha</label>
-                <input autoComplete='off' type='date' {...register('date', { required: true, valueAsDate: true })} />
+                <input autoComplete='on' type='date' {...register('date', { required: true, valueAsDate: true })} />
             </div>
-            {/* <div>
-                <label htmlFor="status">Estado</label>
-                <input autoComplete='off' {...register('status', { required: true })} />
-            </div>
-            <div>
-                <label htmlFor="visitRealizated">Visita Realizada</label>
-                <input autoComplete='off' {...register('visitRealizated', { required: true })} />
-            </div> */}
             {errors.exampleRequired && <span>Este campo es obligatorio</span>}
 {/* Llamar a JOI para ver los errores */}
             <br />

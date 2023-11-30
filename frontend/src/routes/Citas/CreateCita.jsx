@@ -11,4 +11,4 @@ const CreateCita = () => {
 
 export default CreateCita
 
-//29:40
+// Arreglar el agregar los datos a la bdd
