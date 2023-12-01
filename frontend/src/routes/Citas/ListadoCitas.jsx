@@ -1,7 +1,6 @@
 import { getCitas } from '../../services/cita.service';
 import React, { useEffect, useState } from 'react';
 import { Grid } from '@mui/material'
-import Calendar from '../../components/Calendar';
 
 const Citas = () => {
     const [citas, setCitas] = useState([]);
@@ -24,11 +23,16 @@ const Citas = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
             }}>
-                <h1>Calendario de Citas</h1>
+                <h1>Listado de Citas</h1>
             </Grid>
 
-            <div>
-                <Calendar citas={citas} />
+            <div className='Listado'>
+                {citas.map((cita) => (
+                    <div key={cita._id}>
+                        <h3>{cita.name}</h3>
+                        <p>{cita.date}</p>
+                    </div>
+                ))}
             </div>
         </>
     );

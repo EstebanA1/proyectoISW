@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { deleteCita } from '../../services/cita.service';
+import { Button } from '@mui/material'
 
 const DeleteCita = () => {
     const router = useNavigate();
@@ -24,8 +25,8 @@ const DeleteCita = () => {
         <>
             <h4>¿Seguro que desea eliminar la cita?</h4>
             <ul>
-                <button type="button" onClick={borrarRegistro}>Si</button>
-                <button type="button" onClick={() => router('/citas')}>No</button>
+                <Button type="button" onClick={borrarRegistro}>Si</Button>
+                <Button type="button" onClick={() => router('/citas')}>No</Button>
             </ul>
         </>
     )

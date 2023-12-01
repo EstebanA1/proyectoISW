@@ -1,7 +1,16 @@
+import { Grid } from "@mui/material";
+
 function App() {
   return (
     <>
-      <h1>Pagina principal</h1>
+      <Grid sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
+        <h1>Pagina principal</h1>
+      </Grid>
     </>
   );
 }

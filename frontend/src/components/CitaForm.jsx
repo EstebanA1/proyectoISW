@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { createCita, updateCita } from '../services/cita.service';
 import { useNavigate, useParams } from 'react-router-dom';
+import { Button } from '@mui/material'
 
 export default function CitaForm({ cita }) {
     const {
@@ -30,7 +31,7 @@ export default function CitaForm({ cita }) {
             <div>
                 <label htmlFor="name">Nombre</label>
                 <input autoComplete='on' {...register('name', { required: true })} />
-                </div>
+            </div>
             <div>
                 <label htmlFor="typeOfRequest">Tipo</label>
                 <input autoComplete='on' {...register('typeOfRequest', { required: true })} />
@@ -44,10 +45,10 @@ export default function CitaForm({ cita }) {
                 <input autoComplete='on' type='date' {...register('date', { required: true, valueAsDate: true })} />
             </div>
             {errors.exampleRequired && <span>Este campo es obligatorio</span>}
-{/* Llamar a JOI para ver los errores */}
+            {/* Llamar a JOI para ver los errores */}
             <br />
-            <input type="submit" value="Guardar" />
-            <button type="button" onClick={() => router('/citas')}>Cancelar</button>
+            <Button type="button" onClick={() => router('/citas')}>Cancelar</Button>
+            <Button type="submit" >Guardar</Button>
         </form>
     );
 }
