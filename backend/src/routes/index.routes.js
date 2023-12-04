@@ -14,6 +14,9 @@ const citasRoutes = require("./cita.routes.js");
 /** Enrutador de feedback */
 const feedbackRoutes = require("./feedback.routes.js");
 
+/** Enrutador de informes */
+const informeRoutes = require("./informe.routes.js");
+
 /** Enrutador de solicitudes */
 const solicitudesRoutes = require("./solicitud.routes.js");
 
@@ -38,6 +41,8 @@ router.use("/solicitud", solicitudesRoutes)
 router.use("/feedback", feedbackRoutes);
 // Define las rutas para las respuestas /api/respuestas
 router.use("/respuesta", respuestaDoc);
+// Define las rutas para los informes /api/informes
+router.use("/informe", informeRoutes);
 
 // Exporta el enrutador
 module.exports = router;
