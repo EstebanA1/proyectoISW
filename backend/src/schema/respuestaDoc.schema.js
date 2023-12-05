@@ -8,10 +8,11 @@ const Joi = require("joi");
  */
 
 const respuestaDocBodySchema = Joi.object({
-    nombre: Joi.string().required().messages({
+    nombre: Joi.string().required().regex(/^[A-Za-z]+$/).messages({
         "string.empty": "El nombre del solicitante no puede estar vacío.",
         "any.required": "El nombre del solicitante es obligatorio.",
-        "string.base": "El nombre del solicitante debe ser de tipo string.",
+        "string.base": "El nombre del solcitante debe ser de tipo string.",
+        "string.pattern.base": "El nombre del solicitante debe contener solo letras.",
     }),
     rut: Joi.string().required().regex(/^(\d{1,2}\.\d{3}\.\d{3}-[0-9kK]|[\d]{8}-[0-9kK]|[\d]{9}[0-9kK]?)$/).messages({
         "string.empty": "El rut del solicitante no puede estar vacío.",
