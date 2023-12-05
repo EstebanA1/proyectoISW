@@ -34,9 +34,9 @@ router.use("/users", authenticationMiddleware, userRoutes);
 // Define las rutas para la autenticación /api/auth
 router.use("/auth", authRoutes);
 // Define las rutas para las citas /api/citas
-router.use("/citas", citasRoutes)
+router.use("/citas", citasRoutes);
 // Define las rutas para las solicitudes /api/solicitudes
-router.use("/solicitud", solicitudesRoutes)
+router.use("/solicitud", solicitudesRoutes);
 // Define las rutas para las feedbacks /api/feedbacks
 router.use("/feedback", feedbackRoutes);
 // Define las rutas para las respuestas /api/respuestas
