@@ -1,8 +1,10 @@
 import CitaForm from "../../components/CitaForm"
 
 const CreateCita = () => {
-    return(
+    return (
         <>
+            <br />
+            <h1>Formulario de Cita</h1>
             <br />
             <CitaForm />
         </>
