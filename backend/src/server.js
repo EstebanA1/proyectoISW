@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-console */
 // Importa el archivo 'configEnv.js' para cargar las variables de entorno
 const { PORT, HOST } = require("./config/configEnv.js");
 // Importa el módulo 'cors' para agregar los cors
