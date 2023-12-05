@@ -41,13 +41,12 @@ async function updateRespuestaDoc(respuestaDocId, respuestaDoc) {
         const respuestaDocFound = await RespuestaDoc.findById(respuestaDocId);
         if (!respuestaDocFound) return [null, "La respuesta no existe"];
 
-        const { nombre, rut, firma, fecha, logo, descripcion } = respuestaDoc;
+        const { nombre, rut, firma, logo, descripcion } = respuestaDoc;
 
         await RespuestaDoc.findByIdAndUpdate(respuestaDocId, {
             nombre,
             rut,
             firma,
-            fecha,
             logo,
             descripcion,
         });

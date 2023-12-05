@@ -42,14 +42,13 @@ async function updateSolicitud(solicitudId, solicitud) {
         const solicitudFound = await Solicitud.findById(solicitudId);
         if (!solicitudFound) return [null, "La solicitud no existe"];
 
-        const { nombre, tipo, rut, firma, fecha, estadoDeRespuesta, estado, archivoPDF } = solicitud;
+        const { nombre, tipo, rut, firma, estadoDeRespuesta, estado, archivoPDF } = solicitud;
 
         await Solicitud.findByIdAndUpdate(solicitudId, {
             nombre,
             tipo,
             rut,
             firma,
-            fecha,
             estadoDeRespuesta,
             estado,
             archivoPDF,

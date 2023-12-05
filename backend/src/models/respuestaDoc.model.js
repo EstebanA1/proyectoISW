@@ -2,6 +2,7 @@
 
 // Importa el modulo 'mongoose' para crear la conexion a la base de datos
 const mongoose = require("mongoose");
+const fechaActual = new Date();
 
 // Crea el esquema de la coleccion 'respuestasDoc'
 
@@ -20,7 +21,7 @@ const respuestaDocSchema = new mongoose.Schema({
     },
     fecha: {
         type: String,
-        required: true,
+        default: fechaActual.getDate() + "/" + (fechaActual.getMonth() + 1) + "/" + fechaActual.getFullYear(),
     },
     logo: {
         type: String,
