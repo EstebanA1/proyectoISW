@@ -14,11 +14,21 @@ const solicitudController = require("../controllers/solicitud.controller");
 /** Instancia del enrutador */
 const router = express.Router();
 
+/** Middleware multer */
+const upload = require("../config/configMulter.js");
+
 // Define el middleware de autenticacion para todas las rutas
 router.use(authenticationMiddleware);
 
 router.get('/', authorizationMiddleware.isAdmin, solicitudController.getSolicitudes);
-router.post('/', authorizationMiddleware.isSolicitante, solicitudController.createSolicitud);
+router.post('/',  upload.any(), // Este middleware manejará la subida de archivos después de todas las validaciones
+(req, res, next) => {
+  if (req.files && req.files.length > 0) {
+    next();
+  } else {
+   res.status(400).json({ success: false, message: "Error al subir el archivo" }); 
+  }
+}, authorizationMiddleware.isSolicitante, solicitudController.createSolicitud);
 router.get('/:id', authorizationMiddleware.isAdmin, solicitudController.getSolicitudById);
 router.put('/:id',  authorizationMiddleware.isAdmin, solicitudController.updateSolicitud);
 router.delete('/:id', authorizationMiddleware.isAdmin, solicitudController.deleteSolicitud);
