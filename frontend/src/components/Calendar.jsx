@@ -28,7 +28,7 @@ function Calendar(props) {
     React.useEffect(() => {
         const calendar = calendarRef.current.getApi();
         calendar.addEventSource(citas.map(cita => ({
-            title: cita.name,
+            title: [cita.name, cita.hour],
             start: convertirFecha(cita.date),
             url: `/citas/${cita._id}`
         })));
@@ -48,7 +48,7 @@ function Calendar(props) {
 
                 customButtons={{
                     custom1: {
-                        text: 'Listado Citas',
+                        text: 'Listado de Citas',
                         click: function () {
                             router("/citas/listado");
                         }
@@ -61,23 +61,18 @@ function Calendar(props) {
                     info.jsEvent.preventDefault();
                     router(info.event.url);
                 }}
-                // Añadimos la opción dayCellContent para personalizar el contenido de las celdas
                 dayCellContent={(info) => {
-                    // Obtenemos el día de la celda
                     const dia = info.date;
 
-                    // Obtenemos la fecha actual
                     const hoy = new Date();
-                    hoy.setHours(0, 0, 0, 0); // Aseguramos que la hora sea medianoche para una comparación justa
+                    hoy.setHours(0, 0, 0, 0);
 
-                    // Formateamos la fecha a un string en el formato dia-mes-año
                     const fechaFormateada = `${dia.getDate()}-${dia.getMonth() + 1}-${dia.getFullYear()}`;
 
                     return (
                         <div>
                             <div className="dia">{dia.getDate()}</div>
 
-                            {/* Solo mostramos el botón si la fecha de la celda es posterior a la fecha actual */}
                             {dia > hoy && (
                                 <div className="invibleButton" style={{ position: 'absolute', width: '100%' }}>
                                     <Button onClick={() => router(`/citas/create/${fechaFormateada}`)}>Agregar cita</Button>
