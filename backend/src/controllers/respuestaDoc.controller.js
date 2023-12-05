@@ -122,7 +122,7 @@ async function deleteRespuestaDoc(req, res) {
 async function getRespuestaDocByRut(req, res) {
     try {
         const { params } = req;
-        const { error: rutError } = Joi.string().regex(/^\d{1,2}\.\d{3}\.\d{3}[-][0-9kK]{1}$/).validate(params.rut);
+        const { error: rutError } = Joi.string().regex(/^(\d{1,2}\.\d{3}\.\d{3}-[0-9kK]|[\d]{8}-[0-9kK]|[\d]{9}[0-9kK]?)$/).validate(params.rut);
 
         if (rutError) return respondError(req, res, 400, "RUT inválido");
 
