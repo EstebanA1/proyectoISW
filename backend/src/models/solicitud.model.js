@@ -3,6 +3,7 @@
 // Importa el modulo 'mongoose' para crear la conexion a la base de datos
 const mongoose = require("mongoose");
 const ESTADO2 = require("../constants/estadosSolicitud.constants");
+const FechaActual = new Date();
 
 // Crea el esquema de la coleccion 'solicitudes'
 
@@ -25,7 +26,7 @@ const solicitudSchema = new mongoose.Schema({
     },
     fecha: {
         type: String,
-        required: true
+        default: FechaActual.getDate() + "/" + (FechaActual.getMonth() + 1) + "/" + FechaActual.getFullYear(),
     },
     estadoDeRespuesta: {
         type: String,
@@ -37,7 +38,7 @@ const solicitudSchema = new mongoose.Schema({
     },
     archivoPDF: {
         type: String,
-        required: true,
+        default: "./uploads/archivoPDF.pdf,"
     },
 });
 
