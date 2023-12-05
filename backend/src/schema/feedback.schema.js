@@ -80,4 +80,91 @@ const feedbackIdSchema = Joi.string()
     "string.pattern.base": "El ID proporcionado no es válido.",
 });
 
-module.exports = { feedbackBodySchema, feedbackIdSchema };
+
+
+//INFORME
+/**
+ * Esquema de validación para el cuerpo de la solicitud del INFORME feedback.
+ * 
+ * @constant {Object}
+ */
+const informeBodySchema = Joi.object({
+    IDCita: Joi.string().required().messages({
+        "string.empty": "El ID de la retroalimentación no puede estar vacío.",
+        "any.required": "El ID de la retroalimentación es obligatorio.",
+        "string.base": "El ID de la retroalimentación debe ser de tipo string.",
+    }),
+    Titulo: Joi.string().messages({
+        "string.base": "El titulo del informe debe ser de tipo string.",
+    }),
+    solicitante: Joi.string().required().messages({
+        "string.empty": "El solicitante del informe no puede estar vacío.",
+        "any.required": "El solicitante del informe es obligatorio.",
+        "string.base": "El solicitante del informe debe ser de tipo string.",
+    }),
+    A: Joi.string().messages({
+        "string.base": "El 1 del informe debe ser de tipo string.",
+    }),
+    A_1: Joi.string().required().messages({
+        "string.empty": "El 1.1 del informe no puede estar vacío.",
+        "any.required": "El 1.1 del informe es obligatorio.",
+        "string.base": "El 1.1 del informe debe ser de tipo string.",
+    }),
+    B: Joi.string().messages({
+        "string.base": "El 2 del informe debe ser de tipo string.",
+    }),
+    B_1: Joi.string().required().messages({
+        "string.empty": "El 2.1 del informe no puede estar vacío.",
+        "any.required": "El 2.1 del informe es obligatorio.",
+        "string.base": "El 2.1 del informe debe ser de tipo string.",
+    }),
+    C: Joi.string().messages({
+        "string.base": "El 3 del informe debe ser de tipo string.",
+    }),
+    C_1: Joi.string().messages({
+        "string.base": "El 3.1 del informe debe ser de tipo string.",
+    }),
+    C_2: Joi.string().required().messages({
+        "string.empty": "El 3.3 del informe no puede estar vacío.",
+        "any.required": "El 3.3 del informe es obligatorio.",
+        "string.base": "El 3.3 del informe debe ser de tipo string.",
+    }),
+    D: Joi.string().messages({
+        "string.base": "El 4 del informe debe ser de tipo string.",
+    }),
+    D_1: Joi.string().messages({
+        "string.empty": "El 4.1 del informe no puede estar vacío.",
+        "string.base": "El 4.1 del informe debe ser de tipo string.",
+    }),
+    E: Joi.string().messages({
+        "string.base": "El 5 del informe debe ser de tipo string.",
+    }),
+    E_1: Joi.string().messages({
+        "string.base": "El 5.1 del informe debe ser de tipo string.",
+    }),
+    estado: Joi.string().valid(...ESTADOS).required().messages({
+        "string.empty": "El estado del informe no puede estar vacío.",
+        "any.required": "El estado del informe es obligatorio.",
+        "string.base": "El estado del informe debe ser de tipo string.",
+        "any.only": "El estado proporcionado debe ser rechazado, pendiente o aprobado.",
+    })
+}).messages({
+    "object.unknown": "No se permiten propiedades adicionales.",
+});
+
+/**
+ * Esquema de validación para el id del informe
+ * @constant {Object}
+ */
+const informeIdSchema = Joi.string()
+.required()
+.pattern(/^(?:[0-9a-fA-F]{24}|[0-9a-fA-F]{12})$/)
+.messages({
+    "string.empty": "El ID no puede estar vacío.",
+    "any.required": "El ID es obligatorio.",
+    "string.base": "El ID del informe debe ser de tipo string.",
+    "string.pattern.base": "El ID proporcionado no es válido.",
+});
+
+
+module.exports = { feedbackBodySchema, feedbackIdSchema, informeBodySchema, informeIdSchema };

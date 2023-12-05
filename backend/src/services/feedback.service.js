@@ -116,7 +116,7 @@ async function deleteFeedback(id) {
     }
 }
 
-module.exports = {
+module.exports ={
     getFeedback,
     createFeedback,
     getFeedbackById,

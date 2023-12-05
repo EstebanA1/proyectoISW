@@ -4,6 +4,8 @@ const { PORT, HOST } = require("./config/configEnv.js");
 const cors = require("cors");
 // Importa el módulo 'express' para crear la aplicacion web
 const express = require("express");
+// Importa el módulo 'multer' para subir archivos
+const multer = require("multer");
 // Importamos morgan para ver las peticiones que se hacen al servidor
 const morgan = require("morgan");
 // Importa el módulo 'cookie-parser' para manejar las cookies
@@ -26,7 +28,7 @@ async function setupServer() {
     // Agrega el middleware para el manejo de datos en formato JSON
     server.use(express.json());
     // Agregamos los cors
-    server.use(cors({ origin: "/" }));
+    server.use(cors({ origin: "*" }));
     // Agregamos el middleware para el manejo de cookies
     server.use(cookieParser());
     // Agregamos morgan para ver las peticiones que se hacen al servidor
