@@ -18,6 +18,7 @@ const Citas = () => {
 
     return (
         <>
+
             <Grid sx={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -25,11 +26,14 @@ const Citas = () => {
                 justifyContent: 'center',
             }}>
                 <h1>Calendario de Citas</h1>
+
+                <div className='line' style={{ width: '30%' }}></div>
             </Grid>
 
             <div>
                 <Calendar citas={citas} />
             </div>
+
         </>
     );
 };

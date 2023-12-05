@@ -36,19 +36,22 @@ function PageRoot() {
 
   return (
     <ThemeProvider theme={theme}>
-      
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-      <Box>
-        <Button variant="contained" onClick={() => navigate('/')}>Home</Button>
-        <Button sx={{ ml: 2 }} variant="contained" onClick={() => navigate('/citas')}>Ver citas</Button>
-      </Box>
-      <Button variant="contained" onClick={handleLogout}>Cerrar sesión</Button>
-    </Box>
-
-      <p>Estas logeado como: {user.email}</p>
-      <Children />
-    </ThemeProvider>
-  )
+      <div className='botones'>
+        <Box sx={{
+          marginTop: 2,
+          display: 'flex',
+          justifyContent: 'space-between',
+        }}>
+          <Box>
+            <Button sx={{ ml: 2 }} variant="contained" onClick={() => navigate('/')}>Home</Button>
+            <Button sx={{ ml: 2 }} variant="contained" onClick={() => navigate('/citas')}>Ver citas</Button>
+          </Box>
+          <Button sx={{ marginRight: 2 }} variant="contained" onClick={handleLogout}>Cerrar sesión</Button>
+        </Box>
+        <Children />
+      </div>
+    </ThemeProvider >
+  );
 }
 
 export default Root;

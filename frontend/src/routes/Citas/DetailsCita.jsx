@@ -26,6 +26,7 @@ const DetailsCita = () => {
                     <h5>Tipo: {cita.typeOfRequest} </h5>
                     <h5>Direccion: {cita.address} </h5>
                     <h5>Fecha: {cita.date} </h5>
+                    <h5>Hora: {cita.time} </h5>
                     <h5>Estado: {cita.status} </h5>
                     <h5>Visita realizada: {cita.visitRealizated} </h5>
 

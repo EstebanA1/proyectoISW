@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import CitaForm from "../../components/CitaForm"
 import { useParams } from "react-router-dom";
 import { getCita } from "../../services/cita.service";
+import { Grid } from "@mui/material"
 
 const UpdateCita = () => {
     const { id } = useParams();
@@ -13,10 +14,18 @@ const UpdateCita = () => {
         });
     }, []);
 
-    return(
+    return (
         <>
             <br />
-            {cita && <CitaForm cita={cita} />}
+            <Grid sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+
+            }}>
+                {cita && <CitaForm cita={cita} />}
+            </Grid>
         </>
     )
 }
