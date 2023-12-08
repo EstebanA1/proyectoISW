@@ -10,7 +10,7 @@ const REALIZADO = require("../constants/realizatedCitas.constants");
  * @constant {Object}
  */
 const citaBodySchema = Joi.object({
-    name: Joi.string().regex(/^[A-Za-z]+$/).required().messages({
+    name: Joi.string().regex(/^[A-Za-z ]+$/).required().messages({
         "string.empty": "El nombre del solicitante de la cita no puede estar vacío.",
         "any.required": "El nombre del solicitante de la cita es obligatorio.",
         "string.base": "El nombre del solicitante de la cita debe ser de tipo string.",

@@ -1,4 +1,4 @@
 /** Tipos de solicitudes permitidas por la base de datos */
-const TYPE = ["Ampliacion", "Construccion"];
+const TYPE = ["Ampliación", "Construcción"];
 
 module.exports = TYPE;
