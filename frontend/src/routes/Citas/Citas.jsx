@@ -27,7 +27,7 @@ const Citas = () => {
             }}>
                 <h1>Calendario de Citas</h1>
 
-                <div className='line' style={{ width: '30%' }}></div>
+                <div className='line' style={{ width: '85%' }}></div>
             </Grid>
 
             <div>

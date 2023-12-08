@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import { createCita, updateCita } from '../services/cita.service';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button, TextField, Box } from '@mui/material'
+import SaveIcon from '@mui/icons-material/Save';
+import CancelIcon from '@mui/icons-material/ArrowBackIos';
 
 export default function CitaForm({ cita, fecha }) {
     const router = useNavigate();
@@ -26,12 +28,20 @@ export default function CitaForm({ cita, fecha }) {
 
     useEffect(() => {
         if (fecha) {
-            const partes = fecha.split("-");
-            const fechaFormateada = `${partes[2]}-${partes[1].padStart(2, '0')}-${partes[0].padStart(2, '0')}`;
-
-            setValue('date', fechaFormateada);
+            const fechaFormateada = fecha.replace(/\//g, '-');
+            const partes = fechaFormateada.split("-");
+            if (partes.length === 3) {
+                const fechaFinal = `${partes[2]}-${partes[1].padStart(2, '0')}-${partes[0].padStart(2, '0')}`;
+                setValue('date', fechaFinal);
+            } else {
+                console.log('Formato de fecha incorrecto: ', fecha);
+            }
+        } else {
+            setValue('date', '');
         }
     }, [fecha, setValue]);
+
+
 
     const onSubmit = async (data) => {
         const partes = data.date.split("-");
@@ -86,6 +96,7 @@ export default function CitaForm({ cita, fecha }) {
                     variant="filled"
                     autoComplete='off'
                     defaultValue=''
+                    fullWidth
                     {...register('date', { required: true })}
                 />
             </div>
@@ -97,13 +108,14 @@ export default function CitaForm({ cita, fecha }) {
                     variant="filled"
                     autoComplete='off'
                     defaultValue=''
+                    fullWidth
                     {...register('hour', { required: true })}
                 />
             </div>
             {errors.exampleRequired && <span>Este campo es obligatorio</span>}
             <br />
-            <Button type="button" variant="contained" onClick={() => router('/citas')}>Cancelar</Button>
-            <Button type="submit" variant="contained" >Guardar</Button>
+            <Button type="button" variant="contained" sx={{ ml: 2 }} onClick={() => router('/citas')}><CancelIcon /></Button>
+            <Button type="submit" variant="contained" sx={{ ml: 6 }} ><SaveIcon /></Button>
         </Box>
     );
 }

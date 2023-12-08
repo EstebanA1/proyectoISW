@@ -3,6 +3,7 @@ import { logout } from '../services/auth.service';
 import { AuthProvider } from '../context/AuthContext';
 import { Button, Box, ThemeProvider, createTheme } from "@mui/material"
 import React, { useState } from 'react';
+import HomeIcon from '@mui/icons-material/Home';
 
 const theme = createTheme({
   palette: {
@@ -42,7 +43,6 @@ function PageRoot() {
   const [logoutButtonStyle, setLogoutButtonStyle] = useState({
     backgroundColor: 'transparent',
     color: 'black',
-    border: 'none',
   });
 
   const handleMouseOver = (setButtonStyle) => {
@@ -79,30 +79,30 @@ function PageRoot() {
           backgroundColor: 'white',
         }}>
           <Box>
-            <Button 
-              sx={{ ml: 2 }} 
-              style={homeButtonStyle} 
-              onMouseOver={() => handleMouseOver(setHomeButtonStyle)} 
-              onMouseOut={() => handleMouseOut(setHomeButtonStyle)} 
+            <Button
+              sx={{ ml: 2 }}
+              style={homeButtonStyle}
+              onMouseOver={() => handleMouseOver(setHomeButtonStyle)}
+              onMouseOut={() => handleMouseOut(setHomeButtonStyle)}
               onClick={() => navigate('/')}
             >
-              Home
+              <HomeIcon />
             </Button>
-            <Button 
-              sx={{ ml: 2 }} 
-              style={citasButtonStyle} 
-              onMouseOver={() => handleMouseOver(setCitasButtonStyle)} 
-              onMouseOut={() => handleMouseOut(setCitasButtonStyle)} 
+            <Button
+              sx={{ ml: 2 }}
+              style={citasButtonStyle}
+              onMouseOver={() => handleMouseOver(setCitasButtonStyle)}
+              onMouseOut={() => handleMouseOut(setCitasButtonStyle)}
               onClick={() => navigate('/citas')}
             >
               Ver citas
             </Button>
           </Box>
-          <Button 
-            sx={{ marginRight: 2 }} 
-            style={logoutButtonStyle} 
-            onMouseOver={() => handleMouseOver(setLogoutButtonStyle)} 
-            onMouseOut={() => handleMouseOut(setLogoutButtonStyle)} 
+          <Button
+            sx={{ marginRight: 2 }}
+            style={logoutButtonStyle}
+            onMouseOver={() => handleMouseOver(setLogoutButtonStyle)}
+            onMouseOut={() => handleMouseOut(setLogoutButtonStyle)}
             onClick={handleLogout}
           >
             Cerrar sesión

@@ -33,7 +33,7 @@ const DeleteCita = () => {
             }}>
                 <h2>¿Seguro que desea eliminar la cita?</h2>
                 <ul>
-                    <Grid sx={{ marginLeft: -5}}>
+                    <Grid sx={{ marginLeft: -6}}>
                     <Button type="button" onClick={borrarRegistro}>Si</Button>
                     <Button type="button" onClick={() => router('/citas')}>No</Button>
                     </Grid>

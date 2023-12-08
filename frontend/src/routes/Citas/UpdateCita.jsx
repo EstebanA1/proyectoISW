@@ -14,6 +14,7 @@ const UpdateCita = () => {
         });
     }, []);
 
+
     return (
         <>
             <br />
@@ -24,7 +25,7 @@ const UpdateCita = () => {
                 justifyContent: 'center',
                 height: '75vh'
             }}>
-                {cita && <CitaForm cita={cita} />}
+                {cita && <CitaForm cita={cita} fecha={cita.date} />}
             </Grid>
         </>
     )
