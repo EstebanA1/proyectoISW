@@ -127,3 +127,10 @@ span {
   font-weight: bold;
   font-size: 18px; 
 }
+
+.my-error2 {
+  color: red;
+  position: absolute;
+  left: 102%;
+  white-space: nowrap;
+}

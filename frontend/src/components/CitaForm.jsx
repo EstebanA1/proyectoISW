@@ -1,6 +1,5 @@
-// CitaForm.jsx
 import React, { useEffect } from 'react';
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { createCita, updateCita } from '../services/cita.service';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button, TextField, Box, Select, MenuItem, FormControl, InputLabel, Grid } from '@mui/material'
@@ -21,6 +20,7 @@ export default function CitaForm({ cita, fecha }) {
         handleSubmit,
         formState: { errors },
         setValue,
+        control,
     } = useForm({
         defaultValues: cita ? cita : {}
     });
@@ -40,9 +40,11 @@ export default function CitaForm({ cita, fecha }) {
         }
     }, [fecha, setValue]);
 
-
-
     const onSubmit = async (data) => {
+
+        console.log(data)
+        console.log(errors)
+
         const partes = data.date.split("-");
         const fechaFormateada = `${partes[2]}/${partes[1]}/${partes[0]}`;
         const newData = { ...data, date: fechaFormateada };
@@ -59,47 +61,65 @@ export default function CitaForm({ cita, fecha }) {
 
     return (
         <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-            <div>
+            <Box position="relative" width="100%">
                 <TextField
                     id="name"
                     label="Nombre"
                     variant="filled"
                     autoComplete='off'
                     fullWidth
-                    {...register('name', { required: true })}
+                    {...register('name', { required: 'El nombre es obligatorio', minLength: { value: 2, message: 'El nombre debe tener al menos 2 caracteres' } })}
                 />
-            </div>
-
-
+                {errors.name && errors.name.type !== "minLength" && <p style={{ position: 'absolute', right: '-88.8%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.name.message}</p>}
+                {errors.name && errors.name.type === "minLength" && <p style={{ position: 'absolute', right: '-157%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.name.message}</p>}
+            </Box>
             <div>
-                <FormControl variant="filled" fullWidth>
+                <FormControl variant="filled" style={{ position: 'relative' }} fullWidth>
                     <InputLabel id="typeOfRequest-label">Tipo de solicitud</InputLabel>
-                    <Select
-                        id="typeOfRequest"
-                        label="Tipo de solicitud"
-                        variant="filled"
-                        autoComplete='off'
-                        error={error.error}
-                        fullWidth
-                        defaultValue={cita ? cita.typeOfRequest : ''}
-                        {...register('typeOfRequest', { required: true })}
-                    >
-                        <MenuItem value="Ampliación">Ampliación</MenuItem>
-                        <MenuItem value="Construcción">Construcción</MenuItem>
-                    </Select>
+                    <Controller
+                        name="typeOfRequest"
+                        control={control}
+                        defaultValue={cita && cita.typeOfRequest ? cita.typeOfRequest : ''}
+                        rules={{ required: 'El tipo es obligatorio' }}
+                        render={({ field }) => (
+                            <Select
+                                id="typeOfRequest"
+                                label="Tipo de solicitud"
+                                variant="filled"
+                                autoComplete='off'
+                                error={error.error}
+                                fullWidth
+                                {...field}
+                            >
+                                <MenuItem value="Ampliación">Ampliación</MenuItem>
+                                <MenuItem value="Construcción">Construcción</MenuItem>
+                            </Select>
+                        )}
+                    />
+                    {errors.typeOfRequest && <p className="my-error2">{errors.typeOfRequest.message}</p>}
                 </FormControl>
             </div>
-            <div>
+
+            <Box position="relative" width="100%">
                 <TextField
                     id="address"
                     label="Direccion"
                     variant="filled"
                     autoComplete='off'
                     fullWidth
-                    {...register('address', { required: true })}
+                    {...register('address', {
+                        required: 'La dirección es obligatoria',
+                        pattern: {
+                            value: /^[A-Za-z\s]+\s#\d+$/,
+                            message: 'La dirección debe tener un formato de tipo calle (Nombre + #Número)'
+                        }
+                    })}
                 />
-            </div>
-            <div>
+                {errors.address && errors.address.type === "pattern" && <p style={{ position: 'absolute', right: '-253%', top: '20%', transform: 'translateY(-50%)', color: 'red' }}>{errors.address.message}</p>}
+                {errors.address && errors.address.type !== "pattern" && <p style={{ position: 'absolute', right: '-93.8%', top: '20%', transform: 'translateY(-50%)', color: 'red' }}>{errors.address.message}</p>}
+            </Box>
+
+            <Box position="relative" width="100%">
                 <TextField
                     id="date"
                     label="Fecha"
@@ -111,10 +131,20 @@ export default function CitaForm({ cita, fecha }) {
                         shrink: true,
                     }}
                     fullWidth
-                    {...register('date', { required: true })}
+                    {...register('date', {
+                        required: 'La fecha es obligatoria',
+                        validate: {
+                            notInFuture: value => new Date(value) <= new Date(new Date().setFullYear(new Date().getFullYear() + 1)) || 'La fecha no puede ser mayor a un año a partir de hoy',
+                            notBeforeTomorrow: value => new Date(value) >= new Date(new Date().setDate(new Date().getDate() + 1)) || 'La fecha no puede ser menor que la de mañana'
+                        }
+                    })}
                 />
-            </div>
-            <div>
+                {errors.date && errors.date.type === "notInFuture" && <p style={{ position: 'absolute', right: '-192.5%', top: '20%', transform: 'translateY(-50%)', color: 'red' }}>{errors.date.message}</p>}
+                {errors.date && errors.date.type === "notBeforeTomorrow" && <p style={{ position: 'absolute', right: '-171.5%', top: '20%', transform: 'translateY(-50%)', color: 'red' }}>{errors.date.message}</p>}
+                {errors.date && errors.date.type === "required" && <p style={{ position: 'absolute', right: '-81.2%', top: '20%', transform: 'translateY(-50%)', color: 'red' }}>{errors.date.message}</p>}
+            </Box>
+
+            <Box position="relative" width="100%">
                 <TextField
                     id="hour"
                     label="Hora"
@@ -126,9 +156,17 @@ export default function CitaForm({ cita, fecha }) {
                         shrink: true,
                     }}
                     fullWidth
-                    {...register('hour', { required: true })}
+                    {...register('hour', {
+                        required: 'La hora es obligatoria',
+                        validate: {
+                            inRange: value => (value >= "08:00" && value <= "17:00") || 'La hora debe estar entre las 08:00 y las 17:00'
+                        }
+                    })}
                 />
-            </div>
+                {errors.hour && errors.hour.type === "inRange" && <p style={{ position: 'absolute', right: '-159.5%', top: '20%', transform: 'translateY(-50%)', color: 'red' }}>{errors.hour.message}</p>}
+                {errors.hour && errors.hour.type === "required" && <p style={{ position: 'absolute', right: '-78.2%', top: '20%', transform: 'translateY(-50%)', color: 'red' }}>{errors.hour.message}</p>}
+            </Box>
+
             {cita && (
                 <>
                     <div>
@@ -170,7 +208,6 @@ export default function CitaForm({ cita, fecha }) {
                     </div>
                 </>
             )}
-
 
             {errors.exampleRequired && <span>Este campo es obligatorio</span>}
             <br />
