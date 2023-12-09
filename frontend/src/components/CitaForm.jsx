@@ -71,7 +71,7 @@ export default function CitaForm({ cita, fecha }) {
                     {...register('name', { required: 'El nombre es obligatorio', minLength: { value: 2, message: 'El nombre debe tener al menos 2 caracteres' } })}
                 />
                 {errors.name && errors.name.type !== "minLength" && <p style={{ position: 'absolute', right: '-88.8%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.name.message}</p>}
-                {errors.name && errors.name.type === "minLength" && <p style={{ position: 'absolute', right: '-157%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.name.message}</p>}
+                {errors.name && errors.name.type === "minLength" && <p style={{ position: 'absolute', right: '-157.2%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.name.message}</p>}
             </Box>
             <div>
                 <FormControl variant="filled" style={{ position: 'relative' }} fullWidth>
