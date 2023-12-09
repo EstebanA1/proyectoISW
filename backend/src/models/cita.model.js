@@ -27,7 +27,7 @@ const citaSchema = new mongoose.Schema(
         },
         status: {
             type: String,
-            default: "pendiente",
+            default: "Pendiente",
         },
         visitRealizated:{
             type: String,

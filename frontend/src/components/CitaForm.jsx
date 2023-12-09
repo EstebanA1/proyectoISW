@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useForm } from "react-hook-form";
 import { createCita, updateCita } from '../services/cita.service';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Button, TextField, Box } from '@mui/material'
+import { Button, TextField, Box, Select, MenuItem, FormControl, InputLabel, Grid } from '@mui/material'
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/ArrowBackIos';
 
@@ -11,7 +11,7 @@ export default function CitaForm({ cita, fecha }) {
     const router = useNavigate();
     const { id } = useParams();
 
-    const [error, setError] = React.useState({
+    const [error] = React.useState({
         error: false,
         message: ''
     });
@@ -21,7 +21,6 @@ export default function CitaForm({ cita, fecha }) {
         handleSubmit,
         formState: { errors },
         setValue,
-        reset
     } = useForm({
         defaultValues: cita ? cita : {}
     });
@@ -66,18 +65,29 @@ export default function CitaForm({ cita, fecha }) {
                     label="Nombre"
                     variant="filled"
                     autoComplete='off'
+                    fullWidth
                     {...register('name', { required: true })}
                 />
             </div>
+
+
             <div>
-                <TextField
-                    id="typeOfRequest"
-                    label="Tipo de solicitud"
-                    variant="filled"
-                    autoComplete='off'
-                    error={error.error}
-                    {...register('typeOfRequest', { required: true })}
-                />
+                <FormControl variant="filled" fullWidth>
+                    <InputLabel id="typeOfRequest-label">Tipo de solicitud</InputLabel>
+                    <Select
+                        id="typeOfRequest"
+                        label="Tipo de solicitud"
+                        variant="filled"
+                        autoComplete='off'
+                        error={error.error}
+                        fullWidth
+                        defaultValue={cita ? cita.typeOfRequest : ''}
+                        {...register('typeOfRequest', { required: true })}
+                    >
+                        <MenuItem value="Ampliación">Ampliación</MenuItem>
+                        <MenuItem value="Construcción">Construcción</MenuItem>
+                    </Select>
+                </FormControl>
             </div>
             <div>
                 <TextField
@@ -85,6 +95,7 @@ export default function CitaForm({ cita, fecha }) {
                     label="Direccion"
                     variant="filled"
                     autoComplete='off'
+                    fullWidth
                     {...register('address', { required: true })}
                 />
             </div>
@@ -96,6 +107,9 @@ export default function CitaForm({ cita, fecha }) {
                     variant="filled"
                     autoComplete='off'
                     defaultValue=''
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
                     fullWidth
                     {...register('date', { required: true })}
                 />
@@ -108,14 +122,80 @@ export default function CitaForm({ cita, fecha }) {
                     variant="filled"
                     autoComplete='off'
                     defaultValue=''
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
                     fullWidth
                     {...register('hour', { required: true })}
                 />
             </div>
+            {cita && (
+                <>
+                    <div>
+                        <FormControl variant="filled" fullWidth>
+                            <InputLabel id="status-label">Estado</InputLabel>
+                            <Select
+                                id="status"
+                                label="Estado"
+                                variant="filled"
+                                autoComplete='off'
+                                error={error.error}
+                                fullWidth
+                                defaultValue={cita.status}
+                                {...register('status', { required: true })}
+                            >
+                                <MenuItem value="Pendiente">Pendiente</MenuItem>
+                                <MenuItem value="Aprobado">Aprobado</MenuItem>
+                                <MenuItem value="Rechazado">Rechazado</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </div>
+                    <div>
+                        <FormControl variant="filled" fullWidth>
+                            <InputLabel id="visitRealizated-label">Realizada</InputLabel>
+                            <Select
+                                id="visitRealizated"
+                                label="Realizada"
+                                variant="filled"
+                                autoComplete='off'
+                                error={error.error}
+                                fullWidth
+                                defaultValue={cita.visitRealizated}
+                                {...register('visitRealizated', { required: true })}
+                            >
+                                <MenuItem value="No">No</MenuItem>
+                                <MenuItem value="Si">Si</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </div>
+                </>
+            )}
+
+
             {errors.exampleRequired && <span>Este campo es obligatorio</span>}
             <br />
-            <Button type="button" variant="contained" sx={{ ml: 2 }} onClick={() => router('/citas')}><CancelIcon /></Button>
-            <Button type="submit" variant="contained" sx={{ ml: 6 }} ><SaveIcon /></Button>
+            <Grid container spacing={2}>
+                <Grid item xs={6}>
+                    <Button
+                        type="button"
+                        variant="contained"
+                        fullWidth
+                        sx={{ ml: 0 }}
+                        onClick={() => router('/citas')}
+                    >
+                        <CancelIcon />
+                    </Button>
+                </Grid>
+                <Grid item xs={6}>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        fullWidth
+                    >
+                        <SaveIcon />
+                    </Button>
+                </Grid>
+            </Grid>
         </Box>
     );
 }

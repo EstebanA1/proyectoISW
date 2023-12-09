@@ -24,8 +24,8 @@ const DetailsCita = () => {
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
-                height: '75vh',
-                mt: 3
+                height: '60vh',
+                mt: 3,
             }}>
                     <br />
                     <div>

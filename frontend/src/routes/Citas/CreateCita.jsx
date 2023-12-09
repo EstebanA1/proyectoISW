@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import CitaForm from "../../components/CitaForm"
 import { Grid } from "@mui/material"
+
 const CreateCita = () => {
     const { date } = useParams();
     return (
