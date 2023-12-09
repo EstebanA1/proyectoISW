@@ -9,7 +9,6 @@ const XRegExp = require('xregexp');
 const unicodeWord1 = XRegExp('^[\\p{L} ]+$');
 const unicodeWord2 = XRegExp('^[\\p{L}0-9 ]+$');
 
-
 /**
  * Esquema de validación para el cuerpo de la solicitud de la cita.
  * @constant {Object}
