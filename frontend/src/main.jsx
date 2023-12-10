@@ -12,8 +12,20 @@ import CreateCita from './routes/Citas/CreateCita.jsx';
 import DetailsCita from './routes/Citas/DetailsCita.jsx';
 import UpdateCita from './routes/Citas/UpdateCita.jsx';
 import ListadoCita from './routes/Citas/ListadoCitas.jsx';
+<<<<<<< HEAD
 import { SnackbarProvider } from 'notistack';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+=======
+//Feedback
+import CreateFeedback from './routes/Feedback/CreateFeedback.jsx';
+import DeleteFeedback from './routes/Feedback/DeleteFeedback.jsx';
+import UpdateFeedback from './routes/Feedback/UpdateFeedback.jsx';
+import Feedback from './routes/Feedback/Feedback.jsx';
+import CreateInforme from './routes/Feedback/Informe/CreateInforme.jsx';
+import UpdateInforme from './routes/Feedback/Informe/UpdateInforme.jsx';
+
+
+>>>>>>> 99d140b7e74409a676155150ed83f00684fbbc4b
 import './index.css';
 
 const router = createBrowserRouter([
@@ -49,7 +61,31 @@ const router = createBrowserRouter([
       {
         path: '/citas/update/:id',
         element: <UpdateCita />,
-      }
+      },
+      {
+        path: '/feedback',
+        element: <Feedback />,
+      },
+      {
+        path: '/feedback/create/:id',
+        element: <CreateFeedback />,
+      },
+      {
+        path: '/feedback/delete/:id',
+        element: <DeleteFeedback />,
+      },
+      {
+        path: '/feedback/update/:id',
+        element: <UpdateFeedback />,
+      },
+      {
+        path: '/informe/create/:id',
+        element: <CreateInforme />,
+      },
+      {
+        path: '/informe/update/:id',
+        element: <UpdateInforme />,
+      },
     ],
   },
   {
