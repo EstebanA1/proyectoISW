@@ -71,6 +71,7 @@ const Citas = () => {
                         <Button sx={{ ml: 1, mb: 3, mt: -1 }} type="button" variant="contained" onClick={() => router(`/citas/${cita._id}`)}><InfoIcon /></Button>
                         <Button sx={{ ml: 1, mb: 3, mt: -1 }} type="button" variant="contained" onClick={() => router(`/citas/update/${cita._id}`)}><EditIcon /></Button>
                         <Button sx={{ ml: 1, mb: 3, mt: -1 }} type="button" variant="contained" onClick={() => router(`/citas/delete/${cita._id}`)}><DeleteIcon /></Button>
+                        <Button sx={{ ml: 1, mb: 3, mt: -1 }} type="button" variant="contained" onClick={() => router(`/feedback/create/${cita._id}`)}>Crear Retroalimentacion</Button>
                     </div>
                 ))}
                 <br />

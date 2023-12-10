@@ -5,6 +5,7 @@ const cors = require("cors");
 // Importa el módulo 'express' para crear la aplicacion web
 const express = require("express");
 // Importa el módulo 'multer' para subir archivos
+// eslint-disable-next-line no-unused-vars
 const multer = require("multer");
 // Importamos morgan para ver las peticiones que se hacen al servidor
 const morgan = require("morgan");
