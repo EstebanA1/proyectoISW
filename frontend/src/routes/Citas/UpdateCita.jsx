@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import CitaForm from "../../components/CitaForm"
-import { useParams } from "react-router-dom";
-import { getCita } from "../../services/cita.service";
 import { Grid } from "@mui/material"
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import CitaForm from "../../components/CitaForm"
+import { getCita } from "../../services/cita.service";
 
 const UpdateCita = () => {
     const { id } = useParams();
@@ -13,7 +13,6 @@ const UpdateCita = () => {
             setCita(res);
         });
     }, []);
-
 
     return (
         <>

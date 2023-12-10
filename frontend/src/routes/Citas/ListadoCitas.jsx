@@ -1,12 +1,12 @@
-import { getCitas } from '../../services/cita.service';
-import React, { useEffect, useState } from 'react';
 import { Grid } from '@mui/material'
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
+import React, { useEffect, useState } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
-import InfoIcon from '@mui/icons-material/Visibility';
 import AddIcon from '@mui/icons-material/LibraryAdd';
+import InfoIcon from '@mui/icons-material/Visibility';
+import { getCitas } from '../../services/cita.service';
 
 const Citas = () => {
     const [citas, setCitas] = useState([]);
