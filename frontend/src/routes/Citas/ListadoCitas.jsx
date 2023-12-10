@@ -46,6 +46,7 @@ const Citas = () => {
                         <p>{cita.date}</p>
                         <Button type="button" variant="contained" onClick={() => router(`/citas/update/${cita._id}`)}>Modificar</Button>
                         <Button type="button" variant="contained" onClick={() => router(`/citas/delete/${cita._id}`)}>Eliminar</Button>
+                        <Button type="button" variant="contained" onClick={() => router(`/feedback/create/${cita._id}`)}>Crear Retroalimentacion</Button>
                     </div>
                 ))}
                 <br />
