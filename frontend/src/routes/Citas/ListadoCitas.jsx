@@ -9,10 +9,9 @@ import InfoIcon from '@mui/icons-material/Visibility';
 import { getCitas } from '../../services/cita.service';
 
 const Citas = () => {
+    const router = useNavigate();
     const [citas, setCitas] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
-
-    const router = useNavigate();
 
     useEffect(() => {
         getCitas().then((res) => {
@@ -34,7 +33,6 @@ const Citas = () => {
                 height: '75vh'
             }}>
                 <h1>Listado de Citas</h1>
-
                 <Grid sx={{
                     display: 'flex',
                     alignItems: 'right',
@@ -56,17 +54,14 @@ const Citas = () => {
                     />
                     <Button type="button" variant="contained" sx={{ mr: 2, ml: 2 }} onClick={() => router(`/citas/create/`)}><AddIcon /></Button>
                 </Grid>
-
-
                 {citas.filter((cita) => cita.name.toLowerCase().includes(searchTerm.toLowerCase())).map((cita, index) => (
                     <div key={cita._id}>
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <span>{index + 1}.</span>
                             <span>{cita.name}</span>
                         </div>
-
                         <div style={{ display: 'flex', justifyContent: 'end' }}>
-                        <h5>{cita.date}</h5>
+                            <h5>{cita.date}</h5>
                         </div>
                         <Button sx={{ ml: 1, mb: 3, mt: -1 }} type="button" variant="contained" onClick={() => router(`/citas/${cita._id}`)}><InfoIcon /></Button>
                         <Button sx={{ ml: 1, mb: 3, mt: -1 }} type="button" variant="contained" onClick={() => router(`/citas/update/${cita._id}`)}><EditIcon /></Button>

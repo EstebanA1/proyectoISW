@@ -19,11 +19,9 @@ const Citas = () => {
 
     return (
         <>
-
             <SnackbarProvider
                 autohideDuration={3000}
             >
-
                 <Grid sx={{
                     display: 'flex',
                     flexDirection: 'column',
@@ -31,16 +29,12 @@ const Citas = () => {
                     justifyContent: 'center',
                 }}>
                     <h1>Calendario de Citas</h1>
-
                     <div className='line' style={{ width: '85%' }}></div>
                 </Grid>
-
                 <div>
                     <Calendar citas={citas} />
                 </div>
-
             </SnackbarProvider>
-
         </>
     );
 };

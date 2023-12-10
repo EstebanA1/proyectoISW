@@ -1,4 +1,3 @@
-// Calendar.jsx
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Fullcalendar from "@fullcalendar/react"
@@ -16,13 +15,10 @@ function Calendar(props) {
 
     const convertirFecha = (fechaString) => {
         const partes = fechaString.split("/");
-
         const dia = parseInt(partes[0]);
         const mes = parseInt(partes[1]) - 1;
         const año = parseInt(partes[2]);
-
         const fechaObjeto = new Date(año, mes, dia);
-
         return fechaObjeto;
     };
 
@@ -64,10 +60,8 @@ function Calendar(props) {
                 }}
                 dayCellContent={(info) => {
                     const dia = info.date;
-
                     const hoy = new Date();
                     hoy.setHours(0, 0, 0, 0);
-
                     const fechaFormateada = `${dia.getDate()}-${dia.getMonth() + 1}-${dia.getFullYear()}`;
 
                     return (
