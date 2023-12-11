@@ -15,13 +15,13 @@ export const getCitas = async () => {
 
 export const getCita = async (id) => {
     try {
-        const response = await axios.get(`/citas/${id}`);        
+        const response = await axios.get(`/citas/${id}`);
         const { status, data } = response;
         if (status === 200) {
             return data.data[1];
         }
         return {};
-    } catch (error){
+    } catch (error) {
         console.log(error);
         console.log(error.response);
     }
@@ -29,13 +29,11 @@ export const getCita = async (id) => {
 
 export const createCita = async (cita) => {
     try {
-        // Formatea la fecha en el formato 'xx/xx/xxxx'
-        let fecha = new Date(cita.date);
-        let dia = String(fecha.getDate()).padStart(2, '0');
-        let mes = String(fecha.getMonth() + 1).padStart(2, '0'); 
-        let ano = fecha.getFullYear(); 
+        // Divide la fecha en partes
+        let partes = cita.date.split("/");
 
-        let fechaFormateada = `${dia}/${mes}/${ano}`; // Formatea la fecha en el formato 'xx/xx/xxxx'
+        // Reorganiza las partes en el formato dd/mm/aaaa
+        let fechaFormateada = `${partes[0]}/${partes[1]}/${partes[2]}`;
 
         // Reemplaza la fecha en 'cita' con la fecha formateada
         cita.date = fechaFormateada;
@@ -51,6 +49,7 @@ export const createCita = async (cita) => {
     }
 }
 
+
 export const deleteCita = async (id) => {
     try {
         const response = await axios.delete(`/citas/${id}`);
@@ -58,28 +57,37 @@ export const deleteCita = async (id) => {
             return response.data;
         }
         return {};
-    } catch (error){
+    } catch (error) {
         console.log(error.response);
     }
 }
 
 export const updateCita = async (id, cita) => {
     try {
-        let fecha = new Date(cita.date);
-        let dia = String(fecha.getDate()).padStart(2, '0');
-        let mes = String(fecha.getMonth() + 1).padStart(2, '0'); 
-        let ano = fecha.getFullYear(); 
+        // Divide la fecha en partes
+        let partes = cita.date.split("/");
 
-        let fechaFormateada = `${dia}/${mes}/${ano}`;
-        
-        cita.date = fechaFormateada;
+        // Reorganiza las partes en el formato dd/mm/aaaa
+        let fechaFormateada = `${partes[0]}/${partes[1]}/${partes[2]}`;
 
-        const response = await axios.put(`/citas/${id}`, cita);
+        // Crea un nuevo objeto con solo las propiedades que tu esquema de validación espera
+        let citaToUpdate = {
+            name: cita.name,
+            typeOfRequest: cita.typeOfRequest,
+            address: cita.address,
+            date: fechaFormateada,
+            hour: cita.hour,
+            status: cita.status,
+            visitRealizated: cita.visitRealizated
+        };
+
+        const response = await axios.put(`/citas/${id}`, citaToUpdate);
         if (response.status === 200) {
             return response.data;
         }
         return {};
-    } catch (error){
+    } catch (error) {
         console.log(error.response);
     }
 }
+

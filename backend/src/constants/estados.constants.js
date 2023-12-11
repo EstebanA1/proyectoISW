@@ -1,4 +1,4 @@
 /** Estados permitidos por la base de datos */
-const ESTADOS = ["aprobado", "pendiente", "rechazado"];
+const ESTADOS = ["Aprobado", "Pendiente", "Rechazado"];
 
 module.exports = ESTADOS;

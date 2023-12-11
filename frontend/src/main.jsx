@@ -1,24 +1,19 @@
 import ReactDOM from 'react-dom/client';
 import App from './routes/App.jsx';
-
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-
-
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Root from './routes/Root.jsx';
 import ErrorPage from './routes/ErrorPage.jsx';
 import Login from './routes/Login.jsx';
 import Citas from './routes/Citas/Citas.jsx';
 import CreateCita from './routes/Citas/CreateCita.jsx';
-import DeleteCita from './routes/Citas/DeleteCita.jsx';
 import DetailsCita from './routes/Citas/DetailsCita.jsx';
 import UpdateCita from './routes/Citas/UpdateCita.jsx';
 import ListadoCita from './routes/Citas/ListadoCitas.jsx';
-
-
+import { SnackbarProvider } from 'notistack';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './index.css';
 
 const router = createBrowserRouter([
@@ -52,13 +47,33 @@ const router = createBrowserRouter([
         element: <CreateCita />,
       },
       {
-        path: '/citas/delete/:id',
-        element: <DeleteCita />,
-      },
-      {
         path: '/citas/update/:id',
         element: <UpdateCita />,
-      }
+      },
+      {
+        path: '/feedback',
+        element: <Feedback />,
+      },
+      {
+        path: '/feedback/create/:id',
+        element: <CreateFeedback />,
+      },
+      {
+        path: '/feedback/delete/:id',
+        element: <DeleteFeedback />,
+      },
+      {
+        path: '/feedback/update/:id',
+        element: <UpdateFeedback />,
+      },
+      {
+        path: '/informe/create/:id',
+        element: <CreateInforme />,
+      },
+      {
+        path: '/informe/update/:id',
+        element: <UpdateInforme />,
+      },
     ],
   },
   {
@@ -68,5 +83,12 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <RouterProvider router={router} />
+  <SnackbarProvider
+    anchorOrigin={{
+      vertical: 'bottom',
+      horizontal: 'right',
+    }}
+  >
+    <RouterProvider router={router} />
+  </SnackbarProvider>
 );
