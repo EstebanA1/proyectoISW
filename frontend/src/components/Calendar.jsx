@@ -1,4 +1,3 @@
-// Calendar.jsx
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Fullcalendar from "@fullcalendar/react"
@@ -7,6 +6,7 @@ import timeGridPlugin from "@fullcalendar/timegrid"
 import interactionPlugin from "@fullcalendar/interaction"
 import esLocale from "@fullcalendar/core/locales/es";
 import { Button } from "@mui/material";
+import AddIcon from '@mui/icons-material/LibraryAdd';
 
 function Calendar(props) {
     const router = useNavigate();
@@ -15,13 +15,10 @@ function Calendar(props) {
 
     const convertirFecha = (fechaString) => {
         const partes = fechaString.split("/");
-
         const dia = parseInt(partes[0]);
         const mes = parseInt(partes[1]) - 1;
         const año = parseInt(partes[2]);
-
         const fechaObjeto = new Date(año, mes, dia);
-
         return fechaObjeto;
     };
 
@@ -63,10 +60,8 @@ function Calendar(props) {
                 }}
                 dayCellContent={(info) => {
                     const dia = info.date;
-
                     const hoy = new Date();
                     hoy.setHours(0, 0, 0, 0);
-
                     const fechaFormateada = `${dia.getDate()}-${dia.getMonth() + 1}-${dia.getFullYear()}`;
 
                     return (
@@ -74,8 +69,8 @@ function Calendar(props) {
                             <div className="dia">{dia.getDate()}</div>
 
                             {dia > hoy && (
-                                <div className="invibleButton" style={{ position: 'absolute', width: '100%' }}>
-                                    <Button onClick={() => router(`/citas/create/${fechaFormateada}`)}>Agregar cita</Button>
+                                <div className="invibleButton" style={{ position: 'absolute', left: '-9em', top: '0', width: '100%', height: '100%' }}>
+                                    <Button onClick={() => router(`/citas/create/${fechaFormateada}`)}><AddIcon /> </Button>
                                 </div>
                             )}
                         </div>

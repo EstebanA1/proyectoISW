@@ -1,5 +1,6 @@
 import LoginForm from '../components/LoginForm';
 import { useNavigate } from 'react-router-dom';
+import { Grid } from '@mui/material';
 
 function Login() {
   const navigate = useNavigate();
@@ -14,10 +15,15 @@ function Login() {
   }
 
   return (
-    <div>
-      <h2>Inicia sesion!</h2>
+    <Grid sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: '75vh'
+    }}>
       <LoginForm />
-    </div>
+    </Grid>
   );
 }
 

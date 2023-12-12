@@ -1,16 +1,16 @@
-import { Grid } from "@mui/material"
 import { useEffect, useState } from "react";
+import InformeForm from "../../../components/InformeForm";
 import { useParams } from "react-router-dom";
-import CitaForm from "../../components/CitaForm"
-import { getCita } from "../../services/cita.service";
+import { getInforme } from "../../../services/informe.service.js";
+import { Grid } from "@mui/material"
 
-const UpdateCita = () => {
+const UpdateInforme = () => {
     const { id } = useParams();
-    const [cita, setCita] = useState(null);
+    const [informe, setInforme] = useState(null);
 
     useEffect(() => {
-        getCita(id).then((res) => {
-            setCita(res);
+        getInforme(id).then((res) => {
+            setInforme(res);
         });
     }, []);
 
@@ -24,10 +24,10 @@ const UpdateCita = () => {
                 justifyContent: 'center',
                 height: '75vh'
             }}>
-                {cita && <CitaForm cita={cita} fecha={cita.date} />}
+                {informe && <InformeForm informe={informe} />}
             </Grid>
         </>
     )
 }
 
-export default UpdateCita;
+export default UpdateInforme;
