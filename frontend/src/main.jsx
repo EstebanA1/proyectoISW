@@ -50,30 +50,30 @@ const router = createBrowserRouter([
         path: '/citas/update/:id',
         element: <UpdateCita />,
       },
-      {
-        path: '/feedback',
-        element: <Feedback />,
-      },
-      {
-        path: '/feedback/create/:id',
-        element: <CreateFeedback />,
-      },
-      {
-        path: '/feedback/delete/:id',
-        element: <DeleteFeedback />,
-      },
-      {
-        path: '/feedback/update/:id',
-        element: <UpdateFeedback />,
-      },
-      {
-        path: '/informe/create/:id',
-        element: <CreateInforme />,
-      },
-      {
-        path: '/informe/update/:id',
-        element: <UpdateInforme />,
-      },
+      // {
+      //   path: '/feedback',
+      //   element: <Feedback />,
+      // },
+      // {
+      //   path: '/feedback/create/:id',
+      //   element: <CreateFeedback />,
+      // },
+      // {
+      //   path: '/feedback/delete/:id',
+      //   element: <DeleteFeedback />,
+      // },
+      // {
+      //   path: '/feedback/update/:id',
+      //   element: <UpdateFeedback />,
+      // },
+      // {
+      //   path: '/informe/create/:id',
+      //   element: <CreateInforme />,
+      // },
+      // {
+      //   path: '/informe/update/:id',
+      //   element: <UpdateInforme />,
+      // },
     ],
   },
   {
