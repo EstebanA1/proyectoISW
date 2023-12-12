@@ -95,7 +95,7 @@ function PageRoot() {
               onMouseOut={() => handleMouseOut(setCitasButtonStyle)}
               onClick={() => navigate('/citas')}
             >
-              Ver citas
+              Citas
             </Button>
 
             <Button
