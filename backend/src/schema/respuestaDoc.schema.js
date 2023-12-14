@@ -18,21 +18,18 @@ const respuestaDocBodySchema = Joi.object({
         "string.empty": "El rut del solicitante no puede estar vacío.",
         "any.required": "El rut del solicitante es obligatorio.",
         "string.base": "El rut del solcitante debe ser de tipo string.",
+        "string.pattern.base": "El rut del solicitante debe ser válido.",  
     }),
-    firma: Joi.string().required().messages({
-        "string.empty": "La firma no puede estar vacío.",
-        "any.required": "La firma es obligatorio.",
-        "string.base": "La firma debe ser de tipo string.",
-    }),
-    logo: Joi.string().required().messages({
-        "string.empty": "El logo no puede estar vacío.",
-        "any.required": "El logo es obligatorio.",
-        "string.base": "El logo debe ser de tipo string.",
-    }),
-    descripcion: Joi.string().required().messages({
+    descripcion: Joi.string().required().min(3).messages({
         "string.empty": "La descripcion de la respuesta no puede estar vacío.",
         "any.required": "La descripcion de la respuesta es obligatorio.",
         "string.base": "La descripcion de la respuesta debe ser de tipo string.",
+        "string.min": "La descripcion de la respuesta debe tener al menos 3 caracteres.",
+    }),
+    solicitud: Joi.string().length(24).required().messages({
+        "string.empty": "El id de la solicitud no puede estar vacío.",
+        "any.required": "El id de la solicitud es obligatorio.",
+        "string.length": "El id de la solicitud debe tener 24 caracteres.",
     }),
 }).messages({
     "object.unknown": "No se permiten propiedades adicionales.",

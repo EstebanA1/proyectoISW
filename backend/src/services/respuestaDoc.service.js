@@ -1,5 +1,7 @@
 "use strict";
 
+const Joi = require("joi");
+
 const RespuestaDoc = require("../models/respuestaDoc.model");
 const handleError = require("../utils/errorHandler");
 
@@ -15,7 +17,7 @@ async function getRespuestasDoc() {
 
 async function createRespuestaDoc(respuestaDoc) {
     try {
-        const { nombre, rut, firma, fecha, logo, descripcion } = respuestaDoc;
+        const { nombre, rut, fecha, descripcion, solicitud } = respuestaDoc;
 
         const respuestaDocFound = await RespuestaDoc.findOne({ nombre: respuestaDoc.nombre });
         if (respuestaDocFound) return [null, "La respuesta ya existe"];
@@ -23,10 +25,8 @@ async function createRespuestaDoc(respuestaDoc) {
         const newRespuestaDoc = new RespuestaDoc({
             nombre,
             rut,
-            firma,
-            fecha,
-            logo,
-            descripcion
+            descripcion,
+            solicitud,
         });
         await newRespuestaDoc.save();
 
@@ -41,13 +41,12 @@ async function updateRespuestaDoc(respuestaDocId, respuestaDoc) {
         const respuestaDocFound = await RespuestaDoc.findById(respuestaDocId);
         if (!respuestaDocFound) return [null, "La respuesta no existe"];
 
-        const { nombre, rut, firma, logo, descripcion } = respuestaDoc;
+        const { error: descripcionError } = Joi.string().min(3).validate(descripcion);
+        if (descripcionError) return [null, "La descripción debe tener más de dos palabras"];
 
         await RespuestaDoc.findByIdAndUpdate(respuestaDocId, {
             nombre,
             rut,
-            firma,
-            logo,
             descripcion,
         });
 

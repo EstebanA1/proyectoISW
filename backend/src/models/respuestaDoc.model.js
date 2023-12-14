@@ -15,22 +15,19 @@ const respuestaDocSchema = new mongoose.Schema({
         type: String,
         required: true,
     },    
-    firma: {
-        type: String,
-        required: true,
-    },
     fecha: {
         type: String,
         default: fechaActual.getDate() + "/" + (fechaActual.getMonth() + 1) + "/" + fechaActual.getFullYear(),
     },
-    logo: {
-        type: String,
-        required: true,
-    },
     descripcion: {
         type: String,
         required: true,
-    },  
+    },
+    ID_solicitud: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Solicitud",
+        required: true,
+    },
 });
 
 /** Modelo de datos 'RespuestaDoc' */
