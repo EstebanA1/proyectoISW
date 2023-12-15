@@ -122,30 +122,55 @@ export default function CitaForm({ cita, fecha }) {
                 {errors.address && errors.address.type !== "pattern" && <p style={{ position: 'absolute', right: '-93.8%', top: '20%', transform: 'translateY(-50%)', color: 'red' }}>{errors.address.message}</p>}
             </Box>
 
-            <Box position="relative" width="100%">
-                <TextField
-                    id="date"
-                    label="Fecha"
-                    type="date"
-                    variant="filled"
-                    autoComplete='off'
-                    defaultValue=''
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    fullWidth
-                    {...register('date', {
-                        required: 'La fecha es obligatoria',
-                        validate: {
-                            notInFuture: value => new Date(value) <= new Date(new Date().setFullYear(new Date().getFullYear() + 1)) || 'La fecha no puede ser mayor a un año a partir de hoy',
-                            notBeforeTomorrow: value => new Date(value) >= new Date(new Date().setDate(new Date().getDate())) || 'La fecha no puede ser menor que la de mañana'
-                        }
-                    })}
-                />
-                {errors.date && errors.date.type === "notInFuture" && <p style={{ position: 'absolute', right: '-192.5%', top: '20%', transform: 'translateY(-50%)', color: 'red' }}>{errors.date.message}</p>}
-                {errors.date && errors.date.type === "notBeforeTomorrow" && <p style={{ position: 'absolute', right: '-171.5%', top: '20%', transform: 'translateY(-50%)', color: 'red' }}>{errors.date.message}</p>}
-                {errors.date && errors.date.type === "required" && <p style={{ position: 'absolute', right: '-81.2%', top: '20%', transform: 'translateY(-50%)', color: 'red' }}>{errors.date.message}</p>}
-            </Box>
+
+            {cita ? (
+                // Aquí va el código que quieres mostrar si existe la cita
+                <Box position="relative" width="100%">
+                    <TextField
+                        id="date"
+                        label="Fecha"
+                        type="date"
+                        variant="filled"
+                        autoComplete='off'
+                        defaultValue=''
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        fullWidth
+                        {...register('date', {
+                            required: 'La fecha es obligatoria',
+                        })}
+                    />
+                    {errors.date && errors.date.type === "required" && <p style={{ position: 'absolute', right: '-81.2%', top: '20%', transform: 'translateY(-50%)', color: 'red' }}>{errors.date.message}</p>}
+                </Box>
+            ) : (
+                // Aquí va el código que quieres mostrar si no existe la cita
+                <Box position="relative" width="100%">
+                    <TextField
+                        id="date"
+                        label="Fecha"
+                        type="date"
+                        variant="filled"
+                        autoComplete='off'
+                        defaultValue=''
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        fullWidth
+                        {...register('date', {
+                            required: 'La fecha es obligatoria',
+                            validate: {
+                                notInFuture: value => new Date(value) <= new Date(new Date().setFullYear(new Date().getFullYear() + 1)) || 'La fecha no puede ser mayor a un año a partir de hoy',
+                                notBeforeTomorrow: value => new Date(value) >= new Date(new Date().setDate(new Date().getDate())) || 'La fecha no puede ser menor que la de mañana'
+                            }
+                        })}
+                    />
+                    {errors.date && errors.date.type === "notInFuture" && <p style={{ position: 'absolute', right: '-192.5%', top: '20%', transform: 'translateY(-50%)', color: 'red' }}>{errors.date.message}</p>}
+                    {errors.date && errors.date.type === "notBeforeTomorrow" && <p style={{ position: 'absolute', right: '-171.5%', top: '20%', transform: 'translateY(-50%)', color: 'red' }}>{errors.date.message}</p>}
+                    {errors.date && errors.date.type === "required" && <p style={{ position: 'absolute', right: '-81.2%', top: '20%', transform: 'translateY(-50%)', color: 'red' }}>{errors.date.message}</p>}
+                </Box>
+            )}
+
 
             <Box position="relative" width="100%">
                 <TextField
