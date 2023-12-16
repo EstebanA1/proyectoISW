@@ -17,7 +17,7 @@ async function getRespuestasDoc() {
 
 async function createRespuestaDoc(respuestaDoc) {
     try {
-        const { nombre, rut, fecha, descripcion, solicitud } = respuestaDoc;
+        const { nombre, rut, fecha, descripcion, ID_solicitud } = respuestaDoc;
 
         const respuestaDocFound = await RespuestaDoc.findOne({ nombre: respuestaDoc.nombre });
         if (respuestaDocFound) return [null, "La respuesta ya existe"];
@@ -26,7 +26,7 @@ async function createRespuestaDoc(respuestaDoc) {
             nombre,
             rut,
             descripcion,
-            solicitud,
+            ID_solicitud,
         });
         await newRespuestaDoc.save();
 

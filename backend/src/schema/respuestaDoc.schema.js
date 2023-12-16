@@ -26,7 +26,7 @@ const respuestaDocBodySchema = Joi.object({
         "string.base": "La descripcion de la respuesta debe ser de tipo string.",
         "string.min": "La descripcion de la respuesta debe tener al menos 3 caracteres.",
     }),
-    solicitud: Joi.string().length(24).required().messages({
+    ID_solicitud: Joi.string().length(24).required().messages({
         "string.empty": "El id de la solicitud no puede estar vacío.",
         "any.required": "El id de la solicitud es obligatorio.",
         "string.length": "El id de la solicitud debe tener 24 caracteres.",
