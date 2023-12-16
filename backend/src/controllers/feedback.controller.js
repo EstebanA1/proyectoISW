@@ -1,10 +1,14 @@
+/* eslint-disable arrow-parens */
+/* eslint-disable max-len */
+/* eslint-disable spaced-comment */
+/* eslint-disable no-unused-vars */
 "use strict";
 
 const { respondSuccess, respondError } = require("../utils/resHandler");
 const FeedbackService = require("../services/feedback.service");
-const citasService = require("../services/citas.service");
 const { handleError } = require("../utils/errorHandler");
 const { feedbackBodySchema, feedbackIdSchema } = require("../schema/feedback.schema");
+const Joi = require("joi");
 
 const CitaService = require("../services/citas.service");
 
@@ -14,12 +18,12 @@ const CitaService = require("../services/citas.service");
  */
 async function getFeedback(req, res) {
     try {
-        const [feedbacks, errorFeedbacks] = await FeedbackService.getFeedback();
-        if (errorFeedbacks) return respondError(req, res, 404, errorFeedbacks);
+        const [feedback, errorFeedback] = await FeedbackService.getFeedback();
+        if (errorFeedback) return respondError(req, res, 404, errorFeedback);
 
-        feedbacks.length === 0
+        feedback.length === 0
             ? respondSuccess(req, res, 204)
-            : respondSuccess(req, res, 200, ["Las Retroalimentaciones son: ", feedbacks]);
+            : respondSuccess(req, res, 200, ["Las Retroalimentaciones son: ", feedback]);
     } catch (error) {
         handleError(error, "feedback.controller -> getFeedback");
         respondError(req, res, 400, error.message);
@@ -42,6 +46,15 @@ async function createFeedback(req, res) {
         const [cita, errorCitas] = await CitaService.getCitaById(body.IDCita);
         if (errorCitas) return respondError(req, res, 404, "No Existe Cita Asociada Con Ese ID Para Retroalimentacion, Revise ID de Cita");
 
+        //Imagenes
+        /*for (const file of req.files) {
+            switch (file.fieldname) {
+              case "imagenes":
+                body.imagenes = "../../uploads/" + file.filename;
+                break;
+            }
+        }//*/
+
         const [newFeedback, feedbackError] = await FeedbackService.createFeedback(body);
 
         if (feedbackError) return respondError(req, res, 400, feedbackError);
@@ -50,7 +63,7 @@ async function createFeedback(req, res) {
         }
 
         cita.visitRealizated = "Si";
-        const {updateCita, updateError} = await CitaService.updateCita(body.IDCita, cita);
+        const { updateCita, updateError } = await CitaService.updateCita(body.IDCita, cita);
         if (updateError) return respondError(req, res, 400, "No se pudo actualizar la cita");
 
         respondSuccess(req, res, 201, newFeedback);
@@ -97,6 +110,16 @@ async function updateFeedback(req, res) {
         const [cita, errorCitas] = await CitaService.getCitaById(body.IDCita);
         if (errorCitas) return respondError(req, res, 404, "No Existe Cita Asociada Con Ese ID Para Retroalimentacion, Revise ID de Cita");
 
+        /*//Imagenes
+        for (const file of req.files) {
+            switch (file.fieldname) {
+              case "imagenes":
+                body.imagenes = body.imagenes || [];
+                body.imagenes.push("../../uploads/" + file.filename);
+                break;
+            }
+        }*/
+
         const [updatedFeedback, errorUpdateFeedback] = await FeedbackService.updateFeedback(id, body);
         if (errorUpdateFeedback) return respondError(req, res, 404, errorUpdateFeedback);
 
@@ -132,5 +155,5 @@ module.exports = {
     createFeedback,
     getFeedbackById,
     updateFeedback,
-    deleteFeedback
+    deleteFeedback,
 };

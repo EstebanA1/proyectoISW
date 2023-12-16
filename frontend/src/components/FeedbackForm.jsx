@@ -1,128 +1,163 @@
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { createFeedback } from "../services/feedback.service";
+import React, { useEffect } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { createFeedback, updateFeedback } from "../services/feedback.service";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button, TextField, Box } from "@mui/material";
+import { Button, TextField, Box, MenuItem, FormControl, InputLabel, Select, Grid, Paper, Typography } from "@mui/material";
+import SaveIcon from "@mui/icons-material/Save";
+import CancelIcon from "@mui/icons-material/Cancel";
+import { useSnackbar } from "notistack";
 
-export default function FeedbackForm({ feedback }) {
+export default function FeedbackForm({ feedback, solicitante }) {
     const router = useNavigate();
     const { id } = useParams();
+    const [selectedImage, setSelectedImage] = React.useState(null);
     
-    const [error, setError] = React.useState({
-        error: false,
-        message: "",
-    });
-
-    //Imagenes
-    const [selectedImage, setSelectedImage] = useState(null);
-    const [selectStatus, setSelectStatus] = useState("pendiente");
-
     const handleImageChange = (event) => {
         const imageFile = event.target.files[0];
         setSelectedImage(imageFile);
     };
-
+    
+    //Arreglar logica para subir imagen
     const handleImageUpload = () => {
-    // Aquí puedes agregar lógica para subir la imagen a tu servidor o realizar alguna acción con la imagen seleccionada.
-    // Por ejemplo, puedes usar una biblioteca como Axios para realizar una solicitud POST al servidor.
         console.log('Subiendo imagen:', selectedImage);
-
-    // Limpiar el estado después de subir la imagen
         setSelectedImage(null);
     };
-    
+
+    const { enqueueSnackbar } = useSnackbar();
+    const [error] = React.useState({
+        error: false,
+        message: "",
+    });
+
     const {
         register,
         handleSubmit,
         formState: { errors },
         setValue,
-        reset,
+        control,
     } = useForm({
         defaultValues: feedback ? feedback : {},
     });
-    
+
     useEffect(() => {
         if (feedback) {
-        setValue("solicitante", feedback.solicitante);
-        setValue("fecha", feedback.fecha);
-        //setValue("informe", feedback.informe);
-        setValue("comentarios", feedback.comentarios);
-        //setValue("imagenes", feedback.imagenes);
-        setValue("estado", feedback.estado);
+            setValue("solicitante", feedback.solicitante);
+            setValue("fechaVisita", feedback.fechaVisita);
+            setValue("comentarios", feedback.comentarios);
+            setValue("estado", feedback.estado);
         }
     }, [feedback, setValue]);
-    
+
     const onSubmit = async (data) => {
-        const res = await createFeedback(id, data);
-        console.log(res);
+        const newData = { ...data, solicitante: solicitante };
+
+        if (feedback) {
+            const res = await updateFeedback(id, newData);
+            enqueueSnackbar("Retroalimentacion actualizada", { variant: "success" });
+            console.log(res);
+        } else {
+            const res = await createFeedback(newData);
+            enqueueSnackbar("Retroalimentacion creada", { variant: "success" });
+            console.log(res);
+        }
         router("/feedback");
     };
-    
+
     return (
-        <Box component="form" onSubmit={handleSubmit(onSubmit)}
-        sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: 2,
-            width: '100%',
-        }}
-        >
-        <div>
-            <TextField
-            id="solicitante"
-            label="Nombre del Solicitante"
-            variant="filled"
-            autoComplete="off"
-            sx={{ width: '100%'}}
-            {...register("solicitante", { required: true })}
-            />
-        </div>
-        <div>
-            <TextField
-            id="fecha"
-            label="Fecha de Visita"
-            variant="filled"
-            autoComplete="off"
-            sx={{ width: '100%'}}
-            {...register("fecha", { required: true })}
-            />
-        </div>
-        <div>
-            <TextField
-            id="comentarios"
-            label="Comentarios"
-            variant="filled"
-            autoComplete="off"
-            sx={{ width: '100%'}}
-            {...register("comentarios", { required: true })}
-            />
-        </div>
-        <div>
-            <label style={{ color: 'black' }} sx={{ width: '100%'}}> Estado: </label>
-            <select defaultValue="pendiente"{...register("estado", { required: true })}>
-                <option value="pendiente">Pendiente</option>
-                <option value="aprobado">Aprobado</option>
-                <option value="rechazado">Rechazado</option>
-            </select>
-        </div>
-        <div>
-            <label style={{ color: 'black' }} sx={{ width: '100%'}} >Subir Imagen:</label>
-            <input type="file" onChange={handleImageChange} accept="image/*" />
-            {selectedImage && (<img src={URL.createObjectURL(selectedImage)} alt="Vista Previa" style={{ maxWidth: '100%', marginTop: '10px', color: 'black' }} />)}
-        </div>
-        <div>
-            <Button type="button" variant="contained" onClick={() => router('/informe/create/${feedback._id}')} sx={{ width: '100%'}}>Informe</Button>
-            {/*...register("informe", { required: true })*/}
-        </div>
-        <Button 
-            onClick={handleImageUpload} 
-            disabled={!selectedImage } 
-            type="submit" 
-            variant="contained" 
-            sx={{ width: '50%'}}>
-                Guardar
-        </Button>
+        <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+            <Box position="relative" width= '100%'>
+                <TextField
+                    id="solicitante"
+                    label="Nombre Solicitante"
+                    variant="filled"
+                    autoComplete='off'
+                    fullWidth
+                    {...register("solicitante", { required: 'El Nombre del Solicitante es Obligatorio' })}
+                    error={errors.solicitante}
+                />
+            </Box>
+            <Box position="relative" width="100%">
+                <TextField
+                    id="fechaVisita"
+                    label="Fecha Visita"
+                    variant="filled"
+                    autoComplete='off'
+                    fullWidth
+                    {...register("fecha", { required: 'La Fecha es Obligatoria' })}
+                    error={errors.fecha}
+                />
+            </Box>
+            <Box position="relative" width="100%">
+                <TextField
+                    id="comentarios"
+                    label="Comentarios"
+                    variant="filled"
+                    autoComplete='off'
+                    fullWidth
+                    {...register("comentarios", { required: 'Los Comentarios son Obligatorios', minLength: { value: 2, message: 'El nombre debe tener al menos 2 caracteres'} })}
+                    error={errors.comentarios}
+                />
+            </Box>
+            <div>
+                <FormControl variant="filled" style={{ position: 'relative'}} fullWidth>
+                    <InputLabel id="estado">Estado</InputLabel>
+                    <Controller
+                        name="estado"
+                        control={control}
+                        defaultValue={feedback && feedback.estado ? feedback.estado : ""}
+                        rules={{ required: 'El Estado es Obligatorio' }}
+                        render={({ field }) => (
+                            <Select
+                                id="estado"
+                                label="Estado"
+                                variant="filled"
+                                error={errors.estado}
+                                fullWidth
+                                {...field}
+                            >
+                                <MenuItem value="Pendiente">Pendiente</MenuItem>
+                                <MenuItem value="Aprobado">Aprobado</MenuItem>
+                                <MenuItem value="Rechazado">Rechazado</MenuItem>
+                            </Select>
+                        )}
+                    />
+                    {errors.estado && <p className="my-error"> {errors.estado.message}</p>}
+                </FormControl>
+            </div>
+            <div>
+                <label style={{ color: 'black' }}>Subir Imagen:</label>
+                <input type="file" onChange={handleImageChange} accept="image/*" />
+                {selectedImage && (<img src={URL.createObjectURL(selectedImage)} alt="Vista Previa" style={{ maxWidth: '100%', marginTop: '10px', color: 'black' }} />)}
+            </div>
+
+            <Grid container spacing={2} sx={{ marginTop: 2 }}>
+                <Grid item xs={6}>
+                    <Button
+                        variant="contained"
+                        color="error"
+                        fullWidth
+                        startIcon={<CancelIcon />}
+                        onClick={() => router("/citas/listado")}
+                    >
+                        Cancelar
+                    </Button>
+                </Grid>
+                <Grid item xs={6}>
+                    <Button
+                        onClick={handleImageUpload} 
+                        variant="contained"
+                        color="success"
+                        fullWidth
+                        endIcon={<SaveIcon />}
+                        type="submit"
+                        sx={{ width: '50%'}}
+                    >
+                        Guardar
+                    </Button>
+                </Grid>
+            </Grid>
         </Box>
+
     );
-    }
+}
+
