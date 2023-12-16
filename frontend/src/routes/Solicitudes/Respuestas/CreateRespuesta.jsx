@@ -1,11 +1,13 @@
-import { Grid } from "@mui/material";
-import { useParams } from "react-router-dom";
 import RespuestaForm from "../../../components/RespuestaDocForm";
+import { Grid } from "@mui/material"
+import { useParams } from "react-router-dom";
+
 
 const CreateRespuesta = () => {
     const { id } = useParams();
     return (
         <>
+            <br />
             <Grid sx={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -21,5 +23,6 @@ const CreateRespuesta = () => {
         </>
     )
 }
+
 
 export default CreateRespuesta;

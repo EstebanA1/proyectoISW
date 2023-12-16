@@ -29,15 +29,6 @@ export const getRespuesta = async (id) => {
 
 export const createRespuesta = async (respuesta) => {
     try {
-        // Divide la fecha en partes
-        let partes = respuesta.date.split("/");
-
-        // Reorganiza las partes en el formato dd/mm/aaaa
-        let fechaFormateada = `${partes[0]}/${partes[1]}/${partes[2]}`;
-
-        // Reemplaza la fecha en 'respuesta' con la fecha formateada
-        respuesta.date = fechaFormateada;
-
         const response = await axios.post('/respuesta', respuesta);
 
         if (response.status === 201) {
