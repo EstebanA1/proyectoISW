@@ -36,10 +36,10 @@ const solicitudSchema = new mongoose.Schema({
         type: String,
         default: "Pendiente",
     },
-    archivoPDF: {
+     archivoPDF: {
         type: String,
         default: "./uploads/archivoPDF.pdf,"
-    },
+    }, 
 });
 
 /** Modelo de datos 'Solicitud' */
