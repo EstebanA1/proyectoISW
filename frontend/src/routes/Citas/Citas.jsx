@@ -19,9 +19,7 @@ const Citas = () => {
 
     return (
         <>
-            <SnackbarProvider
-                autohideDuration={3000}
-            >
+            <SnackbarProvider>
                 <Grid sx={{
                     display: 'flex',
                     flexDirection: 'column',
