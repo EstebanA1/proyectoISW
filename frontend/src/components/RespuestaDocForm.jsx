@@ -7,14 +7,14 @@ import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useSnackbar } from 'notistack';
 
-export default function RespuestaForm({ respuesta }) {
+export default function RespuestaForm({ respuesta: respuestaProp }) {
     const router = useNavigate();
     const { id } = useParams();
     const { enqueueSnackbar } = useSnackbar();
     const [error] = React.useState({
         error: false,
         message: ''
-    });
+    })
 
     const {
         register,
@@ -23,16 +23,16 @@ export default function RespuestaForm({ respuesta }) {
         setValue,
         control,
     } = useForm(
-        { defaultValues: respuesta ? respuesta : {} }
+        { defaultValues: respuestaProp ? respuestaProp : {} }
     );
     
     useEffect(() => {
-        if (respuesta) {
-            setValue('nombre', respuesta.nombre);
-            setValue('rut', respuesta.rut);
-            setValue('descripcion', respuesta.descripcion);
+        if (respuestaProp) {
+            setValue('nombre', respuestaProp.nombre);
+            setValue('rut', respuestaProp.rut);
+            setValue('descripcion', respuestaProp.descripcion);
         }
-    }, [respuesta, setValue]);
+    }, [respuestaProp, setValue]);
 
     const onSubmit = async (data) => {
         try {
@@ -83,8 +83,8 @@ export default function RespuestaForm({ respuesta }) {
                         }
                     })}
                 />
-                {errors.rut && error.rut.type === "pattern" && <p style={{ position: 'absolute', right: '-88.8%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.rut.message}</p>}
-                {errors.rut && error.rut.type !== "pattern" && <p style={{ position: 'absolute', right: '-88.8%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.rut.message}</p>}
+                {errors.rut && errors.rut.type === "pattern" && <p style={{ position: 'absolute', right: '-88.8%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.rut.message}</p>}
+                {errors.rut && errors.rut.type !== "pattern" && <p style={{ position: 'absolute', right: '-88.8%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.rut.message}</p>}
             </Box>
 
             <Box position="relative" width="100%">
