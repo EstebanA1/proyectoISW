@@ -42,7 +42,6 @@ function LoginForm() {
 
       </Box>
 
-
       <Box position="relative" width="100%" >
         <TextField
           id="password"

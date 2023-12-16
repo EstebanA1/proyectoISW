@@ -108,7 +108,17 @@ function PageRoot() {
               Retroalimentaciones
             </Button>
 
+            <Button
+              sx={{ ml: 2 }}
+              style={citasButtonStyle}
+              onMouseOver={() => handleMouseOver(setCitasButtonStyle)}
+              onMouseOut={() => handleMouseOut(setCitasButtonStyle)}
+              onClick={() => navigate('/solicitud')}
+            >
+              Solicitudes
+            </Button>
           </Box>
+
           <Button
             sx={{ marginRight: 2 }}
             style={logoutButtonStyle}
