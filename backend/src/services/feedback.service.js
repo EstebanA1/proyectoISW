@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 "use strict";
 
 const Feedback = require("../models/feedback.model");
@@ -26,7 +27,7 @@ async function getFeedback() {
  */
 async function createFeedback(feedback) {
     try {
-        const { IDCita, solicitante, fechaVisita, informe, comentarios, imagenes, estado } = feedback;
+        const { IDCita, solicitante, fechaVisita, comentarios, estado, imagenes } = feedback;
 
         const feedbackFound = await Feedback.findOne({ IDCita: feedback.IDCita });
         if (feedbackFound) return [null, "La Retroalimentación de Visita a Terreno ya existe"];
@@ -35,10 +36,9 @@ async function createFeedback(feedback) {
             IDCita,
             solicitante,
             fechaVisita,
-            informe,
             comentarios,
-            imagenes,
             estado,
+            imagenes,
         });
         await newFeedback.save();
 
@@ -76,7 +76,7 @@ async function updateFeedback(id, feedback) {
         const feedbackFound = await Feedback.findById(id);
         if (!feedbackFound) return [null, "La Retroalimentación de Visita a Terreno no existe"];
         
-        const { IDCita, solicitante, fechaVisita, informe, comentarios, imagenes, estado } = feedback;
+        const { IDCita, solicitante, fechaVisita, comentarios, estado, imagenes } = feedback;
 
         const updatedFeedback = await Feedback.findByIdAndUpdate(
             id,
@@ -84,12 +84,11 @@ async function updateFeedback(id, feedback) {
                 IDCita,
                 solicitante,
                 fechaVisita,
-                informe,
                 comentarios,
-                imagenes,
                 estado,
+                imagenes,
             },
-            { new: true }
+            { new: true },
         );
 
         return [updatedFeedback, null];

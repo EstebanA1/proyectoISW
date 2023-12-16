@@ -1,3 +1,6 @@
+/* eslint-disable eol-last */
+/* eslint-disable quotes */
+/* eslint-disable spaced-comment */
 "use strict";
 
 // exporta el módulo de rutas de cita

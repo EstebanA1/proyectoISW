@@ -1,3 +1,8 @@
+/* eslint-disable brace-style */
+/* eslint-disable spaced-comment */
+/* eslint-disable no-unused-vars */
+/* eslint-disable max-len */
+/* eslint-disable eol-last */
 "use strict";
 
 const { respondSuccess, respondError } = require("../utils/resHandler");
@@ -5,6 +10,8 @@ const InformeService = require("../services/informe.service");
 const { handleError } = require("../utils/errorHandler");
 const { informeBodySchema, informeIdSchema } = require("../schema/feedback.schema");
 const CitaService = require("../services/citas.service");
+const FeedbackService = require("../services/feedback.service");
+
 /**
  * Controlador de Informe
  * @module InformeController
@@ -35,9 +42,9 @@ async function createInforme(req, res) {
 
         if (bodyError) return respondError(req, res, 400, bodyError.message);
 
-        //Verificar ID de la cita
-        const [citas, errorCitas] = await CitaService.getCitaById(body.IDCita);
-        if (errorCitas) return respondError(req, res, 404, "No Existe Cita Asociada Con Ese ID Para Informe, Revise ID de Cita");
+        //Verificar ID de la retroalimentacion
+        const [feedback, errorFeedback] = await FeedbackService.getFeedbackById(body.IDFeedback);
+        if (errorFeedback) return respondError(req, res, 404, "No Existe Retroalimentacion Asociada Con Ese ID Para Informe, Revise ID de Cita");
 
         const [newInforme, informeError] = await InformeService.createInforme(body);
 
@@ -87,9 +94,9 @@ async function updateInforme(req, res) {
         const { error: idError } = informeIdSchema.validate(id);
         if (idError) return respondError(req, res, 400, idError.message);
 
-        //Verificar ID de la cita
-        const [citas, errorCitas] = await CitaService.getCitaById(body.IDCita);
-        if (errorCitas) return respondError(req, res, 404, "No Existe Cita Asociada Con Ese ID Para Informe, Revise ID de Cita");
+        //Verificar ID de la retroalimentacion
+        const [feedback, errorFeedback] = await FeedbackService.getFeedbackById(body.IDFeedback);
+        if (errorFeedback) return respondError(req, res, 404, "No Existe Retroalimentacion Asociada Con Ese ID Para Informe, Revise ID de Cita");
 
         const [updatedInforme, errorUpdateInforme] = await InformeService.updateInforme(id, body);
         if (errorUpdateInforme) return respondError(req, res, 404, errorUpdateInforme);
