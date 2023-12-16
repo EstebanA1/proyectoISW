@@ -77,12 +77,6 @@ const Respuestas = () => {
                     <div style={{ display: "flex", justifyContent: "end" }}>
                         <h5>{respuesta.rut}</h5>
                     </div>
-                    <div style={{ display: "flex", justifyContent: "end" }}>
-                        <h5>{respuesta.descripcion}</h5>
-                    </div>
-                    <div style={{ display: "flex", justifyContent: "end" }}>
-                        <h5>{respuesta.fecha}</h5>
-                    </div>
                     <Button sx={{ ml: 1, mb: 3, mt: -1 }} type="button" variant="contained" onClick={() => router(`/respuesta/${respuesta._id}`)}><InfoIcon /></Button>
                     <Button sx={{ ml: 1, mb: 3, mt: -1 }} type="button" variant="contained" onClick={() => router(`/respuesta/update/${respuesta._id}`)}><EditIcon /></Button>
                     <Button sx={{ ml: 1, mb: 3, mt: -1 }} type="button" variant="contained" onClick={() => router(`/respuesta/delete/${respuesta._id}`)}><DeleteIcon /></Button>

@@ -21,6 +21,7 @@ import UpdateFeedback from './routes/Feedback/UpdateFeedback.jsx';
 import Solicitudes from './routes/Solicitudes/Solicitudes.jsx';
 import RespuestaDoc from './routes/Solicitudes/Respuestas/RespuestaDoc.jsx';
 import CreateRespuesta from './routes/Solicitudes/Respuestas/CreateRespuesta.jsx';
+import DetailsRespuesta from './routes/Solicitudes/Respuestas/DetailsRespuesta.jsx';
 import UpdateRespuesta from './routes/Solicitudes/Respuestas/UpdateRespuesta.jsx';
 import DeleteRespuesta from './routes/Solicitudes/Respuestas/DeleteRespuesta.jsx';
 import { SnackbarProvider } from 'notistack';
@@ -117,6 +118,10 @@ const router = createBrowserRouter([
       {
         path: '/respuesta/create/:id',
         element: <CreateRespuesta />,
+      },
+      {
+        path: '/respuesta/:id',
+        element: <DetailsRespuesta />,
       },
       {
         path: '/respuesta/update/:id',
