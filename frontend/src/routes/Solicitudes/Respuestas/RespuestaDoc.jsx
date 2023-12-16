@@ -1,23 +1,34 @@
-import { getRespuesta } from "../../../services/respuestaDoc.service";
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button } from "@mui/material";
 import { Grid } from "@mui/material";
+import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import EditIcon from "@mui/icons-material/Edit";
+import React, { useEffect, useState } from "react";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddIcon from "@mui/icons-material/LibraryAdd";
+import InfoIcon from "@mui/icons-material/Visibility";
+import { getRespuestas } from "../../../services/respuestaDoc.service";
 
 const Respuestas = () => {
-    const [respuesta, setRespuesta] = useState([]);
     const router = useNavigate();
-
+    const [respuestas, setRespuestas] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    
     useEffect(() => {
-        getRespuesta().then((res) => {
-        setRespuesta(res);
+        getRespuestas().then((res) => {
+            if (Array.isArray(res)) {
+                setRespuestas(res);
+            } else {
+                console.error("La respuesta no es un array:", res);
+            }
+        }).catch(error => {
+            console.error("Error al obtener respuestas:", error);
         });
     }, []);
-
+    
     useEffect(() => {
-        console.log(respuesta);
-    }, [respuesta]);
-
+        console.log(respuestas);
+    }, [respuestas]);
+    
     return (
         <>
         <Grid
@@ -26,47 +37,61 @@ const Respuestas = () => {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
+            height: "75vh",
             }}
         >
             <h1>Listado de Respuestas</h1>
-        </Grid>
-
-        <Grid
-            sx={{
-            display: "flex",
-            alignItems: "right",
-            justifyContent: "flex-end",
-            mr: 2,
-            }}
-        >
-            <Button
-            type="button"
-            variant="contained"
-            onClick={() => router(`/respuesta/create/`)}
-            >
-            Agregar Respuesta
-            </Button>
-        </Grid>
-
-        <div className="Listado">
-            {respuesta.map((respuesta) => (
-            <div key={respuesta._id}>
-                <h3>{respuesta.nombre}</h3>
-                <p>{respuesta.rut}</p>
-                <p>{respuesta.descripcion}</p>
+            <Grid sx={{
+                display: "flex",
+                alignItems: "right",
+                justifyContent: "flex-end",
+                mr: 2,
+                ml: "85%",
+            }}>
+                <input
+                    type="text"
+                    placeholder="Buscar"
+                    onChange={(event) => setSearchTerm(event.target.value)}
+                    style={{
+                        backgroundColor: "lightgray",
+                        borderColor: "white",
+                        borderRadius: "5px",
+                        color: "black",
+                        ":focus": {
+                            backgroundColor: "white",
+                        },
+                    }}
+                />
                 <Button
                     type="button"
                     variant="contained"
-                    onClick={() => router(`/respuesta/update/${respuesta._id}`)}
-                >
-                    Actualizar
-                </Button>
-            </div>
+                    sx={{ mr: 2, ml: 2 }}
+                    onClick={() => router(`/respuesta/create/`)}><AddIcon /></Button>
+            </Grid>
+            {respuestas.filter((respuesta) => respuesta.nombre.toLowerCase().includes(searchTerm.toLowerCase())).map((respuesta, index) => (
+                <div key={respuesta._id}>
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <span>{index + 1}.</span>
+                        <span>{respuesta.nombre}</span>
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "end" }}>
+                        <h5>{respuesta.rut}</h5>
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "end" }}>
+                        <h5>{respuesta.descripcion}</h5>
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "end" }}>
+                        <h5>{respuesta.fecha}</h5>
+                    </div>
+                    <Button sx={{ ml: 1, mb: 3, mt: -1 }} type="button" variant="contained" onClick={() => router(`/respuesta/${respuesta._id}`)}><InfoIcon /></Button>
+                    <Button sx={{ ml: 1, mb: 3, mt: -1 }} type="button" variant="contained" onClick={() => router(`/respuesta/update/${respuesta._id}`)}><EditIcon /></Button>
+                    <Button sx={{ ml: 1, mb: 3, mt: -1 }} type="button" variant="contained" onClick={() => router(`/respuesta/delete/${respuesta._id}`)}><DeleteIcon /></Button>
+                </div>
             ))}
-        </div>
+            <br />
+        </Grid>
         </>
-    );
-
+    );                
 };
 
 export default Respuestas;

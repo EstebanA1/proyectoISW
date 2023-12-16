@@ -1,25 +1,15 @@
 import RespuestaForm from "../../../components/RespuestaDocForm";
-import { Grid } from "@mui/material"
 import { useParams } from "react-router-dom";
 
-
 const CreateRespuesta = () => {
-    const { id } = useParams();
+    const { id } = useParams(); // Obtiene la fecha de la ruta
+
     return (
         <>
             <br />
-            <Grid sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                height: '75vh'
-            }}>
-                <br />
-                <h1>Formulario de Respuesta</h1>
-                <br />
-                <RespuestaForm id={id} />
-            </Grid>
+            <h1>Formulario de Respuesta de Solicitud</h1>
+            <br />
+                <RespuestaForm id={id} /> 
         </>
     )
 }

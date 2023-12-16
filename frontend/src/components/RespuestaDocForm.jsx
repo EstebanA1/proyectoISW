@@ -1,5 +1,5 @@
-import React, { useEffect , useState} from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useEffect } from 'react';
+import { useForm, Controller } from 'react-hook-form';
 import { createRespuesta, updateRespuesta } from "../services/respuestaDoc.service";
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button, TextField, Box, Select, MenuItem, FormControl, InputLabel, Grid  } from '@mui/material';
@@ -7,28 +7,32 @@ import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useSnackbar } from 'notistack';
 
-const RespuestaDocForm = () => {
-    const { id } = useParams();
+export default function RespuestaForm({ respuesta }) {
     const router = useNavigate();
+    const { id } = useParams();
     const { enqueueSnackbar } = useSnackbar();
-    const { register, handleSubmit, reset } = useForm();
-    const [respuesta, setRespuesta] = useState(null);
+    const [error] = React.useState({
+        error: false,
+        message: ''
+    });
 
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        setValue,
+        control,
+    } = useForm(
+        { defaultValues: respuesta ? respuesta : {} }
+    );
+    
     useEffect(() => {
-        if (id) {
-            getRespuesta();
+        if (respuesta) {
+            setValue('nombre', respuesta.nombre);
+            setValue('rut', respuesta.rut);
+            setValue('descripcion', respuesta.descripcion);
         }
-    }, [id]);
-
-    const getRespuesta = async () => {
-        try {
-            const res = await getRespuesta(id);
-            setRespuesta(res);
-            reset(res);
-        } catch (error) {
-            console.log("Error al obtener el registro:", error.response);
-        }
-    };
+    }, [respuesta, setValue]);
 
     const onSubmit = async (data) => {
         try {
@@ -41,93 +45,86 @@ const RespuestaDocForm = () => {
                 setRespuesta(res);
                 enqueueSnackbar('Respuesta creada con éxito', { variant: 'success' });
             }
-            router('/respuestas');
+            router('/respuesta');
         } catch (error) {
             console.log("Error al crear el registro:", error.response);
             enqueueSnackbar('Error al crear la Respuesta', { variant: 'error' });
         }
-    };
+        router('/respuesta');
+    }
 
     return (
-        <>
-        <Grid
-            sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            }}
-        >
-        </Grid>
+        <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+            <Box position="relative" width="100%">
+                <TextField
+                    id="nombre"
+                    label="Nombre"
+                    variant="filled"
+                    autoComplete="off"
+                    fullWidth
+                    {...register('nombre', { required: 'El nombre es requerido', minLength: { value: 3, message: 'El nombre debe tener al menos 3 caracteres' } })}
+                />
+                {errors.nombre && errors.nombre.type !== "minLength" && <p style={{ position: 'absolute', right: '-88.8%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.nombre.message}</p>}
+                {errors.nombre && errors.nombre.type === "minLength" && <p style={{ position: 'absolute', right: '-157.2%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.nombre.message}</p>}
+            </Box>
 
-        <Grid
-            sx={{
-            display: "flex",
-            alignItems: "right",
-            justifyContent: "flex-end",
-            mr: 2,
-            }}
-        >
-        </Grid>
+            <Box position="relative" width="100%">
+                <TextField
+                    id="rut"
+                    label="Rut"
+                    variant="filled"
+                    autoComplete="off"
+                    fullWidth
+                    {...register('rut', { 
+                        required: 'El rut es requerido', 
+                        pattern: { 
+                            value: /^[0-9]+[-|‐]{1}[0-9kK]{1}$/, 
+                            message: 'El rut debe ser válido' 
+                        }
+                    })}
+                />
+                {errors.rut && error.rut.type === "pattern" && <p style={{ position: 'absolute', right: '-88.8%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.rut.message}</p>}
+                {errors.rut && error.rut.type !== "pattern" && <p style={{ position: 'absolute', right: '-88.8%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.rut.message}</p>}
+            </Box>
 
-        <Box
-            component="form"
-            sx={{
-            '& .MuiTextField-root': { m: 1, width: '25ch' },
-            }}
-            noValidate
-            autoComplete="off"
-            onSubmit={handleSubmit(onSubmit)}
-        >
-            <div>
-            <TextField
-                required
-                id="nombre"
-                name="nombre"
-                label="Nombre"
-                variant="outlined"
-                defaultValue=""
-                {...register("nombre")}
-            />
-            <TextField
-                required
-                id="rut"
-                name="rut"
-                label="Rut"
-                variant="outlined"
-                defaultValue=""
-                {...register("rut")}
-            />
-            <TextField
-                required
-                id="descripcion"
-                name="descripcion"
-                label="Descripción"
-                variant="outlined"
-                defaultValue=""
-                {...register("descripcion")}
-            />
-            </div>
-            <div>
-            <Button
-                type="submit"
-                variant="contained"
-                startIcon={<SaveIcon />}
-            >
-                Guardar
-            </Button>
-            <Button
-                type="button"
-                variant="contained"
-                startIcon={<CancelIcon />}
-                onClick={() => router(`/respuesta`)}
-            >
-                Cancelar
-            </Button>
-            </div>
+            <Box position="relative" width="100%">
+                <TextField
+                    id="descripcion"
+                    label="Descripción"
+                    variant="filled"
+                    autoComplete="off"
+                    fullWidth
+                    {...register('descripcion', { required: 'La descripción es requerida', minLength: { value: 3, message: 'La descripción debe tener al menos 3 caracteres' } })}
+                />
+                {errors.descripcion && errors.descripcion.type !== "minLength" && <p style={{ position: 'absolute', right: '-88.8%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.descripcion.message}</p>}
+                {errors.descripcion && errors.descripcion.type === "minLength" && <p style={{ position: 'absolute', right: '-157.2%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.descripcion.message}</p>}
+            </Box>
+
+            {error.exampleRequired && <span>Este campo es obligatorio</span>}
+            <br />
+            <Grid container spacing={2}>
+                <Grid item xs={6}>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        startIcon={<SaveIcon />}
+                        fullWidth
+                    >
+                        Guardar
+                    </Button>
+                </Grid>
+                <Grid item xs={6}>
+                    <Button
+                        type="button"
+                        variant="contained"
+                        startIcon={<CancelIcon />}
+                        fullWidth
+                        onClick={() => router('/respuesta')}
+                    >
+                        Cancelar
+                    </Button>
+                </Grid>
+            </Grid>
         </Box>
-        </>
-    );
+    )
 }
-
-export default RespuestaDocForm;

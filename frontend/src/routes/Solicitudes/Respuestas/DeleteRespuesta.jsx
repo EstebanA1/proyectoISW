@@ -38,7 +38,7 @@ const DeleteRespuesta = () => {
                 <Button type="button" onClick={borrarRegistro}>
                 Si
                 </Button>
-                <Button type="button" onClick={() => router("/respuestas")}>
+                <Button type="button" onClick={() => router("/respuesta")}>
                 No
                 </Button>
             </Grid>
