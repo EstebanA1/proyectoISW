@@ -63,69 +63,69 @@ async function createCita(cita) {
 */
 async function getCitaById(id) {
 
-        try {
-            const cita = await Cita.findById(id).exec();
-            if (!cita) return [null, "La cita no existe, intente otro ID"];
+    try {
+        const cita = await Cita.findById(id).exec();
+        if (!cita) return [null, "La cita no existe, intente otro ID"];
 
-            return [cita, null];
-        } catch (error) {
-            return [null, "La cita no existe, intente otro ID"];
-        }
+        return [cita, null];
+    } catch (error) {
+        return [null, "La cita no existe, intente otro ID"];
     }
+}
 
 
-    /**
-     * Actualiza una cita por su id en la base de datos
-     * @param {string} id Id del cita
-     * @param {Object} cita Objeto de cita
-     * @returns {Promise} Promesa con el objeto de cita actualizado
-     */
-    async function updateCita(id, cita) {
-        try {
+/**
+ * Actualiza una cita por su id en la base de datos
+ * @param {string} id Id del cita
+ * @param {Object} cita Objeto de cita
+ * @returns {Promise} Promesa con el objeto de cita actualizado
+ */
+async function updateCita(id, cita) {
+    try {
 
-            const citaFound = await Cita.findById(id);
-            if (!citaFound) return [null, "La cita no existe, pruebe otro ID"];
+        const citaFound = await Cita.findById(id);
+        if (!citaFound) return [null, "La cita no existe, pruebe otro ID"];
 
-            const { name, typeOfRequest, address, date, hour, status, visitRealizated, ID_Solicitud } = cita;
+        const { name, typeOfRequest, address, date, hour, status, visitRealizated, ID_Solicitud } = cita;
 
-            const citaUpdated = await Cita.findByIdAndUpdate(
-                id,
-                {
-                    name,
-                    typeOfRequest,
-                    address,
-                    date,
-                    hour,
-                    status,
-                    visitRealizated,
-                    ID_Solicitud
-                },
-                { new: true },
-            );
+        const citaUpdated = await Cita.findByIdAndUpdate(
+            id,
+            {
+                name,
+                typeOfRequest,
+                address,
+                date,
+                hour,
+                status,
+                visitRealizated,
+                ID_Solicitud
+            },
+            { new: true },
+        );
 
-            return [citaUpdated, null];
-        } catch (error) {
-            return [null, "La cita no existe, pruebe otro ID"];
-        }
+        return [citaUpdated, null];
+    } catch (error) {
+        return [null, "La cita no existe, pruebe otro ID"];
     }
+}
 
-    /**
-     * Elimina una cita por su id de la base de datos
-     * @param {string} Id de la cita
-     * @returns {Promise} Promesa con el objeto de la cita eliminada
-     */
-    async function deleteCita(id) {
-        try {
-            return await Cita.findByIdAndDelete(id);
-        } catch (error) {
-            handleError(error, "cita.service -> deleteCita");
-        }
+/**
+ * Elimina una cita por su id de la base de datos
+ * @param {string} Id de la cita
+ * @returns {Promise} Promesa con el objeto de la cita eliminada
+ */
+async function deleteCita(id) {
+    try {
+        return await Cita.findByIdAndDelete(id);
+    } catch (error) {
+        handleError(error, "cita.service -> deleteCita");
     }
+}
 
-    module.exports = {
-        getCitas,
-        createCita,
-        getCitaById,
-        updateCita,
-        deleteCita,
-    };
+module.exports = {
+    getCitas,
+    createCita,
+    getCitaById,
+    updateCita,
+    deleteCita,
+};

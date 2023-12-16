@@ -44,7 +44,7 @@ const Citas = () => {
                     display: 'flex',
                     alignItems: 'right',
                     justifyContent: 'flex-end',
-                    mr: 2,
+                    mr: '5%',
                     ml: '85%'
                 }}>
                     <input type="text" placeholder="Buscar"
@@ -52,7 +52,10 @@ const Citas = () => {
                         style={{
                             backgroundColor: 'lightgray',
                             borderColor: 'white',
+                            borderWidth: '2px',
                             borderRadius: '5px',
+                            height: '30px',
+                            width: '200px',
                             color: 'black',
                             ':focus': {
                                 backgroundColor: 'white'
@@ -64,7 +67,6 @@ const Citas = () => {
 
                 <Box sx={{ overflowY: 'auto' }}>
                     <Box sx={{ mr: 2 }}>
-                        <div class="lineaNegra"></div>
                         {citas.filter((cita) => cita.name.toLowerCase().includes(searchTerm.toLowerCase())).map((cita, index) => (
                             <div key={cita._id}>
                                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
