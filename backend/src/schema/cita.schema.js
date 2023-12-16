@@ -98,7 +98,7 @@ const citaModBodySchema = Joi.object({
     date: Joi.string().regex(/^\d{2}\/\d{2}\/\d{4}$/).messages({
         "string.empty": "La fecha de la cita no puede estar vacío.",
         "string.base": "La fecha de la cita debe ser de tipo string.",
-        "string.pattern.base": "El formato de la fecha es xx/xx/xxxx, y debe ser entre la fecha de mañana y 1 año después."
+        "string.pattern.base": "El formato de la fecha es xx/xx/xxxx."
     }),
     hour: Joi.string().regex(/^\d{2}:\d{2}$/).messages({
         "string.empty": "La hora de la cita no puede estar vacío.",
