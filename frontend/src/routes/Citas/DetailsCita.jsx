@@ -1,18 +1,34 @@
-import swal from 'sweetalert'
 import { Grid } from "@mui/material"
 import { Button } from "@mui/material"
 import { useSnackbar } from 'notistack';
 import { useEffect, useState } from "react";
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate, useParams } from "react-router-dom";
-import ArrowBackIos from "@mui/icons-material/ArrowBackIos"
 import { getCita, deleteCita } from "../../services/cita.service";
 
-const DetailsCita = () => {
+import swal from 'sweetalert';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ArrowBackIos from "@mui/icons-material/ArrowBackIos"
+
+export const handleDelete = async (id, enqueueSnackbar, router) => {
+    swal({
+        title: "Eliminar",
+        text: "¿Seguro que desea eliminar la cita?",
+        icon: "warning",
+        buttons: ["No", "Si"]
+    }).then(async willDelete => {
+        if (willDelete) {
+            const res = await deleteCita(id);
+            enqueueSnackbar('Cita eliminada correctamente', { variant: 'success' });
+            router('/citas');
+        }
+    });
+}
+
+export const DetailsCita = () => {
     const { id } = useParams();
-    const [cita, setCita] = useState([]);
     const router = useNavigate();
+    const [cita, setCita] = useState([]);
     const { enqueueSnackbar } = useSnackbar();
 
     useEffect(() => {
@@ -20,21 +36,6 @@ const DetailsCita = () => {
             setCita(res);
         });
     }, []);
-
-    const handleDelete = async () => {
-        swal({
-            title: "Eliminar",
-            text: "¿Seguro que desea eliminar la cita?",
-            icon: "warning",
-            buttons: ["No", "Si"]
-        }).then(async willDelete => {
-            if (willDelete) {
-                    const res = await deleteCita(id);
-                    enqueueSnackbar('Cita eliminada correctamente', { variant: 'success' });
-                    router('/citas');
-            } 
-        });
-    }
 
     return (
         <>
@@ -61,7 +62,7 @@ const DetailsCita = () => {
 
                     <Button type="button" variant="contained" sx={{ mr: 2, mt: 1 }} onClick={() => router('/citas')}><ArrowBackIos /></Button>
                     <Button type="button" variant="contained" sx={{ mr: 2, mt: 1 }} onClick={() => router(`/citas/update/${cita._id}`)}><EditIcon /></Button>
-                    <Button type="button" variant="contained" sx={{ mr: 2, mt: 1 }} onClick={handleDelete}><DeleteIcon /></Button>
+                    <Button sx={{ mr: 2, mt: 1 }} type="button" variant="contained" onClick={() => handleDelete(cita._id, enqueueSnackbar, router)}><DeleteIcon /></Button>
                 </div>
             </Grid>
         </>

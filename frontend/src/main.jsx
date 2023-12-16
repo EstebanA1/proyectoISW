@@ -24,6 +24,7 @@ import UpdateInforme from './routes/Feedback/Informe/UpdateInforme.jsx';
 
 import { SnackbarProvider } from 'notistack';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+
 import './index.css';
 
 const router = createBrowserRouter([

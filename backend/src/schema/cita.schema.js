@@ -56,6 +56,10 @@ const citaBodySchema = Joi.object({
         "string.base": "La visita de la cita debe ser de tipo string.",
         "any.only": "La visita de la cita debe ser Si o No.",
     }),
+    ID_Solicitud: Joi.string().messages({
+        "string.empty": "El id de la solicitud no puede estar vacia.",
+        "string.base": "El id de la solicitud debe ser de tipo string.",
+    }),
 
 }).messages({
     "object.unknown": "No se permiten propiedades adicionales.",
@@ -110,6 +114,10 @@ const citaModBodySchema = Joi.object({
         "string.empty": "La visita de la cita no puede estar vacío.",
         "string.base": "La visita de la cita debe ser de tipo string.",
         "any.only": "La visita de la cita debe ser Si o No.",
+    }),
+    ID_Solicitud: Joi.string().messages({
+        "string.empty": "El id de la solicitud no puede estar vacia.",
+        "string.base": "El id de la solicitud debe ser de tipo string.",
     }),
 }).messages({
     "object.unknown": "No se permiten propiedades adicionales.",

@@ -26,7 +26,7 @@ async function getCitas() {
  */
 async function createCita(cita) {
     try {
-        const { name, typeOfRequest, address, date, hour, status, visitRealizated } = cita;
+        const { name, typeOfRequest, address, date, hour, status, visitRealizated, ID_Solicitud } = cita;
 
         // Buscar todas las citas existentes que contengan el mismo nombre y tipo
         const citasFound = await Cita.find({ name: new RegExp('^' + name + ' [AC][0-9]+$'), typeOfRequest });
@@ -35,7 +35,7 @@ async function createCita(cita) {
         const count = citasFound.length + 1;
 
         // Generar el nombre de la nueva cita
-        const newName = name + ' ' + (typeOfRequest === 'Ampliacion' ? 'A' : 'C') + count;
+        const newName = name + ' ' + (typeOfRequest === 'Ampliación' ? 'A' : 'C') + count;
 
         const newCita = new Cita({
             name: newName,
@@ -44,7 +44,8 @@ async function createCita(cita) {
             date,
             hour,
             status,
-            visitRealizated
+            visitRealizated,
+            ID_Solicitud
         });
         await newCita.save();
 
@@ -85,7 +86,7 @@ async function getCitaById(id) {
             const citaFound = await Cita.findById(id);
             if (!citaFound) return [null, "La cita no existe, pruebe otro ID"];
 
-            const { name, typeOfRequest, address, date, hour, status, visitRealizated } = cita;
+            const { name, typeOfRequest, address, date, hour, status, visitRealizated, ID_Solicitud } = cita;
 
             const citaUpdated = await Cita.findByIdAndUpdate(
                 id,
@@ -96,7 +97,8 @@ async function getCitaById(id) {
                     date,
                     hour,
                     status,
-                    visitRealizated
+                    visitRealizated,
+                    ID_Solicitud
                 },
                 { new: true },
             );
