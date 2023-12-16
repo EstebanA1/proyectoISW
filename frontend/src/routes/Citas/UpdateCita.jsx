@@ -24,6 +24,8 @@ const UpdateCita = () => {
                 justifyContent: 'center',
                 height: '75vh'
             }}>
+                <h1>Editor de Citas</h1>
+                <div className='line' style={{ width: '85%' }}></div>
                 {cita && <CitaForm cita={cita} fecha={cita.date} />}
             </Grid>
         </>
