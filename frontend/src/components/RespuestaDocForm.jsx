@@ -78,8 +78,8 @@ export default function RespuestaForm({ respuesta: respuestaProp }) {
                     {...register('rut', { 
                         required: 'El rut es requerido', 
                         pattern: { 
-                            value: /^[0-9]+[-|‐]{1}[0-9kK]{1}$/, 
-                            message: 'El rut debe ser válido' 
+                            value: /^[0-9]{1,2}.[0-9]{3}.[0-9]{3}-[0-9kK]{1}$/, 
+                            message: 'El rut debe tener el formato XXX.XXX.XXX-X' 
                         }
                     })}
                 />

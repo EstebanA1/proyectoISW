@@ -14,7 +14,7 @@ const DeleteRespuesta = () => {
         const res = await deleteRespuesta(id);
         if (res) {
             setRespuestaDeleted(res);
-            router("/respuestas");
+            router("/respuesta");
         }
         } catch (error) {
         console.log("Error al borrar el registro:", error.response);
