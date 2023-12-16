@@ -38,11 +38,6 @@ const solicitudBodySchema = Joi.object({
         "string.base": "El estado de la solicitud debe ser de tipo string.",
         "any.only": "El estado proporcionado debe ser Pendiente, Aprobado o Rechazado.",
     }),
-    archivoPDF: Joi.string().required().messages({
-        "string.empty": "El PDF de la solicitud no puede estar vacío.",
-        "any.required": "El PDF de la solicitud es obligatorio.",
-        "string.base": "El PDF de la solicitud debe ser de tipo string.",
-    }),
 }).messages({
     "object.unknown": "No se permiten propiedades adicionales.",
 });

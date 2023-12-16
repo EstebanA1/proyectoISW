@@ -97,6 +97,17 @@ function PageRoot() {
             >
               Citas
             </Button>
+
+            <Button
+              sx={{ ml: 2 }}
+              style={citasButtonStyle}
+              onMouseOver={() => handleMouseOver(setCitasButtonStyle)}
+              onMouseOut={() => handleMouseOut(setCitasButtonStyle)}
+              onClick={() => navigate('/feedback')}
+            >
+              Retroalimentaciones
+            </Button>
+
           </Box>
           <Button
             sx={{ marginRight: 2 }}

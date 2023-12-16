@@ -1,7 +1,11 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable eol-last */
+/* eslint-disable spaced-comment */
 "use strict";
 
 const { default: mongoose } = require("mongoose");
 const ESTADOS = require("../constants/estados.constants");
+const FechaActual = new Date();
 
 // Esquema Feedback
 const feedbackSchema = new mongoose.Schema({
@@ -9,7 +13,7 @@ const feedbackSchema = new mongoose.Schema({
         type: String,
         required: true,
         minLenght: 3,
-        maxLenght: 50
+        maxLenght: 50,
     },
     solicitante: {
         type: String,
@@ -20,31 +24,22 @@ const feedbackSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    informe: {
-        type: String,
-        required: true,
-        minLenght: 10
-    },
     comentarios: {
         type: String,
         required: true,
-    },
-    imagenes: {//schema arreglar
-        type: String,
-        required: true,
-        //data: Buffer,
-        //contentType: String,
-        //originalname: String,
+        minLenght: 2,
     },
     estado: {
         type: String,
         required: true,
-        enum: ESTADOS
-    }
+        enum: ESTADOS,
+    },
+    imagenes: {
+        type: String,
+        default: "./uploads/imagenes.jpg",
+    },
 });
 
-
-/** Modelo de datos 'Feedback' */
 const Feedback = mongoose.model("Feedback", feedbackSchema);
 
 // Exporta el modelo de datos 'Feedback'

@@ -64,7 +64,7 @@ const Citas = () => {
 
                 <Box sx={{ overflowY: 'auto' }}>
                     <Box sx={{ mr: 2 }}>
-                    <div class="lineaNegra"></div>
+                        <div class="lineaNegra"></div>
                         {citas.filter((cita) => cita.name.toLowerCase().includes(searchTerm.toLowerCase())).map((cita, index) => (
                             <div key={cita._id}>
                                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>

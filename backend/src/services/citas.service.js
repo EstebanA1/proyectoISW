@@ -35,7 +35,7 @@ async function createCita(cita) {
         const count = citasFound.length + 1;
 
         // Generar el nombre de la nueva cita
-        const newName = name + ' ' + (typeOfRequest === 'Ampliacion' ? 'A' : 'C') + count;
+        const newName = name + ' ' + (typeOfRequest === 'Ampliación' ? 'A' : 'C') + count;
 
         const newCita = new Cita({
             name: newName,
