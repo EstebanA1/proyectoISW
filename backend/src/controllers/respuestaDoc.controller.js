@@ -66,18 +66,18 @@ async function createRespuestaDoc(req, res) {
 
 async function getRespuestaDocById(req, res) {
     try {
-        const { id } = req.params;
-        const { error: idError } = respuestaDocIdSchema.validate(id);
-        if (idError) return respondError(req, res, 400, idError.message);
+        const { params } = req;
+        const { error: idError } = respuestaDocIdSchema.validate(params.id);
+        if (paramsError) return respondError(req, res, 400, paramsError.message);
 
-        const [respuestaDoc, errorRespuestaDoc] = await RespuestaDocService.getRespuestaDocById(id);
+        const [respuestaDoc, errorRespuestaDoc] = await RespuestaDocService.getRespuestaDocById(params.id);
 
         if (errorRespuestaDoc) return respondError(req, res, 404, errorRespuestaDoc);
 
-        respondSuccess(req, res, 200, respuestaDoc);
+        respondSuccess(req, res, 200, ["La respuesta solicitada es: ", respuestaDoc]);
     } catch (error) {
         handleError(error, 'respuestaDoc.controller -> getRespuestaDocById');
-        respondError(req, res, 400, error.message);
+        respondError(req, res, 500, 'No se pudo obtener la respuesta');
     }
 }
 
