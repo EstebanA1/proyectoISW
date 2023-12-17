@@ -26,6 +26,7 @@ const UpdateRespuesta = () => {
             }}>
                 <br />
                 <h1>Modificar Respuesta</h1>
+                <div className='line' style={{ width: '85%' }}></div>
                 <br />
                 {respuesta && <RespuestaForm respuesta={respuesta} />}
             </Grid>

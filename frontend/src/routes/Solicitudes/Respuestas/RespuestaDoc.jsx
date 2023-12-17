@@ -40,6 +40,7 @@ const Respuestas = () => {
             }}
         >
             <h1>Listado de Respuestas</h1>
+            <div className='line' style={{ width: '85%' }}></div>
             <Grid sx={{
                 display: "flex",
                 alignItems: "right",

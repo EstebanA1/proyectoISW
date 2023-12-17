@@ -17,6 +17,7 @@ const CreateRespuesta = () => {
             >
                 <br />
                 <h1>Formulario de Respuesta</h1>
+                <div className='line' style={{ width: '85%' }}></div>
                 <br />
                 <RespuestaForm respuesta={respuesta} />
             </Grid>
