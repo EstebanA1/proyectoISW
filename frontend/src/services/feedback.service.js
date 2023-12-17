@@ -55,10 +55,8 @@ export const deleteFeedback = async (id) => {
 export const updateFeedback = async (id, feedback) => {
     try {
         let feedbackUpdated = {
-            IDCita: feedback.IDCita,
             solicitante: feedback.solicitante,
             fechaVisita: feedback.fechaVisita,
-            informe: feedback.informe,
             comentarios: feedback.comentarios,
             imagenes: feedback.imagenes,
             estado: feedback.estado,

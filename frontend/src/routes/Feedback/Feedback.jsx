@@ -1,16 +1,20 @@
-import { getFeedback } from "../../services/feedback.service";
+import { getFeedbacks, getFeedback } from "../../services/feedback.service";
 import React, { useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddIcon from "@mui/icons-material/LibraryAdd";
+import InfoIcon from "@mui/icons-material/Visibility";
 
 const Feedback = () => {
-    const [feedback, setFeedback] = useState([]);
     const router = useNavigate();
+    const [feedback, setFeedback] = useState([]);
     
     useEffect(() => {
-        getFeedback().then((res) => {
-        setFeedback(res);
+        getFeedbacks().then((res) => {
+            setFeedback(res);
         });
     }, []);
     
@@ -37,12 +41,13 @@ const Feedback = () => {
             alignItems: "right",
             justifyContent: "flex-end",
             mr: 2,
+            ml: "85%",
             }}
         >
             <Button
             type="button"
             variant="contained"
-            onClick={() => router(`/feedback/create/`)}
+            onClick={() => router(`/citas/listado`)}
             >
             Agregar Retroalimentacion
             </Button>
@@ -55,12 +60,23 @@ const Feedback = () => {
                 <p>{feedback.fecha}</p>
                 <p>{feedback.comentarios}</p>
                 <p>{feedback.estado}</p>
+
+                <Button
+                    type="button"
+                    variant="contained"
+                    onClick={() => router(`/feedback/${feedback._id}`)}
+                >
+                    {/*Ver Retroalimentacion*/}
+                    <InfoIcon />
+                </Button>
+
                 <Button
                     type="button"
                     variant="contained"
                     onClick={() => router(`/feedback/update/${feedback._id}`)}
                 >
-                    Editar
+                    {/*Editar*/}
+                    <EditIcon />
                 </Button>
 
                 <Button
@@ -68,7 +84,12 @@ const Feedback = () => {
                     variant="contained"
                     onClick={() => router(`/feedback/delete/${feedback._id}`)}
                 >
-                    Eliminar
+                    {/*Eliminar*/}
+                    <DeleteIcon />
+                </Button>
+
+                <Button type="button" variant="contained" onClick={() => router(`/informe/create/${feedback._id}`)}>
+                    Informe
                 </Button>
             </div>
             ))}

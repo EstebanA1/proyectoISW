@@ -113,15 +113,6 @@ async function updateCita(req, res) {
             let fecha1 = fechaActual.split("-");
             let fecha2 = fechaInput.split("/");
 
-            if (fecha1[2] > fecha2[2]) return respondError(req, res, 400, "La fecha de la cita debe ser posterior a la fecha actual");
-
-            if (fecha1[2] === fecha2[2]) {
-                if (fecha1[1] > fecha2[1]) return respondError(req, res, 400, "La fecha de la cita debe ser posterior a la fecha actual");
-
-                if (fecha1[1] === fecha2[1]) {
-                    if ((fecha1[0] + 1) > fecha2[0]) return respondError(req, res, 400, "La fecha de la cita debe ser posterior a la fecha actual");
-                }
-            }
         }
 
         const { error: bodyError } = citaModBodySchema.validate(body);

@@ -32,6 +32,10 @@ const citaSchema = new mongoose.Schema(
         visitRealizated:{
             type: String,
             default: "No",
+        },
+        ID_Solicitud:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Solicitud",
         }
     },
     {

@@ -40,6 +40,14 @@
   background: linear-gradient(to right, #0f69b4 0, #0f69b4 50%, #e22c2c 50%, #e22c2c 100%);
 }
 
+.lineaNegra {
+  border-bottom: 4px solid black;
+  height: 1px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+
 .fc * {
   border-radius: 9px;
   color: #000000;
@@ -125,7 +133,7 @@ li {
 span {
   color: #000000;
   font-weight: bold;
-  font-size: 18px; 
+  font-size: 18px;
 }
 
 .my-error2 {

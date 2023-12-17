@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { login } from '../services/auth.service';
-import { Button, TextField, Box, Select, MenuItem, FormControl, InputLabel, Grid } from '@mui/material'
+import { Button, TextField, Box } from '@mui/material'
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -20,7 +20,6 @@ function LoginForm() {
 
   return (
     <Box component="form" sx={{ mr: '0' }} onSubmit={handleSubmit(onSubmit)}>
-
       <Box position="relative" width="100%" sx={{ mt: '24%' }}>
         <h2>Inicia Sesión</h2>
         <TextField
@@ -39,7 +38,6 @@ function LoginForm() {
         />
         {errors.email && errors.email.type === "required" && <p style={{ position: 'absolute', right: '-45%', top: '60%', transform: 'translateY(-50%)', color: 'red' }}> {errors.email.message}</p>}
         {errors.email && errors.email.type === "pattern" && <p style={{ position: 'absolute', right: '-38.9%', top: '60%', transform: 'translateY(-50%)', color: 'red' }}> {errors.email.message}</p>}
-
       </Box>
 
       <Box position="relative" width="100%" >

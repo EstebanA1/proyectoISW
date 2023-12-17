@@ -18,6 +18,15 @@ import CreateSolicitud from './routes/Solicitud/CreateSolicitud.jsx';
 import DeleteSolicitud from './routes/Solicitud/DeleteSolicitud.jsx';
 import UpdateSolicitud from './routes/Solicitud/UpdateSolicitud.jsx';
 
+//Feedback
+import Feedback from './routes/Feedback/Feedback.jsx';
+import DetailsFeedback from './routes/Feedback/DetailsFeedback.jsx';
+import CreateFeedback from './routes/Feedback/CreateFeedback.jsx';
+import DeleteFeedback from './routes/Feedback/DeleteFeedback.jsx';
+import UpdateFeedback from './routes/Feedback/UpdateFeedback.jsx';
+import CreateInforme from './routes/Feedback/Informe/CreateInforme.jsx';
+import UpdateInforme from './routes/Feedback/Informe/UpdateInforme.jsx';
+
 import { SnackbarProvider } from 'notistack';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './index.css';
@@ -56,30 +65,30 @@ const router = createBrowserRouter([
         path: '/citas/update/:id',
         element: <UpdateCita />,
       },
-      // {
-      //   path: '/feedback',
-      //   element: <Feedback />,
-      // },
-      // {
-      //   path: '/feedback/create/:id',
-      //   element: <CreateFeedback />,
-      // },
-      // {
-      //   path: '/feedback/delete/:id',
-      //   element: <DeleteFeedback />,
-      // },
-      // {
-      //   path: '/feedback/update/:id',
-      //   element: <UpdateFeedback />,
-      // },
-      // {
-      //   path: '/informe/create/:id',
-      //   element: <CreateInforme />,
-      // },
-      // {
-      //   path: '/informe/update/:id',
-      //   element: <UpdateInforme />,
-      // },
+       {
+         path: '/feedback',
+         element: <Feedback />,
+      },
+      {
+        path: '/feedback/create/:id',
+        element: <CreateFeedback />,
+      },
+      {
+        path: '/feedback/delete/:id',
+        element: <DeleteFeedback />,
+      },
+      {
+        path: '/feedback/update/:id',
+        element: <UpdateFeedback />,
+      },
+      {
+        path: '/informe/create/:id',
+        element: <CreateInforme />,
+      },
+      {
+        path: '/informe/update/:id',
+        element: <UpdateInforme />,
+      },
 
       //Solicitud
 
@@ -103,6 +112,34 @@ const router = createBrowserRouter([
           path: '/solicitud/update/:id',
           element: <UpdateSolicitud/>,
         },
+      {
+        path: '/feedback',
+        element: <Feedback />,
+      },
+      {
+        path: '/feedback/:id',
+        element: <DetailsFeedback />,
+      },
+      {
+        path: '/feedback/create/:id',
+        element: <CreateFeedback />,
+      },
+      {
+        path: '/feedback/delete/:id',
+        element: <DeleteFeedback />,
+      },
+      {
+        path: '/feedback/update/:id',
+        element: <UpdateFeedback />,
+      },
+      {
+        path: '/informe/create/:id',
+        element: <CreateInforme />,
+      },
+      {
+        path: '/informe/update/:id',
+        element: <UpdateInforme />,
+      },
     ],
   },
   {
