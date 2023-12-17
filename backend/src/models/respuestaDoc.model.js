@@ -25,8 +25,7 @@ const respuestaDocSchema = new mongoose.Schema({
     },
     ID_solicitud: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Solicitud",
-        required: true,
+        ref: "Solicitud"    
     },
 });
 
