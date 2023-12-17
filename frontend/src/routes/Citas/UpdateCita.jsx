@@ -1,8 +1,9 @@
 import { Grid } from "@mui/material"
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import CitaForm from "../../components/CitaForm"
 import { getCita } from "../../services/cita.service";
+
+import CitaForm from "../../components/CitaForm"
 
 const UpdateCita = () => {
     const { id } = useParams();
@@ -24,8 +25,8 @@ const UpdateCita = () => {
                 justifyContent: 'center',
                 height: '75vh'
             }}>
-                <h1>Editor de Citas</h1>
-                <div className='line' style={{ width: '85%' }}></div>
+                <h1>Editor de Cita</h1>
+                <div className='line' style={{ width: '85%', marginTop: '2%' }}></div>
                 {cita && <CitaForm cita={cita} fecha={cita.date} />}
             </Grid>
         </>

@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react';
-import { useForm, Controller } from "react-hook-form";
-import { createCita, updateCita } from '../services/cita.service';
-import { useNavigate, useParams } from 'react-router-dom';
-import { Button, TextField, Box, Select, MenuItem, FormControl, InputLabel, Grid } from '@mui/material'
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/ArrowBackIos';
 import { useSnackbar } from 'notistack';
+import React, { useEffect } from 'react';
+import { useForm, Controller } from "react-hook-form";
+import { useNavigate, useParams } from 'react-router-dom';
+import { createCita, updateCita } from '../services/cita.service';
+import { Button, TextField, Box, Select, MenuItem, FormControl, InputLabel, Grid } from '@mui/material'
 
 export default function CitaForm({ cita, fecha }) {
     const router = useNavigate();
-    const { id } = useParams();
     const { enqueueSnackbar } = useSnackbar();
+    const { id } = useParams();
     const [error] = React.useState({
         error: false,
         message: ''
@@ -42,10 +42,6 @@ export default function CitaForm({ cita, fecha }) {
     }, [fecha, setValue]);
 
     const onSubmit = async (data) => {
-
-        console.log(data)
-        console.log(errors)
-
         const partes = data.date.split("-");
         const fechaFormateada = `${partes[2]}/${partes[1]}/${partes[0]}`;
         const newData = { ...data, date: fechaFormateada };
@@ -134,9 +130,7 @@ export default function CitaForm({ cita, fecha }) {
                 {errors.address && errors.address.type !== "pattern" && <p style={{ position: 'absolute', right: '-93.8%', top: '20%', transform: 'translateY(-50%)', color: 'red' }}>{errors.address.message}</p>}
             </Box>
 
-
             {cita ? (
-                // Aquí va el código que quieres mostrar si existe la cita
                 <Box position="relative" width="100%">
                     <TextField
                         id="date"
@@ -156,7 +150,6 @@ export default function CitaForm({ cita, fecha }) {
                     {errors.date && errors.date.type === "required" && <p style={{ position: 'absolute', right: '-81.2%', top: '20%', transform: 'translateY(-50%)', color: 'red' }}>{errors.date.message}</p>}
                 </Box>
             ) : (
-                // Aquí va el código que quieres mostrar si no existe la cita
                 <Box position="relative" width="100%">
                     <TextField
                         id="date"
@@ -182,7 +175,6 @@ export default function CitaForm({ cita, fecha }) {
                     {errors.date && errors.date.type === "required" && <p style={{ position: 'absolute', right: '-81.2%', top: '20%', transform: 'translateY(-50%)', color: 'red' }}>{errors.date.message}</p>}
                 </Box>
             )}
-
 
             <Box position="relative" width="100%">
                 <TextField
@@ -257,7 +249,6 @@ export default function CitaForm({ cita, fecha }) {
                         type="button"
                         variant="contained"
                         fullWidth
-                        sx={{ ml: 0 }}
                         onClick={() => router('/citas')}
                     >
                         <CancelIcon />

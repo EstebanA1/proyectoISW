@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material"
-import { Button } from "@mui/material"
 import { useSnackbar } from 'notistack';
+import { Box, Button } from "@mui/material"
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getCita, deleteCita } from "../../services/cita.service";
@@ -27,8 +27,8 @@ export const handleDelete = async (id, enqueueSnackbar, router) => {
 
 export const DetailsCita = () => {
     const { id } = useParams();
-    const router = useNavigate();
     const [cita, setCita] = useState([]);
+    const router = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
 
     useEffect(() => {
@@ -44,14 +44,16 @@ export const DetailsCita = () => {
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
-                height: '60vh',
-                mt: 3,
+                height: '75vh',
+                mt: '-2%'
             }}>
                 <br />
-                <div>
-                    <h1>Detalles de la cita</h1>
-                </div>
-                <div>
+                <Box>
+                    <h1>Detalles de Cita</h1>
+                    <div className='line' style={{ width: '510%', marginLeft: '-210%', marginTop: '13.5%' }}></div>
+                </Box>
+
+                <Box sx={{ mt: '2%' }} >
                     <h3>Nombre: {cita.name} </h3>
                     <h3>Tipo: {cita.typeOfRequest} </h3>
                     <h3>Direccion: {cita.address} </h3>
@@ -62,8 +64,8 @@ export const DetailsCita = () => {
 
                     <Button type="button" variant="contained" sx={{ mr: 2, mt: 1 }} onClick={() => router('/citas')}><ArrowBackIos /></Button>
                     <Button type="button" variant="contained" sx={{ mr: 2, mt: 1 }} onClick={() => router(`/citas/update/${cita._id}`)}><EditIcon /></Button>
-                    <Button sx={{ mr: 2, mt: 1 }} type="button" variant="contained" onClick={() => handleDelete(cita._id, enqueueSnackbar, router)}><DeleteIcon /></Button>
-                </div>
+                    <Button type="button" variant="contained" sx={{ mr: 2, mt: 1 }} onClick={() => handleDelete(cita._id, enqueueSnackbar, router)}><DeleteIcon /></Button>
+                </Box>
             </Grid>
         </>
     );

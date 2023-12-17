@@ -1,17 +1,15 @@
-import { Grid } from '@mui/material'
-import { Button } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
-import { getCitas } from '../../services/cita.service';
 import { Box } from '@mui/system';
+import { useSnackbar } from 'notistack';
+import { useEffect, useState } from 'react';
+import { Grid, Button } from '@mui/material';
+import { handleDelete } from './DetailsCita';
+import { useNavigate } from 'react-router-dom';
+import { getCitas } from '../../services/cita.service';
 
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/LibraryAdd';
 import InfoIcon from '@mui/icons-material/Visibility';
-
-import { handleDelete } from './DetailsCita';
-import { useSnackbar } from 'notistack';
 
 const Citas = () => {
     const router = useNavigate();
@@ -26,7 +24,6 @@ const Citas = () => {
     }, []);
 
     useEffect(() => {
-        console.log(citas)
     }, [citas]);
 
     return (
@@ -36,7 +33,7 @@ const Citas = () => {
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
-                height: '75vh'
+                height: '80vh'
             }}>
                 <h1>Listado de Citas</h1>
                 <div className='line' style={{ width: '85%' }}></div>
@@ -62,7 +59,8 @@ const Citas = () => {
                             }
                         }}
                     />
-                    <Button type="button" variant="contained" sx={{ mr: 2, ml: 2 }} onClick={() => router(`/citas/create/`)}><AddIcon /></Button>
+                    <Button type="button" variant="contained" sx={{ mr: '6%', ml: 2, height: 35 }} onClick={() => router(`/citas/create/`)}><AddIcon /></Button>
+                    <br /><br /><br />
                 </Grid>
 
                 <Box sx={{ overflowY: 'auto' }}>

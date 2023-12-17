@@ -45,7 +45,7 @@ async function createUsers() {
     await Promise.all([
       new User({
         username: "Solicitante",
-        email: "user@email.com",
+        email: "solicitante@email.com",
         password: await User.encryptPassword("solicitante123"),
         roles: solicitante._id,
       }).save(),
