@@ -70,13 +70,14 @@ async function deleteRespuestaDoc(respuestaDocId) {
     }
 }
 
-async function getRespuestaDocById(respuestaDocId) {
+async function getRespuestaDocById(id) {
     try {
-        const respuestaDocFound = await RespuestaDoc.findById(respuestaDocId);
-        if (!respuestaDocFound) return [null, "La respuesta no existe"];
-        return [respuestaDocFound, null];
+        const respuestaDoc = await RespuestaDoc.findById(id).exec();
+        if (!respuestaDoc) return [null, "La respuesta no existe, intente con otro ID"];
+        
+        return [respuestaDoc, null];
     } catch (error) {
-        handleError(error, "respuestaDoc.service -> getRespuestaDocById");
+        return [error, "La respuesta no existe, intente con otro ID"];
     }
 }
 
