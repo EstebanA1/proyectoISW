@@ -34,4 +34,3 @@ const RespuestaDoc = mongoose.model("RespuestaDoc", respuestaDocSchema);
 
 // Exporta el modelo de datos 'RespuestaDoc'
 module.exports = RespuestaDoc;
-
