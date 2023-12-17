@@ -17,7 +17,7 @@ async function getRespuestasDoc() {
 
 async function createRespuestaDoc(respuestaDoc) {
     try {
-        const { nombre, rut, descripcion, fecha } = respuestaDoc;
+        const { nombre, rut, estado, descripcion, fecha } = respuestaDoc;
 
         const respuestaDocFound = await RespuestaDoc.findOne({ nombre: respuestaDoc.nombre });
         if (respuestaDocFound) return [null, "La respuesta ya existe"];
@@ -25,6 +25,7 @@ async function createRespuestaDoc(respuestaDoc) {
         const newRespuestaDoc = new RespuestaDoc({
             nombre,
             rut,
+            estado,
             descripcion,
             fecha,
         });
@@ -41,17 +42,22 @@ async function updateRespuestaDoc(respuestaDocId, respuestaDoc) {
         const respuestaDocFound = await RespuestaDoc.findById(respuestaDocId);
         if (!respuestaDocFound) return [null, "La respuesta no existe"];
 
-        const { error: descripcionError } = Joi.string().min(3).validate(descripcion);
-        if (descripcionError) return [null, "La descripción debe tener más de dos palabras"];
+        const { nombre, rut, estado, fecha, descripcion } = respuestaDoc;
 
-        await RespuestaDoc.findByIdAndUpdate(respuestaDocId, {
-            nombre,
-            rut,
-            fecha,
-            descripcion,
-        });
+        const respuestaUpdated = await RespuestaDoc.findByIdAndUpdate(
+            respuestaDocId,
+            {
+                nombre,
+                rut,
+                estado,
+                fecha,
+                descripcion,
+            },
+            {
+                new: true,
+            });
 
-        return [true, null];
+        return [respuestaUpdated, null];
     } catch (error) {
         handleError(error, "respuestaDoc.service -> updateRespuestaDoc");
     }

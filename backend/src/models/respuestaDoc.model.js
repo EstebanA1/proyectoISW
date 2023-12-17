@@ -14,6 +14,10 @@ const respuestaDocSchema = new mongoose.Schema({
     rut: {
         type: String,
         required: true,
+    },
+    estado: {
+        type: String,
+        default: "Pendiente",
     },    
     descripcion: {
         type: String,
@@ -21,7 +25,6 @@ const respuestaDocSchema = new mongoose.Schema({
     },
     fecha: {
         type: String,
-        // default: fechaActual.getDate() + "/" + (fechaActual.getMonth() + 1) + "/" + fechaActual.getFullYear(),
     },
     ID_solicitud: {
         type: mongoose.Schema.Types.ObjectId,
@@ -29,9 +32,11 @@ const respuestaDocSchema = new mongoose.Schema({
     },
 });
 
+// va en fecha
+// default: fechaActual.getDate() + "/" + (fechaActual.getMonth() + 1) + "/" + fechaActual.getFullYear(),
+
 /** Modelo de datos 'RespuestaDoc' */
 const RespuestaDoc = mongoose.model("RespuestaDoc", respuestaDocSchema);
 
 // Exporta el modelo de datos 'RespuestaDoc'
 module.exports = RespuestaDoc;
-

@@ -1,6 +1,7 @@
 "use strict";
 
 const Joi = require("joi");
+const ESTADOS = require("../constants/estados.constants");
 
 /**
  *  
@@ -19,6 +20,12 @@ const respuestaDocBodySchema = Joi.object({
         "any.required": "El rut del solicitante es obligatorio.",
         "string.base": "El rut del solcitante debe ser de tipo string.",
         "string.pattern.base": "El rut del solicitante debe ser válido.",  
+    }),
+    estado: Joi.string().valid(...ESTADOS).messages({
+        "string.empty": "El estado de la respuesta no puede estar vacío.",
+        "any.required": "El estado de la respuesta es obligatorio.",
+        "string.base": "El estado de la respuesta debe ser de tipo string.",
+        "any.only": "El estado proporcionado debe ser Rechazado, Pendiente o Aprobado.",
     }),
     descripcion: Joi.string().required().min(3).messages({
         "string.empty": "La descripcion de la respuesta no puede estar vacío.",
