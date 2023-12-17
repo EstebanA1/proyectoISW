@@ -1,169 +1,164 @@
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { createSolicitud } from "../services/solicitud.service";
-import { useNavigate, useParams } from "react-router-dom";
-import { Button, TextField, Box } from "@mui/material";
+import React, { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { createSolicitud, updateSolicitud } from '../services/solicitud.service';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Button, TextField, Box, Select, MenuItem, FormControl, InputLabel, Grid } from '@mui/material';
+import SaveIcon from '@mui/icons-material/Save';
+import CancelIcon from '@mui/icons-material/Cancel';
+import { useSnackbar } from 'notistack';
 
-export default function SolicitudForm({ solicitud }) {
+
+
+export default function SolicitudForm({ solicitud: solicitudProp }) {
     const router = useNavigate();
     const { id } = useParams();
-    
-    const [error, setError] = React.useState({
-        error: false,
-        message: "",
-    });
+    const { enqueueSnackbar } = useSnackbar();
 
-    //ArchivoPDF
-    const [selectedArchivo, setSelectedArchivo] = useState(null);
-
-    const handleArchivoChange = (event) => {
-        const ArchivoFile = event.target.files[0];
-        setSelectedArchivo(ArchivoFile);
-    };
-
-    const handleArchivoUpload = () => {
-    // Aquí puedes agregar lógica para subir un pdf a tu servidor o realizar alguna acción con el archivo seleccionado.
-    // Por ejemplo, puedes usar una biblioteca como Axios para realizar una solicitud POST al servidor.
-        console.log('Subiendo Archivo:', selectedArchivo);
-
-    // Limpiar el estado después de subir el pdf.
-        setSelectedArchivo(null);
-    };
-    
     const {
         register,
         handleSubmit,
         formState: { errors },
         setValue,
-    } = useForm({
-        defaultValues: solicitud ? solicitud : {},
-    });
-    
+    } = useForm({ defaultValues: solicitudProp ? solicitudProp : {} });
+
     useEffect(() => {
-        if (solicitud) {
-        setValue("nombre", solicitud.nombre);
-        setValue("tipo", solicitud.tipo);
-        setValue("rut", solicitud.rut);
-        setValue("estado", solicitud.estado);
-        setValue("archivoPDF", solicitud.archivoPDF);
+        if (solicitudProp) {
+            setValue('nombre', solicitudProp.nombre);
+            setValue('rut', solicitudProp.rut);
+            setValue('tipo', solicitudProp.tipo);
+            setValue('fecha', solicitudProp.fecha);
+            setValue('archivoPDF', solicitudProp.archivoPDF);
         }
-    }, [solicitud, setValue]);
-    
+    }, [solicitudProp, setValue]);
+
     const onSubmit = async (data) => {
-        const res = await createSolicitud(id, data);
-        console.log(res);
-        router("/solicitud");
+        try {
+            if (!data.archivoPDF) {
+                // Muestra un mensaje de error o realiza alguna acción según tu lógica
+                enqueueSnackbar('Debe seleccionar un archivo PDF', { variant: 'error' });
+                return;
+            }
+            if (id) {
+                const res = await updateSolicitud(id, data);
+                enqueueSnackbar('Solicitud actualizada con éxito', { variant: 'success' });
+            } else {
+                const res = await createSolicitud(data);
+                enqueueSnackbar('Solicitud creada con éxito', { variant: 'success' });
+            }
+            router('/solicitud');
+        } catch (error) {
+            console.log('Error al crear el registro:', error.response);
+            enqueueSnackbar('Error al crear la Solicitud', { variant: 'error' });
+        }
+        router('/solicitud');
     };
-    
+
+    const handleFileChange = (event) => {
+        const selectedFile = event.target.files[0];
+        setValue('archivoPDF', selectedFile);
+    };
+
     return (
-      <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-      <Box position="relative" width="100%">
-          <TextField
-              id="name"
-              label="Nombre"
-              variant="filled"
-              autoComplete='off'
-              fullWidth
-              {...register('name', { required: 'El nombre es obligatorio', minLength: { value: 2, message: 'El nombre debe tener al menos 2 caracteres' } })}
-          />
-          {errors.name && errors.name.type !== "minLength" && <p style={{ position: 'absolute', right: '-88.8%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.name.message}</p>}
-          {errors.name && errors.name.type === "minLength" && <p style={{ position: 'absolute', right: '-157.2%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.name.message}</p>}
-      </Box>
-      <div>
-                <FormControl variant="filled" style={{ position: 'relative' }} fullWidth>
-                    <InputLabel id="tipo">Tipo de solicitud</InputLabel>
-                    <Controller
-                        name="tipo"
-                        control={control}
-                        defaultValue={solicitud && solicitud.tipo ? solicitud.tipo : ''}
-                        rules={{ required: 'El tipo es obligatorio' }}
-                        render={({ field }) => (
-                            <Select
-                                id="tipo"
-                                label="Tipo de solicitud"
-                                variant="filled"
-                                autoComplete='off'
-                                error={error.error}
-                                fullWidth
-                                {...field}
-                            >
-                                <MenuItem value="Ampliación">Ampliación</MenuItem>
-                                <MenuItem value="Construcción">Construcción</MenuItem>
-                            </Select>
-                        )}
-                    />
-                    {errors.tipo && <p className="my-error2">{errors.tipo.message}</p>}
-                </FormControl>
-            </div>
+        <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+            <Box position="relative" width="100%">
+                <TextField
+                    id="nombre"
+                    label="Nombre"
+                    variant="filled"
+                    autoComplete="off"
+                    fullWidth
+                    {...register('nombre', { required: 'El nombre es requerido', minLength: { value: 3, message: 'El nombre debe tener al menos 3 caracteres' } })}
+                />
+                 {errors.nombre && errors.nombre.type !== "minLength" && <p style={{ position: 'absolute', right: '-88.8%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.nombre.message}</p>}
+                {errors.nombre && errors.nombre.type === "minLength" && <p style={{ position: 'absolute', right: '-157.2%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.nombre.message}</p>}
+            </Box>
+
             <Box position="relative" width="100%">
                 <TextField
                     id="rut"
                     label="Rut"
                     variant="filled"
-                    autoComplete='off'
+                    autoComplete="off"
                     fullWidth
                     {...register('rut', {
-                        required: 'El Rut es obligatorio',
+                        required: 'El rut es requerido',
                         pattern: {
-                            value: /^\d{1,2}\.\d{3}\.\d{3}[-][0-9kK]{1}$/,
-                            message: 'El rut debe tener un formato de tipo (xx.xxx.xxx-x)'
-                        }
+                            value: /^[0-9]{1,2}.[0-9]{3}.[0-9]{3}-[0-9kK]{1}$/,
+                            message: 'El rut debe tener el formato XX.XXX.XXX-X',
+                        },
                     })}
                 />
-                {errors.rut && errors.rut.type === "pattern" && <p style={{ position: 'absolute', right: '-253%', top: '20%', transform: 'translateY(-50%)', color: 'red' }}>{errors.rut.message}</p>}
-                {errors.rut && errors.rut.type !== "pattern" && <p style={{ position: 'absolute', right: '-93.8%', top: '20%', transform: 'translateY(-50%)', color: 'red' }}>{errors.rut.message}</p>}
+                 {errors.rut && errors.rut.type === "pattern" && <p style={{ position: 'absolute', right: '-88.8%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.rut.message}</p>}
+                {errors.rut && errors.rut.type !== "pattern" && <p style={{ position: 'absolute', right: '-88.8%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.rut.message}</p>}
             </Box>
+
             <Box position="relative" width="100%">
-                <TextField
-                    id="fecha"
-                    label="Fecha"
-                    type="date"
-                    variant="filled"
-                    autoComplete='off'
-                    defaultValue=''
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    fullWidth
-                    {...register('date', {
-                        required: 'La fecha es obligatoria',
-                        validate: {
-                            notInFuture: value => new Date(value) <= new Date(new Date().setFullYear(new Date().getFullYear() + 1)) || 'La fecha no puede ser mayor a un año a partir de hoy',
-                            notBeforeTomorrow: value => new Date(value) >= new Date(new Date().setDate(new Date().getDate())) || 'La fecha no puede ser menor que la de mañana'
-                        }
-                    })}
-                />
-                {errors.date && errors.date.type === "notInFuture" && <p style={{ position: 'absolute', right: '-192.5%', top: '20%', transform: 'translateY(-50%)', color: 'red' }}>{errors.date.message}</p>}
-                {errors.date && errors.date.type === "notBeforeTomorrow" && <p style={{ position: 'absolute', right: '-171.5%', top: '20%', transform: 'translateY(-50%)', color: 'red' }}>{errors.date.message}</p>}
-                {errors.date && errors.date.type === "required" && <p style={{ position: 'absolute', right: '-81.2%', top: '20%', transform: 'translateY(-50%)', color: 'red' }}>{errors.date.message}</p>}
-            </Box>
-        <div>
             <TextField
-            id="archivoPDF"
-            label="Archivos"
+            id="fecha"
+            label="Fecha"
             variant="filled"
             autoComplete="off"
-            sx={{ width: '100%'}}
-            {...register("archivoPDF", { required: true })}
+            fullWidth
+            type='date'
+            {...register('fecha', { required: 'La fecha es requerida' })}
             />
-        </div>
-        <div>
-            <label style={{ color: 'black' }} sx={{ width: '100%'}} >Subir Archivo:</label>
-            <input type="file" onChange={handleArchivoChange} accept=".pdf/*" />
-            {selectedArchivo && (<img src={URL.createObjectURL(selectedArchivo)} alt="Vista Previa" style={{ maxWidth: '100%', marginTop: '10px', color: 'black' }} />)}
-        </div>
-        <div>
-            <Button type="button" variant="contained" onClick={() => router('/archivoPDF/create/${solicitud._id}')} sx={{ width: '100%'}}>Archivo</Button>
-            {/*...register("informe", { required: true })*/}
-        </div>
-        <Button 
-            onClick={handleArchivoUpload} 
-            disabled={!selectedArchivo } 
-            type="submit" 
-            variant="contained" 
-            sx={{ width: '50%'}}>
-                Guardar
-        </Button>
+            {errors.fecha && <p style={{ position: 'absolute', right: '-88.8%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.fecha.message}</p>}
+             </Box>
+
+            <Box position="relative" width="100%">
+                <FormControl variant="filled" fullWidth>
+                    <InputLabel id="tipo">Tipo de solicitud</InputLabel>
+                    <Select
+                        id="tipo"
+                        label="Tipo de solicitud"
+                        {...register('tipo', {
+                            required: 'Debe elegir una opción',
+                        })}
+                        error={Boolean(errors?.tipo)}
+                    >
+                        <MenuItem value="Construcción">Construcción</MenuItem>
+                        <MenuItem value="Ampliación">Ampliación</MenuItem>
+                    </Select>
+                {errors.tipo && errors.tipo.type !== "minLength" && <p style={{ position: 'absolute', right: '-88.8%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.tipo.message}</p>}
+                {errors.tipo && errors.tipo.type === "minLength" && <p style={{ position: 'absolute', right: '-157.2%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.tipo.message}</p>}
+                </FormControl>
+            </Box>
+
+            <Box position="relative" width="100%">
+                <input
+                    type="file"
+                    accept=".pdf"
+                    onChange={handleFileChange}
+                    style={{ display: 'none' }}
+                    id="archivoPDF"
+                />
+                 <label htmlFor="archivoPDF" style={{ backgroundColor: 'blue', color: 'white', padding: '0,5px', borderRadius: '1px', cursor: 'pointer' }}>
+                 Subir archivo (PDF)
+                 </label>
+            </Box>
+
+            {/* Otros campos del formulario */}
+            {/* ... */}
+
+            <br />
+            <Grid container spacing={2}>
+                <Grid item xs={6}>
+                    <Button type="submit" variant="contained" startIcon={<SaveIcon />} fullWidth>
+                        Guardar
+                    </Button>
+                </Grid>
+                <Grid item xs={6}>
+                    <Button
+                        type="button"
+                        variant="contained"
+                        startIcon={<CancelIcon />}
+                        fullWidth
+                        onClick={() => router('/solicitud')}
+                    >
+                        Cancelar
+                    </Button>
+                </Grid>
+            </Grid>
         </Box>
     );
-    }
+}

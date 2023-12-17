@@ -21,7 +21,7 @@ const Solicitud = () => {
                 console.error("La respuesta no es un array:", res);
             }
         }).catch(error => {
-            console.error("Error al obtener respuestas:", error);
+            console.error("Error al obtener solicitudes:", error);
         });
     }, []);
     
@@ -75,10 +75,10 @@ const Solicitud = () => {
                         <span>{solicitud.nombre}</span>
                     </div>
                     <div style={{ display: "flex", justifyContent: "end" }}>
-                        <h5>{solicitud.tipo}</h5>
+                        <h5>{solicitud.rut}</h5>
                     </div>
                     <div style={{ display: "flex", justifyContent: "end" }}>
-                        <h5>{solicitud.rut}</h5>
+                        <h5>{solicitud.tipo}</h5>
                     </div>
                     <div style={{ display: "flex", justifyContent: "end" }}>
                         <h5>{solicitud.fecha}</h5>

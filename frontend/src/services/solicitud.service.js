@@ -6,11 +6,12 @@ export const getSolicitudes = async () => {
         const response = await axios.get('/solicitud');
         const { status, data } = response;
         if (status === 200) {
-            return data.data[1];
+            return Array.isArray(data.data) ? data.data : [];
         }
         return [];
     } catch (error) {
-        console.log(error.response);
+        console.error("Error al obtener solicitudes:", error);
+        throw error;
     }
 };
 
@@ -19,12 +20,12 @@ export const getSolicitud = async (id) => {
         const response = await axios.get(`/solicitud/${id}`);
         const { status, data } = response;
         if (status === 200) {
-            return data.data[1];
+            return Array.isArray(data.data) ? data.data[0] : {};
         }
         return {};
     } catch (error) {
-        console.log(error);
-        console.log(error.response);
+        console.error("Error al obtener solicitudes:", error);
+        throw error;
     }
 }
 
@@ -49,27 +50,20 @@ export const deleteSolicitud = async (id) => {
         }
         return {};
     } catch (error) {
-        console.log(error.response);
+        console.error("Error al eliminar solicitud:", error);
+        throw error;
     }
 }
 
 export const updateSolicitud = async (id, solicitud) => {
     try {
-        let solicitudUpdated = {
-            nombre: solicitud.nombre,
-            tipo: solicitud.tipo,
-            rut: solicitud.rut,
-            fecha: solicitud.fecha,
-            archivoPDF: solicitud.archivoPDF,
-        }
-
-
-        const response = await axios.put(`/solicitud/${id}`, solicitudUpdated);
+        const response = await axios.put(`/solicitud/${id}`, solicitud);
         if (response.status === 200) {
             return response.data;
         }
         return {};
     } catch (error) {
-        console.log(error.response);
+        console.error("Error al actualizar solicitud:", error);
+        throw error;
     }
 }
