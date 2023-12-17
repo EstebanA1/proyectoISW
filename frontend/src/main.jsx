@@ -115,10 +115,10 @@ const router = createBrowserRouter([
         path: '/respuesta/create',
         element: <CreateRespuesta />,
       },
-      {
-        path: '/respuesta/create/:id',
-        element: <CreateRespuesta />,
-      },
+      // {
+      //   path: '/respuesta/create/:id',
+      //   element: <CreateRespuesta />,
+      // },
       {
         path: '/respuesta/:id',
         element: <DetailsRespuesta />,

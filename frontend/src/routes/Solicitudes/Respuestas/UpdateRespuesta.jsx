@@ -24,6 +24,9 @@ const UpdateRespuesta = () => {
                 justifyContent: 'center',
                 height: '75vh'
             }}>
+                <br />
+                <h1>Modificar Respuesta</h1>
+                <br />
                 {respuesta && <RespuestaForm respuesta={respuesta} />}
             </Grid>
         </>

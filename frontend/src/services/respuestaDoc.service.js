@@ -37,8 +37,7 @@ export const createRespuesta = async (respuesta) => {
         }
         return {};
     } catch (error) {
-        console.error("Error al crear respuesta:", error);
-        throw error;
+        console.log(error.response);
     }
 }
 
