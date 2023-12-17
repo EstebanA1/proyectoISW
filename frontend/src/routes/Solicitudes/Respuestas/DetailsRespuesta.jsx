@@ -49,7 +49,6 @@ const DetailsRespuesta = () => {
                 <br />
                 <div>
                     <h1>Detalles de la Respuesta</h1>
-                    <div className='line' style={{ width: '85%' }}></div>
                 </div>
                 <div>
                     <h3>Nombre: {respuesta.nombre} </h3>

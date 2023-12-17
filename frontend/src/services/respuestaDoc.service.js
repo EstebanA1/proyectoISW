@@ -19,12 +19,12 @@ export const getRespuesta = async (id) => {
         const response = await axios.get(`/respuesta/${id}`);
         const { status, data } = response;
         if (status === 200) {
-            return data.data[1];
+            return Array.isArray(data.data) ? data.data[0] : {};
         }
         return {};
     } catch (error) {
-        console.log(error);
-        console.log(error.response);
+        console.error("Error al obtener respuesta:", error);
+        throw error;
     }
 }
 
