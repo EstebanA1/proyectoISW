@@ -35,12 +35,18 @@ async function getRespuestasDoc(req, res) {
 async function createRespuestaDoc(req, res) {
     try {
         const { body } = req;
+        console.log(body);
         const { error: bodyError } = respuestaDocBodySchema.validate(body);
         if (bodyError) return respondError(req, res, 400, bodyError.message);
 
         const [newRespuestaDoc, respuestaDocError] = await RespuestaDocService.createRespuestaDoc(body);
 
-        if (respuestaDocError) return respondError(req, res, 400, respuestaDocError);
+        if (respuestaDocError) {
+            console.log(respuestaDocError);
+            return respondError(req, res, 400, respuestaDocError);
+        }
+
+        // if (respuestaDocError) return respondError(req, res, 400, respuestaDocError);
         if (!newRespuestaDoc) {
             return respondError(req, res, 400, 'No se creo la respuesta');
         }

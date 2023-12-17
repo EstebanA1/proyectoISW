@@ -26,9 +26,13 @@ const respuestaDocBodySchema = Joi.object({
         "string.base": "La descripcion de la respuesta debe ser de tipo string.",
         "string.min": "La descripcion de la respuesta debe tener al menos 3 caracteres.",
     }),
-    ID_solicitud: Joi.string().length(24).required().messages({
+    fecha: Joi.string().required().messages({
+        "string.empty": "La fecha de la respuesta no puede estar vacío.",
+        "any.required": "La fecha de la respuesta es obligatorio.",
+        "string.base": "La fecha de la respuesta debe ser de tipo string.",
+    }),
+    ID_solicitud: Joi.string().messages({
         "string.empty": "El id de la solicitud no puede estar vacío.",
-        "any.required": "El id de la solicitud es obligatorio.",
         "string.length": "El id de la solicitud debe tener 24 caracteres.",
     }),
 }).messages({
@@ -40,7 +44,7 @@ const respuestaDocBodySchema = Joi.object({
  * @constant {Object}
  */
 
-const respuestaDocIdSchema = Joi.string().length(24).required().messages({
+const respuestaDocIdSchema = Joi.string().required().messages({
     "string.empty": "El id no puede estar vacío.",
     "any.required": "El id es obligatorio.",
     "string.length": "El id debe tener 24 caracteres.",

@@ -3,7 +3,7 @@
 const Joi = require("joi");
 
 const RespuestaDoc = require("../models/respuestaDoc.model");
-const handleError = require("../utils/errorHandler");
+const { handleError } = require("../utils/errorHandler");
 
 async function getRespuestasDoc() {
     try {
@@ -17,7 +17,7 @@ async function getRespuestasDoc() {
 
 async function createRespuestaDoc(respuestaDoc) {
     try {
-        const { nombre, rut, fecha, descripcion, ID_solicitud } = respuestaDoc;
+        const { nombre, rut, descripcion, fecha } = respuestaDoc;
 
         const respuestaDocFound = await RespuestaDoc.findOne({ nombre: respuestaDoc.nombre });
         if (respuestaDocFound) return [null, "La respuesta ya existe"];
@@ -26,7 +26,7 @@ async function createRespuestaDoc(respuestaDoc) {
             nombre,
             rut,
             descripcion,
-            ID_solicitud,
+            fecha,
         });
         await newRespuestaDoc.save();
 
@@ -47,6 +47,7 @@ async function updateRespuestaDoc(respuestaDocId, respuestaDoc) {
         await RespuestaDoc.findByIdAndUpdate(respuestaDocId, {
             nombre,
             rut,
+            fecha,
             descripcion,
         });
 
