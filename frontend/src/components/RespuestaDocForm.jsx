@@ -1,8 +1,8 @@
-import React, { useEffect , useState } from 'react';
-import { useForm, Controller, set } from 'react-hook-form';
+import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { createRespuesta, updateRespuesta } from "../services/respuestaDoc.service";
 import { useNavigate, useParams } from 'react-router-dom';
-import { Button, TextField, Box, Select, MenuItem, FormControl, InputLabel, Grid } from '@mui/material';
+import { Button, TextField, Box, Grid } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useSnackbar } from 'notistack';
@@ -13,7 +13,7 @@ export default function RespuestaForm({ respuesta: respuestaProp }) {
  const today = new Date();
  const formattedDate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
  const { enqueueSnackbar } = useSnackbar();
- const [error] = React.useState({
+ const [error] = useState({
  error: false,
  message: ''
  })
@@ -27,19 +27,18 @@ export default function RespuestaForm({ respuesta: respuestaProp }) {
  } = useForm(
  { defaultValues: respuestaProp ? respuestaProp : {} }
  );
- 
+
  useEffect(() => {
-    setValue('fecha', formattedDate);
- 
+ setValue('fecha', formattedDate);
  }, [respuestaProp, setValue]);
 
- const onSubmit = async (data) => { 
+ const onSubmit = async (data) => {
  console.log("id de dentro", respuestaProp);
-//  if (respuestaProp) {
-//  const res = await updateRespuesta(id, data);
-//  setRespuesta(res);
-//  enqueueSnackbar('Respuesta actualizada con éxito', { variant: 'success' });
-//  } else {
+ // if (respuestaProp) {
+ // const res = await updateRespuesta(id, data);
+ // setRespuesta(res);
+ // enqueueSnackbar('Respuesta actualizada con éxito', { variant: 'success' });
+ // } else {
  const res = await createRespuesta(data);
  console.log("res: ", res);
  enqueueSnackbar('Respuesta creada con éxito', { variant: 'success' });
@@ -51,12 +50,12 @@ export default function RespuestaForm({ respuesta: respuestaProp }) {
  <Box component="form" onSubmit={handleSubmit(onSubmit)}>
  <Box position="relative" width="100%">
  <TextField
-  id="nombre"
-  label="Nombre"
-  variant="filled"
-  autoComplete="off"
-  fullWidth
-  {...register('nombre', { required: 'El nombre es requerido', minLength: { value: 3, message: 'El nombre debe tener al menos 3 caracteres' } })}
+ id="nombre"
+ label="Nombre"
+ variant="filled"
+ autoComplete="off"
+ fullWidth
+ {...register('nombre', { required: 'El nombre es requerido', minLength: { value: 3, message: 'El nombre debe tener al menos 3 caracteres' } })}
  />
  {errors.nombre && errors.nombre.type !== "minLength" && <p style={{ position: 'absolute', right: '-88.8%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.nombre.message}</p>}
  {errors.nombre && errors.nombre.type === "minLength" && <p style={{ position: 'absolute', right: '-157.2%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.nombre.message}</p>}
@@ -64,18 +63,18 @@ export default function RespuestaForm({ respuesta: respuestaProp }) {
 
  <Box position="relative" width="100%">
  <TextField
-  id="rut"
-  label="Rut"
-  variant="filled"
-  autoComplete="off"
-  fullWidth
-  {...register('rut', { 
-  required: 'El rut es requerido', 
-  pattern: { 
-  value: /^[0-9]{1,2}.[0-9]{3}.[0-9]{3}-[0-9kK]{1}$/, 
-  message: 'El formato debe ser XX.XXX.XXX-X' 
-  }
-  })}
+ id="rut"
+ label="Rut"
+ variant="filled"
+ autoComplete="off"
+ fullWidth
+ {...register('rut', {
+ required: 'El rut es requerido',
+ pattern: {
+ value: /^[0-9]{1,2}.[0-9]{3}.[0-9]{3}-[0-9kK]{1}$/,
+ message: 'El formato debe ser XX.XXX.XXX-X'
+ }
+ })}
  />
  {errors.rut && errors.rut.type === "pattern" && <p style={{ position: 'absolute', right: '-88.8%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.rut.message}</p>}
  {errors.rut && errors.rut.type !== "pattern" && <p style={{ position: 'absolute', right: '-88.8%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.rut.message}</p>}
@@ -83,12 +82,12 @@ export default function RespuestaForm({ respuesta: respuestaProp }) {
 
  <Box position="relative" width="100%">
  <TextField
-  id="descripcion"
-  label="Descripción"
-  variant="filled"
-  autoComplete="off"
-  fullWidth
-  {...register('descripcion', { required: 'La descripción es requerida', minLength: { value: 3, message: 'La descripción debe tener al menos 3 caracteres' } })}
+ id="descripcion"
+ label="Descripción"
+ variant="filled"
+ autoComplete="off"
+ fullWidth
+ {...register('descripcion', { required: 'La descripción es requerida', minLength: { value: 3, message: 'La descripción debe tener al menos 3 caracteres' } })}
  />
  {errors.descripcion && errors.descripcion.type !== "minLength" && <p style={{ position: 'absolute', right: '-88.8%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.descripcion.message}</p>}
  {errors.descripcion && errors.descripcion.type === "minLength" && <p style={{ position: 'absolute', right: '-157.2%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.descripcion.message}</p>}
@@ -96,13 +95,13 @@ export default function RespuestaForm({ respuesta: respuestaProp }) {
 
  <Box position="relative" width="100%">
  <TextField
-  id="fecha"
-  label="Fecha"
-  variant="filled"
-  autoComplete="off"
-  fullWidth
-  type='date'
-  {...register('fecha', { required: 'La fecha es requerida' })}
+ id="fecha"
+ label="Fecha"
+ variant="filled"
+ autoComplete="off"
+ fullWidth
+ type='date'
+ {...register('fecha', { required: 'La fecha es requerida' })}
  />
  {errors.fecha && <p style={{ position: 'absolute', right: '-88.8%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.fecha.message}</p>}
  </Box>
@@ -111,25 +110,25 @@ export default function RespuestaForm({ respuesta: respuestaProp }) {
  <br />
  <Grid container spacing={2}>
  <Grid item xs={6}>
-  <Button
-  type="submit"
-  variant="contained"
-  startIcon={<SaveIcon />}
-  fullWidth
-  >
-  Guardar
-  </Button>
+ <Button
+ type="submit"
+ variant="contained"
+ startIcon={<SaveIcon />}
+ fullWidth
+ >
+ Guardar
+ </Button>
  </Grid>
  <Grid item xs={6}>
-  <Button
-  type="button"
-  variant="contained"
-  startIcon={<CancelIcon />}
-  fullWidth
-  onClick={() => router('/respuesta')}
-  >
-  Cancelar
-  </Button>
+ <Button
+ type="button"
+ variant="contained"
+ startIcon={<CancelIcon />}
+ fullWidth
+ onClick={() => router('/respuesta')}
+ >
+ Cancelar
+ </Button>
  </Grid>
  </Grid>
  </Box>

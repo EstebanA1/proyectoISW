@@ -7,27 +7,26 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/LibraryAdd";
 import InfoIcon from "@mui/icons-material/Visibility";
 import { getRespuestas } from "../../../services/respuestaDoc.service";
+import { useParams } from "react-router-dom";
 
 const Respuestas = () => {
     const router = useNavigate();
-    const [respuestas, setRespuestas] = useState([]);
+    const { id } = useParams();
+
+    const [respuesta, setRespuesta] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     
     useEffect(() => {
         getRespuestas().then((res) => {
             if (Array.isArray(res)) {
-                setRespuestas(res);
+                setRespuesta(res);
             } else {
                 console.error("La respuesta no es un array:", res);
             }
         }).catch(error => {
             console.error("Error al obtener respuestas:", error);
         });
-    }, []);
-    
-    useEffect(() => {
-        console.log(respuestas);
-    }, [respuestas]);
+    }, [respuesta]);
     
     return (
         <>
@@ -66,9 +65,9 @@ const Respuestas = () => {
                     type="button"
                     variant="contained"
                     sx={{ mr: 2, ml: 2 }}
-                    onClick={() => router(`/respuesta/create/`)}><AddIcon /></Button>
+                    onClick={() => router('/respuesta/create/')}><AddIcon /></Button>
             </Grid>
-            {respuestas.filter((respuesta) => respuesta.nombre.toLowerCase().includes(searchTerm.toLowerCase())).map((respuesta, index) => (
+            {respuesta.filter((respuesta) => respuesta.nombre.toLowerCase().includes(searchTerm.toLowerCase())).map((respuesta, index) => (
                 <div key={respuesta._id}>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <span>{index + 1}.</span>

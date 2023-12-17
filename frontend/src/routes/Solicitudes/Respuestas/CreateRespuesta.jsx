@@ -1,11 +1,9 @@
 import RespuestaForm from "../../../components/RespuestaDocForm";
-import { useParams } from "react-router-dom";
 import { Grid } from "@mui/material";
 import { useState } from "react";
 
 const CreateRespuesta = () => {
-    const [respuesta, setRespuesta] = useState(null); // Cambia esto
-    console.log("respuesta", respuesta);
+    const [respuesta, setRespuesta] = useState([]); // Cambia esto
     return (
         <>
             <Grid
@@ -24,7 +22,6 @@ const CreateRespuesta = () => {
             </Grid>
         </>
     );
-    console.log("respuesta", respuesta);
 }
 
 export default CreateRespuesta;
