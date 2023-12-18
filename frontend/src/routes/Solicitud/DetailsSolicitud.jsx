@@ -52,12 +52,10 @@ const DetailsSolicitud = () => {
                 </div>
                 <div>
                     <h3>Nombre: {solicitud.name} </h3>
-                    <h3>Tipo: {solicitud.tipo} </h3>
-                    <h3>Direccion: {solicitud.address} </h3>
-                    <h3>Fecha: {solicitud.date} </h3>
-                    <h3>Hora: {solicitud.hour} </h3>
-                    <h3>Estado: {solicitud.status} </h3>
-                    <h3>Visita realizada: {solicitud.visitRealizated} </h3>
+                    <h3>Rut: {solicitud.rut} </h3>
+                    <h3>Fecha: {solicitud.fecha} </h3>
+                    <h3>Tipo de solicitud: {solicitud.tipo} </h3>
+                    <h3>Archivo: {solicitud.archivoPDF} </h3>
 
                     <Button type="button" variant="contained" sx={{ mr: 2, mt: 1 }} onClick={() => router('/solicitud')}><ArrowBackIos /></Button>
                     <Button type="button" variant="contained" sx={{ mr: 2, mt: 1 }} onClick={() => router(`/solicitud/update/${cita._id}`)}><EditIcon /></Button>

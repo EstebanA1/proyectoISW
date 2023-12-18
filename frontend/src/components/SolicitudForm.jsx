@@ -7,8 +7,6 @@ import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useSnackbar } from 'notistack';
 
-
-
 export default function SolicitudForm({ solicitud: solicitudProp }) {
     const router = useNavigate();
     const { id } = useParams();
@@ -19,38 +17,36 @@ export default function SolicitudForm({ solicitud: solicitudProp }) {
         handleSubmit,
         formState: { errors },
         setValue,
-    } = useForm({ defaultValues: solicitudProp ? solicitudProp : {} });
+    } = useForm();
 
     useEffect(() => {
         if (solicitudProp) {
-            setValue('nombre', solicitudProp.nombre);
-            setValue('rut', solicitudProp.rut);
-            setValue('tipo', solicitudProp.tipo);
-            setValue('fecha', solicitudProp.fecha);
-            setValue('archivoPDF', solicitudProp.archivoPDF);
+            Object.keys(solicitudProp).forEach(key => {
+                setValue(key, solicitudProp[key]);
+            });
         }
     }, [solicitudProp, setValue]);
 
     const onSubmit = async (data) => {
+        const formData = new FormData();
+
+        for (const key in data) {
+            formData.append(key, data[key]);
+        }
+
         try {
-            if (!data.archivoPDF) {
-                // Muestra un mensaje de error o realiza alguna acción según tu lógica
-                enqueueSnackbar('Debe seleccionar un archivo PDF', { variant: 'error' });
-                return;
-            }
             if (id) {
-                const res = await updateSolicitud(id, data);
+                await updateSolicitud(id, formData);
                 enqueueSnackbar('Solicitud actualizada con éxito', { variant: 'success' });
             } else {
-                const res = await createSolicitud(data);
+                await createSolicitud(formData);
                 enqueueSnackbar('Solicitud creada con éxito', { variant: 'success' });
             }
             router('/solicitud');
         } catch (error) {
-            console.log('Error al crear el registro:', error.response);
+            console.error('Error al crear el registro:', error.response);
             enqueueSnackbar('Error al crear la Solicitud', { variant: 'error' });
         }
-        router('/solicitud');
     };
 
     const handleFileChange = (event) => {
@@ -59,7 +55,7 @@ export default function SolicitudForm({ solicitud: solicitudProp }) {
     };
 
     return (
-        <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+        <Box component="form" onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
             <Box position="relative" width="100%">
                 <TextField
                     id="nombre"
@@ -69,8 +65,7 @@ export default function SolicitudForm({ solicitud: solicitudProp }) {
                     fullWidth
                     {...register('nombre', { required: 'El nombre es requerido', minLength: { value: 3, message: 'El nombre debe tener al menos 3 caracteres' } })}
                 />
-                 {errors.nombre && errors.nombre.type !== "minLength" && <p style={{ position: 'absolute', right: '-88.8%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.nombre.message}</p>}
-                {errors.nombre && errors.nombre.type === "minLength" && <p style={{ position: 'absolute', right: '-157.2%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.nombre.message}</p>}
+                {errors.nombre && <p style={{ color: 'red' }}>{errors.nombre.message}</p>}
             </Box>
 
             <Box position="relative" width="100%">
@@ -88,39 +83,34 @@ export default function SolicitudForm({ solicitud: solicitudProp }) {
                         },
                     })}
                 />
-                 {errors.rut && errors.rut.type === "pattern" && <p style={{ position: 'absolute', right: '-88.8%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.rut.message}</p>}
-                {errors.rut && errors.rut.type !== "pattern" && <p style={{ position: 'absolute', right: '-88.8%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.rut.message}</p>}
+                {errors.rut && <p style={{ color: 'red' }}>{errors.rut.message}</p>}
             </Box>
 
             <Box position="relative" width="100%">
-            <TextField
-            id="fecha"
-            label="Fecha"
-            variant="filled"
-            autoComplete="off"
-            fullWidth
-            type='date'
-            {...register('fecha', { required: 'La fecha es requerida' })}
-            />
-            {errors.fecha && <p style={{ position: 'absolute', right: '-88.8%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.fecha.message}</p>}
-             </Box>
+                <TextField
+                    id="fecha"
+                    label="Fecha"
+                    variant="filled"
+                    autoComplete="off"
+                    fullWidth
+                    type='date'
+                    {...register('fecha', { required: 'La fecha es requerida' })}
+                />
+                {errors.fecha && <p style={{ color: 'red' }}>{errors.fecha.message}</p>}
+            </Box>
 
             <Box position="relative" width="100%">
                 <FormControl variant="filled" fullWidth>
-                    <InputLabel id="tipo">Tipo de solicitud</InputLabel>
+                    <InputLabel id="tipo-label">Tipo de solicitud</InputLabel>
                     <Select
                         id="tipo"
-                        label="Tipo de solicitud"
-                        {...register('tipo', {
-                            required: 'Debe elegir una opción',
-                        })}
-                        error={Boolean(errors?.tipo)}
+                        labelId="tipo-label"
+                        {...register('tipo', { required: 'Debe elegir una opción' })}
                     >
                         <MenuItem value="Construcción">Construcción</MenuItem>
                         <MenuItem value="Ampliación">Ampliación</MenuItem>
                     </Select>
-                {errors.tipo && errors.tipo.type !== "minLength" && <p style={{ position: 'absolute', right: '-88.8%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.tipo.message}</p>}
-                {errors.tipo && errors.tipo.type === "minLength" && <p style={{ position: 'absolute', right: '-157.2%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.tipo.message}</p>}
+                    {errors.tipo && <p style={{ color: 'red' }}>{errors.tipo.message}</p>}
                 </FormControl>
             </Box>
 
@@ -131,14 +121,12 @@ export default function SolicitudForm({ solicitud: solicitudProp }) {
                     onChange={handleFileChange}
                     style={{ display: 'none' }}
                     id="archivoPDF"
+                    {...register('archivoPDF')}
                 />
-                 <label htmlFor="archivoPDF" style={{ backgroundColor: 'blue', color: 'white', padding: '0,5px', borderRadius: '1px', cursor: 'pointer' }}>
-                 Subir archivo (PDF)
-                 </label>
+                <label htmlFor="archivoPDF" style={{ backgroundColor: 'blue', color: 'white', padding: '10px', borderRadius: '4px', cursor: 'pointer' }}>
+                    Subir archivo (PDF)
+                </label>
             </Box>
-
-            {/* Otros campos del formulario */}
-            {/* ... */}
 
             <br />
             <Grid container spacing={2}>

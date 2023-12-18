@@ -15,6 +15,7 @@ function LoginForm() {
   const onSubmit = (data) => {
     login(data).then(() => {
       navigate('/');
+      console.log(data);
     });
   };
 

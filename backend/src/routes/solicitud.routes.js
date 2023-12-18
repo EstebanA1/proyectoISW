@@ -23,13 +23,16 @@ router.use(authenticationMiddleware);
 router.get('/', authorizationMiddleware.isAdmin, solicitudController.getSolicitudes);
 router.post('/',  upload.any(), // Este middleware manejará la subida de archivos después de todas las validaciones
 (req, res, next) => {
+  console.log(req.files);
+  console.log(req.body);
+  console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
   if (req.files && req.files.length > 0) {
     next();
   } else {
   res.status(400).json({ success: false, message: "Error al subir el archivo" }); 
   }
 }, authorizationMiddleware.isSolicitante, solicitudController.createSolicitud);
-router.get('/:id', authorizationMiddleware.isAdmin, solicitudController.getSolicitudById);
+router.get('/:id', solicitudController.getSolicitudById);
 router.put('/:id',  authorizationMiddleware.isAdmin, solicitudController.updateSolicitud);
 router.delete('/:id', authorizationMiddleware.isAdmin, solicitudController.deleteSolicitud);
 router.get('/buscar/:rut', authorizationMiddleware.isSolicitante, solicitudController.getSolicitudByRut);

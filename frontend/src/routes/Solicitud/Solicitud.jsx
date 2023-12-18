@@ -1,34 +1,28 @@
-import { Grid } from "@mui/material";
-import { Button } from "@mui/material";
+import { getSolicitudes } from "../../services/solicitud.service"; // Asegúrate de cambiar la ruta al archivo correcto
+import React, { useEffect, useState } from "react";
+import { Grid, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
-import React, { useEffect, useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/LibraryAdd";
 import InfoIcon from "@mui/icons-material/Visibility";
-import { getSolicitud } from "../../services/solicitud.service";
 
-const Solicitud = () => {
+const Solicitudes = () => {
     const router = useNavigate();
-    const [solicitud, setSolicitud] = useState([]);
-    const [searchTerm, setSearchTerm] = useState("");
-    
+    const [solicitudes, setSolicitudes] = useState([]);
+
     useEffect(() => {
-        getSolicitud().then((res) => {
-            if (Array.isArray(res)) {
-                setSolicitud(res);
-            } else {
-                console.error("La respuesta no es un array:", res);
-            }
-        }).catch(error => {
-            console.error("Error al obtener solicitudes:", error);
+        getSolicitudes().then((res) => {
+            // Suponiendo que 'res' ya es el array de solicitudes,
+            // de lo contrario, ajusta para acceder a la propiedad correcta.
+            setSolicitudes(res);
         });
     }, []);
-    
+
     useEffect(() => {
-        console.log(solicitud);
-    }, [solicitud]);
-    
+        console.log(solicitudes);
+    }, [solicitudes]);
+
     return (
         <>
         <Grid
@@ -37,64 +31,70 @@ const Solicitud = () => {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            height: "75vh",
             }}
         >
             <h1>Listado de Solicitudes</h1>
-            <Grid sx={{
-                display: "flex",
-                alignItems: "right",
-                justifyContent: "flex-end",
-                mr: 2,
-                ml: "85%",
-            }}>
-                <input
-                    type="text"
-                    placeholder="Buscar"
-                    onChange={(event) => setSearchTerm(event.target.value)}
-                    style={{
-                        backgroundColor: "lightgray",
-                        borderColor: "white",
-                        borderRadius: "5px",
-                        color: "black",
-                        ":focus": {
-                            backgroundColor: "white",
-                        },
-                    }}
-                />
+        </Grid>
+    
+        <Grid
+            sx={{
+            display: "flex",
+            alignItems: "right",
+            justifyContent: "flex-end",
+            mr: 2,
+            ml: "85%",
+            }}
+        >
+            <Button
+            type="button"
+            variant="contained"
+            onClick={() => router('/solicitud/create')} // Ajusta la ruta según sea necesario
+            >
+            Agregar Solicitud
+            </Button>
+        </Grid>
+    
+        <div className="Listado">
+            {solicitudes.map((solicitud) => (
+            <div key={solicitud._id}>
+                <h3>{solicitud.nombre}</h3>
+                <p>{solicitud.tipo}</p>
+                <p>{solicitud.rut}</p>
+
                 <Button
                     type="button"
                     variant="contained"
-                    sx={{ mr: 2, ml: 2 }}
-                    onClick={() => router("/solicitud/create/")}><AddIcon /></Button>
-            </Grid>
-            {solicitud.filter((solicitud) => solicitud.nombre.toLowerCase().includes(searchTerm.toLowerCase())).map((solicitud, index) => (
-                <div key={solicitud._id}>
-                    <div style={{ display: "flex", justifyContent: "space-between" }}>
-                        <span>{index + 1}.</span>
-                        <span>{solicitud.nombre}</span>
-                    </div>
-                    <div style={{ display: "flex", justifyContent: "end" }}>
-                        <h5>{solicitud.rut}</h5>
-                    </div>
-                    <div style={{ display: "flex", justifyContent: "end" }}>
-                        <h5>{solicitud.tipo}</h5>
-                    </div>
-                    <div style={{ display: "flex", justifyContent: "end" }}>
-                        <h5>{solicitud.fecha}</h5>
-                    </div>
-                    <div style={{ display: "flex", justifyContent: "end" }}>
-                        <h5>{solicitud.archivoPDF}</h5>
-                    </div>
-                    <Button sx={{ ml: 1, mb: 3, mt: -1 }} type="button" variant="contained" onClick={() => router(`/solicitud/${solicitud._id}`)}><InfoIcon /></Button>
-                    <Button sx={{ ml: 1, mb: 3, mt: -1 }} type="button" variant="contained" onClick={() => router(`/solicitud/update/${solicitud._id}`)}><EditIcon /></Button>
-                    <Button sx={{ ml: 1, mb: 3, mt: -1 }} type="button" variant="contained" onClick={() => router(`/solicitud/delete/${solicitud._id}`)}><DeleteIcon /></Button>
-                </div>
+                    onClick={() => router(`/solicitudes/${solicitud._id}`)} // Ajusta la ruta según sea necesario
+                >
+                    Ver Solicitud
+                    <InfoIcon />
+                </Button>
+
+                <Button
+                    type="button"
+                    variant="contained"
+                    onClick={() => router(`/solicitudes/editar/${solicitud._id}`)} // Ajusta la ruta según sea necesario
+                >
+                    Editar
+                    <EditIcon />
+                </Button>
+
+                <Button
+                    type="button"
+                    variant="contained"
+                    onClick={() => router(`/solicitudes/eliminar/${solicitud._id}`)} // Ajusta la ruta según sea necesario
+                >
+                    Eliminar
+                    <DeleteIcon />
+                </Button>
+
+                {/* Otros botones o acciones que quieras incluir */}
+            </div>
             ))}
             <br />
-        </Grid>
+        </div>
         </>
-    );               
+    );
 };
 
-export default Solicitud;
+export default Solicitudes;
