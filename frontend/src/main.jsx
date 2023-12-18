@@ -19,8 +19,6 @@ import DetailsFeedback from './routes/Feedback/DetailsFeedback.jsx';
 import CreateFeedback from './routes/Feedback/CreateFeedback.jsx';
 import DeleteFeedback from './routes/Feedback/DeleteFeedback.jsx';
 import UpdateFeedback from './routes/Feedback/UpdateFeedback.jsx';
-import CreateInforme from './routes/Feedback/Informe/CreateInforme.jsx';
-import UpdateInforme from './routes/Feedback/Informe/UpdateInforme.jsx';
 
 import { SnackbarProvider } from 'notistack';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
@@ -70,7 +68,7 @@ const router = createBrowserRouter([
         element: <DetailsFeedback />,
       },
       {
-        path: '/feedback/create/:id',
+        path: '/feedback/create',
         element: <CreateFeedback />,
       },
       {
@@ -80,14 +78,6 @@ const router = createBrowserRouter([
       {
         path: '/feedback/update/:id',
         element: <UpdateFeedback />,
-      },
-      {
-        path: '/informe/create/:id',
-        element: <CreateInforme />,
-      },
-      {
-        path: '/informe/update/:id',
-        element: <UpdateInforme />,
       },
     ],
   },
