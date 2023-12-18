@@ -17,13 +17,7 @@ function LoginForm() {
   const onSubmit = (data) => {
     login(data).then(() => {
       navigate('/');
-    }).catch((error) => {
-      if (error.response && error.response.status === 400) {
-        setLoginError('El correo y/o contraseña son incorrectos');
-      } else {
-        setLoginError('Correo y/o contraseña son incorrectos');//*
-      }
-    });
+    })
   };
 
   return (
