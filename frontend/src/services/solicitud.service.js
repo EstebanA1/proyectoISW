@@ -31,13 +31,15 @@ export const getSolicitud = async (id) => {
 export const createSolicitud = async (solicitud) => {
     try {
         const response = await axios.post('/solicitud', solicitud);
-
+        console.log("Aca está el error");
+        console.log(response);
+        console.log(solicitud);
         if (response.status === 201) {
             return response.data;
         }
         return {};
     } catch (error) {
-        console.log(error.response);
+        console.log(error);
     }
 }
 

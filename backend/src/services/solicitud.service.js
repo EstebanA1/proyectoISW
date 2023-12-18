@@ -3,6 +3,7 @@
 const Solicitud = require("../models/solicitud.model");
 const handleError = require("../utils/errorHandler");
 
+
 async function getSolicitudes() {
     try {
         const solicitudes = await Solicitud.find();
@@ -16,7 +17,7 @@ async function getSolicitudes() {
 async function createSolicitud(solicitud) {
     try {
         const { nombre, tipo, rut, fecha, archivoPDF } = solicitud;
-
+        console.log(solicitud);
         const solicitudFound = await Solicitud.findOne({ nombre: solicitud.nombre });
         if (solicitudFound) return [null, "La solicitud ya existe"];
 
@@ -92,6 +93,7 @@ async function getSolicitudByRut(rut) {
         return [null, "Error al buscar por RUT"];
     }
 }
+
 
 module.exports = {
     getSolicitudes,
