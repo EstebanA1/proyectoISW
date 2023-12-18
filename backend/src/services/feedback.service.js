@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 /* eslint-disable max-len */
 /* eslint-disable quotes */
-=======
->>>>>>> 1eb032b186e9d443674fbc002e38e9bb8944509f
 /* eslint-disable no-unused-vars */
 "use strict";
 
@@ -32,11 +29,7 @@ async function getFeedback() {
  */
 async function createFeedback(feedback) {
     try {
-<<<<<<< HEAD
         const { IDCita, solicitante, fechaVisita, comentarios, informe, detalles, estado, imagenes } = feedback;
-=======
-        const { IDCita, solicitante, fechaVisita, comentarios, estado, imagenes } = feedback;
->>>>>>> 1eb032b186e9d443674fbc002e38e9bb8944509f
 
         const feedbackFound = await Feedback.findOne({ IDCita: feedback.IDCita });
         if (feedbackFound) return [null, "La Retroalimentación de Visita a Terreno ya existe"];
@@ -46,11 +39,8 @@ async function createFeedback(feedback) {
             solicitante,
             fechaVisita,
             comentarios,
-<<<<<<< HEAD
             informe,
             detalles,
-=======
->>>>>>> 1eb032b186e9d443674fbc002e38e9bb8944509f
             estado,
             imagenes,
         });
@@ -90,11 +80,7 @@ async function updateFeedback(id, feedback) {
         const feedbackFound = await Feedback.findById(id);
         if (!feedbackFound) return [null, "La Retroalimentación de Visita a Terreno no existe"];
         
-<<<<<<< HEAD
         const { IDCita, solicitante, fechaVisita, comentarios, informe, detalles, estado, imagenes } = feedback;
-=======
-        const { IDCita, solicitante, fechaVisita, comentarios, estado, imagenes } = feedback;
->>>>>>> 1eb032b186e9d443674fbc002e38e9bb8944509f
 
         const updatedFeedback = await Feedback.findByIdAndUpdate(
             id,
@@ -103,11 +89,8 @@ async function updateFeedback(id, feedback) {
                 solicitante,
                 fechaVisita,
                 comentarios,
-<<<<<<< HEAD
                 informe,
                 detalles,
-=======
->>>>>>> 1eb032b186e9d443674fbc002e38e9bb8944509f
                 estado,
                 imagenes,
             },

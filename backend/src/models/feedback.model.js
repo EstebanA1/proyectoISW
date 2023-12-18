@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 /* eslint-disable max-len */
-=======
->>>>>>> 1eb032b186e9d443674fbc002e38e9bb8944509f
 /* eslint-disable no-unused-vars */
 /* eslint-disable eol-last */
 /* eslint-disable spaced-comment */
@@ -14,15 +11,8 @@ const FechaActual = new Date();
 // Esquema Feedback
 const feedbackSchema = new mongoose.Schema({
     IDCita: {
-<<<<<<< HEAD
         type: mongoose.Schema.Types.ObjectId,
         ref: "Cita",
-=======
-        type: String,
-        required: true,
-        minLenght: 3,
-        maxLenght: 50,
->>>>>>> 1eb032b186e9d443674fbc002e38e9bb8944509f
     },
     solicitante: {
         type: String,
@@ -37,7 +27,6 @@ const feedbackSchema = new mongoose.Schema({
         type: String,
         required: true,
         minLenght: 2,
-<<<<<<< HEAD
     },
     informe: {
         type: String,
@@ -48,8 +37,6 @@ const feedbackSchema = new mongoose.Schema({
         type: String,
         required: true,
         minLenght: 2,
-=======
->>>>>>> 1eb032b186e9d443674fbc002e38e9bb8944509f
     },
     estado: {
         type: String,
@@ -58,7 +45,6 @@ const feedbackSchema = new mongoose.Schema({
     },
     imagenes: {
         type: String,
-<<<<<<< HEAD
         default: "contru.jpg",
     },
 },
@@ -66,11 +52,6 @@ const feedbackSchema = new mongoose.Schema({
     versionKey: false,
 },
 );
-=======
-        default: "./uploads/imagenes.jpg",
-    },
-});
->>>>>>> 1eb032b186e9d443674fbc002e38e9bb8944509f
 
 const Feedback = mongoose.model("Feedback", feedbackSchema);
 

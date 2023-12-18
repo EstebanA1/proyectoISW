@@ -86,24 +86,6 @@ async function updateCita(id, cita) {
         const citaFound = await Cita.findById(id);
         if (!citaFound) return [null, "La cita no existe, pruebe otro ID"];
 
-<<<<<<< HEAD
-            const { name, typeOfRequest, address, date, hour, status, visitRealizated, ID_Solicitud } = cita;
-
-            const citaUpdated = await Cita.findByIdAndUpdate(
-                id,
-                {
-                    name,
-                    typeOfRequest,
-                    address,
-                    date,
-                    hour,
-                    status,
-                    visitRealizated,
-                    ID_Solicitud
-                },
-                { new: true },
-            );
-=======
         const { name, typeOfRequest, address, date, hour, status, visitRealizated, ID_Solicitud } = cita;
 
         const citaUpdated = await Cita.findByIdAndUpdate(
@@ -120,7 +102,6 @@ async function updateCita(id, cita) {
             },
             { new: true },
         );
->>>>>>> 1eb032b186e9d443674fbc002e38e9bb8944509f
 
         return [citaUpdated, null];
     } catch (error) {
