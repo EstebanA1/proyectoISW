@@ -40,7 +40,7 @@ export const createSolicitud = async (solicitud) => {
         }
         return {};
     } catch (error) {
-        console.log(error.response);
+        console.log(error);
     }
 }
 

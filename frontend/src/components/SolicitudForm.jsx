@@ -35,13 +35,13 @@ export default function SolicitudForm({ solicitud: solicitudProp }) {
         }
 
         try {
-            if (id) {
-                await updateSolicitud(id, formData);
-                enqueueSnackbar('Solicitud actualizada con éxito', { variant: 'success' });
-            } else {
+           // if (id) {
+           //     await updateSolicitud(id, formData);
+            //    enqueueSnackbar('Solicitud actualizada con éxito', { variant: 'success' });
+          //  } else {
                 await createSolicitud(formData);
                 enqueueSnackbar('Solicitud creada con éxito', { variant: 'success' });
-            }
+          //  }
             router('/solicitud');
         } catch (error) {
             console.error('Error al crear el registro:', error.response);
