@@ -63,7 +63,6 @@ function LoginForm() {
         {errors.password && <p style={{ position: 'absolute', right: '-58%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.password.message}</p>}
       </Box>
 
-      <Button sx={{ mt: 2 }} variant="contained">Ingresar como Solicitante</Button>
       <Button type="submit" sx={{ mt: 2, ml: 2.5 }} variant="contained">Continuar</Button>
     </Box>
   );
