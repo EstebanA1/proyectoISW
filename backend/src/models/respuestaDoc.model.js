@@ -13,7 +13,7 @@ const respuestaDocSchema = new mongoose.Schema({
     rut: {
         type: String,
         required: true,
-    },    
+    },
     firma: {
         type: String,
         required: true,
@@ -29,7 +29,7 @@ const respuestaDocSchema = new mongoose.Schema({
     descripcion: {
         type: String,
         required: true,
-    },  
+    },
 });
 
 /** Modelo de datos 'RespuestaDoc' */

@@ -15,7 +15,7 @@ async function getSolicitudes() {
 
 async function createSolicitud(solicitud) {
     try {
-        const { nombre, tipo, rut, firma, fecha, logo, archivoPDF } = solicitud;
+        const { nombre, tipo, rut, fecha, archivoPDF } = solicitud;
 
         const solicitudFound = await Solicitud.findOne({ nombre: solicitud.nombre });
         if (solicitudFound) return [null, "La solicitud ya existe"];
@@ -24,9 +24,7 @@ async function createSolicitud(solicitud) {
             nombre,
             tipo,
             rut,
-            firma,
             fecha,
-            logo,
             archivoPDF,
         });
         await newSolicitud.save();
@@ -42,13 +40,12 @@ async function updateSolicitud(solicitudId, solicitud) {
         const solicitudFound = await Solicitud.findById(solicitudId);
         if (!solicitudFound) return [null, "La solicitud no existe"];
 
-        const { nombre, tipo, rut, firma, fecha, estadoDeRespuesta, estado, archivoPDF } = solicitud;
+        const { nombre, tipo, rut, fecha, estadoDeRespuesta, estado, archivoPDF } = solicitud;
 
         await Solicitud.findByIdAndUpdate(solicitudId, {
             nombre,
             tipo,
             rut,
-            firma,
             fecha,
             estadoDeRespuesta,
             estado,

@@ -12,6 +12,11 @@ import CreateCita from './routes/Citas/CreateCita.jsx';
 import DetailsCita from './routes/Citas/DetailsCita.jsx';
 import UpdateCita from './routes/Citas/UpdateCita.jsx';
 import ListadoCita from './routes/Citas/ListadoCitas.jsx';
+// Solicitud
+import Solicitud from './routes/Solicitud/Solicitud.jsx';
+import CreateSolicitud from './routes/Solicitud/CreateSolicitud.jsx';
+import DeleteSolicitud from './routes/Solicitud/DeleteSolicitud.jsx';
+import UpdateSolicitud from './routes/Solicitud/UpdateSolicitud.jsx';
 
 //Feedback
 import Feedback from './routes/Feedback/Feedback.jsx';
@@ -60,6 +65,53 @@ const router = createBrowserRouter([
         path: '/citas/update/:id',
         element: <UpdateCita />,
       },
+       {
+         path: '/feedback',
+         element: <Feedback />,
+      },
+      {
+        path: '/feedback/create/:id',
+        element: <CreateFeedback />,
+      },
+      {
+        path: '/feedback/delete/:id',
+        element: <DeleteFeedback />,
+      },
+      {
+        path: '/feedback/update/:id',
+        element: <UpdateFeedback />,
+      },
+      {
+        path: '/informe/create/:id',
+        element: <CreateInforme />,
+      },
+      {
+        path: '/informe/update/:id',
+        element: <UpdateInforme />,
+      },
+
+      //Solicitud
+
+      {
+        path: '/solicitud',
+        element: <Solicitud />,
+      },
+      {
+        path: '/solicitud/create/',
+       element: <CreateSolicitud/>,
+       },
+       {
+        path: '/solicitud/create/:id',
+       element: <CreateSolicitud/>,
+       },
+        {
+          path: '/solicitud/delete/:id',
+          element: <DeleteSolicitud/>,
+        },
+        {
+          path: '/solicitud/update/:id',
+          element: <UpdateSolicitud/>,
+        },
       {
         path: '/feedback',
         element: <Feedback />,
@@ -95,6 +147,7 @@ const router = createBrowserRouter([
     element: <Login />,
   },
 ]);
+
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <SnackbarProvider
