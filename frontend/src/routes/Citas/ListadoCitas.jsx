@@ -112,7 +112,22 @@ const Citas = () => {
                     <br /><br /><br />
                 </Grid>
 
-                <Box sx={{ overflowY: 'auto', mt: 3 }}>
+                <Box sx={{
+                    overflowY: 'auto',
+                    mt: 3,
+                    '&::-webkit-scrollbar': {
+                        width: '10px',
+                    },
+                    '&::-webkit-scrollbar-track': {
+                        backgroundColor: '#f1f1f1',
+                    },
+                    '&::-webkit-scrollbar-thumb': {
+                        backgroundColor: '#888',
+                    },
+                    '&::-webkit-scrollbar-thumb:hover': {
+                        backgroundColor: '#555',
+                    }
+                }}>
                     <Box sx={{ mr: 2 }}>
                         {citas
                             .filter((cita) => {
