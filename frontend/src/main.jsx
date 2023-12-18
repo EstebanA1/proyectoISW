@@ -35,6 +35,10 @@ import DetailsRespuesta from './routes/Respuestas/DetailsRespuesta.jsx';
 import UpdateRespuesta from './routes/Respuestas/UpdateRespuesta.jsx';
 import DeleteRespuesta from './routes/Respuestas/DeleteRespuesta.jsx';
 
+//Rut
+
+// import DetailsRut from './routes/Respuestas/DetailsRut.jsx';
+
 
 import { SnackbarProvider } from 'notistack';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
@@ -170,6 +174,10 @@ const router = createBrowserRouter([
         path: '/respuesta/delete/:id',
         element: <DeleteRespuesta />,
       },
+      // {
+      //   path: '/respuesta/rut/:rut',
+      //   element: <DetailsRut />,
+      // },
     ],
   },
   {
