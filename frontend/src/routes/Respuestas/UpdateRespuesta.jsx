@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Grid } from "@mui/material"
-import RespuestaForm from "../../../components/RespuestaDocForm"
-import { getRespuesta } from "../../../services/respuestaDoc.service";
+import RespuestaForm from "../../components/RespuestaDocForm"
+import { getRespuesta } from "../../services/respuestaDoc.service";
 
 const UpdateRespuesta = () => {
  const { id } = useParams();

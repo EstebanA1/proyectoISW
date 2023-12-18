@@ -1,4 +1,4 @@
-import RespuestaForm from "../../../components/RespuestaDocForm";
+import RespuestaForm from "../../components/RespuestaDocForm";
 import { Grid } from "@mui/material";
 import { useState } from "react";
 

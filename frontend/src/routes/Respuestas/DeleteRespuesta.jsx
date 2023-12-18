@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { deleteRespuesta } from "../../../services/respuestaDoc.service";
+import { deleteRespuesta } from "../../services/respuestaDoc.service";
 import { Button } from "@mui/material";
 import { Grid } from "@mui/material";
 

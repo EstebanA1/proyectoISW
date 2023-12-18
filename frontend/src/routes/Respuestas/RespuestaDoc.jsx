@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/LibraryAdd";
 import InfoIcon from "@mui/icons-material/Visibility";
-import { getRespuestas } from "../../../services/respuestaDoc.service";
+import { getRespuestas } from "../../services/respuestaDoc.service";
 import { useParams } from "react-router-dom";
 
 const Respuestas = () => {

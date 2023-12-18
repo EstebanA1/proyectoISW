@@ -7,7 +7,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate, useParams } from "react-router-dom";
 import ArrowBackIos from "@mui/icons-material/ArrowBackIos"
-import { getRespuesta, deleteRespuesta } from "../../../services/respuestaDoc.service";
+import { getRespuesta, deleteRespuesta } from "../../services/respuestaDoc.service";
 
 const DetailsRespuesta = () => {
  const { id } = useParams();
