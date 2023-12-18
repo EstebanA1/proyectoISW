@@ -27,7 +27,7 @@ function LoginForm() {
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+    <Box component="form" width='30%' onSubmit={handleSubmit(onSubmit)}>
       {loginError && <Alert severity="error">{loginError}</Alert>}
 
       <Box position="relative" width="100%" sx={{ mt: '24%' }}>
@@ -46,8 +46,8 @@ function LoginForm() {
             }
           })}
         />
-        {errors.email && errors.email.type === "required" && <p style={{ position: 'absolute', right: '-45%', top: '60%', transform: 'translateY(-50%)', color: 'red' }}> {errors.email.message}</p>}
-        {errors.email && errors.email.type === "pattern" && <p style={{ position: 'absolute', right: '-38.9%', top: '60%', transform: 'translateY(-50%)', color: 'red' }}> {errors.email.message}</p>}
+        {errors.email && errors.email.type === "required" && <p style={{ position: 'absolute', right: '-37%', top: '60%', transform: 'translateY(-50%)', color: 'red' }}> {errors.email.message}</p>}
+        {errors.email && errors.email.type === "pattern" && <p style={{ position: 'absolute', right: '-31.9%', top: '60%', transform: 'translateY(-50%)', color: 'red' }}> {errors.email.message}</p>}
       </Box>
 
       <Box position="relative" width="100%" >
@@ -60,11 +60,10 @@ function LoginForm() {
           fullWidth
           {...register('password', { required: 'La constraseña es obligatorio', })}
         />
-        {errors.password && <p style={{ position: 'absolute', right: '-58%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.password.message}</p>}
+        {errors.password && <p style={{ position: 'absolute', right: '-48%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.password.message}</p>}
       </Box>
 
-      <Button sx={{ mt: 2 }} variant="contained">Ingresar como Solicitante</Button>
-      <Button type="submit" sx={{ mt: 2, ml: 2.5 }} variant="contained">Continuar</Button>
+      <Button type="submit" sx={{ mt: 2, mr:'-100%' }} variant="contained">Continuar</Button>
     </Box>
   );
 }

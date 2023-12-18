@@ -1,9 +1,10 @@
 import { Grid } from "@mui/material";
 import { useParams } from "react-router-dom";
+import { useState } from "react";
 import FeedbackForm from "../../components/FeedbackForm";
 
 const CreateFeedback = () => {
-    const { id } = useParams();
+    const { feedback } = useParams();
 
     return (
         <>
@@ -18,7 +19,7 @@ const CreateFeedback = () => {
             <br />
             <h1>Formulario de Retroalimentacion de Visita</h1>
             <br />
-                <FeedbackForm id={id} /> 
+                <FeedbackForm feedback={feedback} /> 
             </Grid>
         </>
     )

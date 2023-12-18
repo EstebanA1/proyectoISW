@@ -104,7 +104,7 @@ const Citas = () => {
  }
  }}
  />
- <Button type="button" variant="contained" sx={{ mr: '6%', ml: 2, height: 35 }} onClick={() => router(`/citas/create/`)}><AddIcon /></Button>
+ <Button type="button" variant="contained" sx={{ mr: '6%', ml: 2, height: 35 }} onClick={() => router('/citas/create/')}><AddIcon /></Button>
  </Grid>
  <br /><br /><br />
  </Grid>
