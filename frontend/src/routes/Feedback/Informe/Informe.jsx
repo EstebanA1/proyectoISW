@@ -1,4 +1,4 @@
-import { getFeedbacks } from "../../services/feedback.service";
+import { getInformes } from "../../../services/informe.service";
 import React, { useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 import { Button } from "@mui/material";
@@ -10,24 +10,24 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/LibraryAdd";
 import InfoIcon from "@mui/icons-material/Visibility";
 
-import { handleDelete } from "./DetailsFeedback";
+import { handleDelete } from "./DetailsInforme";
 import { useSnackbar } from "notistack";
 
-const Feedback = () => {
+const Informe = () => {
     const router = useNavigate();
-    const [feedback, setFeedback] = useState([]);
+    const [informe, setInforme] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const { enqueueSnackbar } = useSnackbar();
     
     useEffect(() => {
-        getFeedbacks().then((res) => {
-            setFeedback(res);
+        getInformes().then((res) => {
+            setInforme(res);
         });
     }, []);
     
     useEffect(() => {
-        console.log(feedback);
-    }, [feedback]);
+        console.log(informe);
+    }, [informe]);
     
     return (
         <>
@@ -39,7 +39,7 @@ const Feedback = () => {
             justifyContent: "center",
             }}
         >
-            <h1>Listado de Retroalimentaciones</h1>
+            <h1>Listado de Informes</h1>
 
     
         <Grid
@@ -62,50 +62,36 @@ const Feedback = () => {
             }}
             />
             </div>
-            <div>
-            <Button type="button" variant="contained"
-            onClick={() => router(`/citas/listado`)}
-            >
-            Agregar Retroalimentacion
-            </Button>
-            </div>
+            
         </Grid>
     
         <Box sx={{ overflowY: "auto" }}>
             <Box sx={{ mr: 2 }}>
-            {feedback.filter((feedback) => feedback.solicitante.toLowerCase().includes(searchTerm.toLowerCase())).map((feedback, index) => (
-                <div key={feedback._id}>
+            {informe.filter((informe) => informe.solicitante.toLowerCase().includes(searchTerm.toLowerCase())).map((informe, index) => (
+                <div key={informe._id}>
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                     <span>{index + 1}.</span>
-                    <span>{feedback.solicitante}</span>
+                    <span>{informe.solicitante}</span>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                    <span>{informe.TipoObra}</span>
                 </div>
                 <div style={{ display: "flex", justifyContent: "end" }}>
-                    <h5>{feedback.estado}</h5>
+                    <h5>{informe.estado}</h5>
                 </div>
-                
-                {/*<div style={{ display: "flex", justifyContent: "end" }}>
-                    <h5>{feedback.fechaVisita}</h5>
-                </div>
-                <div style={{ display: "flex", justifyContent: "end" }}>
-                    <h5>{feedback.comentarios}</h5>
-                </div>
-                <div style={{ display: "flex", justifyContent: "end" }}>
-                    <h5>{feedback.imagenes}</h5>
-                </div>*/}
 
-                <Button sx={{ ml: 1, mb: 3, mt: -1 }} type="button" variant="contained" onClick={() => router(`/feedback/${feedback._id}`)}><InfoIcon /></Button>
-                <Button sx={{ ml: 1, mb: 3, mt: -1 }} type="button" variant="contained" onClick={() => router(`/feedback/update/${feedback._id}`)}><EditIcon /></Button>
-                {/*<Button sx={{ ml: 1, mb: 3, mt: -1 }} type="button" variant="contained" onClick={() => handleDelete(feedback._id, enqueueSnackbar, router)}><DeleteIcon /></Button>*/}
-                
+                <Button sx={{ ml: 1, mb: 3, mt: -1 }} type="button" variant="contained" onClick={() => router(`/informe/${informe._id}`)}><InfoIcon /></Button>
+                {/*<Button sx={{ ml: 1, mb: 3, mt: -1 }} type="button" variant="contained" onClick={() => router(`/informe/update/${informe._id}`)}><EditIcon /></Button>
+*/}
                 <Button
                     sx={{ ml: 1, mb: 3, mt: -1 }}
                     type="button"
                     variant="contained"
-                    onClick={() => router(`/feedback/delete/${feedback._id}`)}
+                    onClick={() => router(`/informe/delete/${informe._id}`)}
                 >
                     
                     <DeleteIcon />
-                </Button>
+            </Button>
 
                 
                 <div class="lineaNegra"></div>
@@ -119,4 +105,4 @@ const Feedback = () => {
     );
     };
 
-export default Feedback;
+export default Informe;

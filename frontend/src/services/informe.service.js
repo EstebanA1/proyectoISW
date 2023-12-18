@@ -54,7 +54,16 @@ export const deleteInforme = async (id) => {
 
 export const updateInforme = async (id, informe) => {
     try {
-        const response = await axios.put(`/informe/${id}`, informe);
+        let informeUpdate = {
+            solicitante: informe.solicitante,
+            TipoObra: informe.TipoObra,
+            ubicacion: informe.ubicacion,
+            D: informe.D,
+            observaciones: informe.observaciones,
+            estado: informe.estado,
+        }
+
+        const response = await axios.put(`/informe/${id}`, informeUpdate);
         if (response.status === 200) {
             return response.data;
         }

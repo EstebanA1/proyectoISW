@@ -1,8 +1,9 @@
 import { Grid } from '@mui/material'
 import { SnackbarProvider } from "notistack";
-import Calendar from '../../components/Calendar';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getCitas } from '../../services/cita.service';
+
+import Calendar from '../../components/Calendar';
 
 const Citas = () => {
     const [citas, setCitas] = useState([]);
@@ -14,7 +15,6 @@ const Citas = () => {
     }, []);
 
     useEffect(() => {
-        console.log(citas)
     }, [citas]);
 
     return (

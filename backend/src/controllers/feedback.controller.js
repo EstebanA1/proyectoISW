@@ -1,3 +1,6 @@
+/* eslint-disable prefer-const */
+/* eslint-disable quotes */
+/* eslint-disable require-jsdoc */
 /* eslint-disable arrow-parens */
 /* eslint-disable max-len */
 /* eslint-disable spaced-comment */
@@ -38,13 +41,27 @@ async function getFeedback(req, res) {
 async function createFeedback(req, res) {
     try {
         const { body } = req;
-        const { error: bodyError } = feedbackBodySchema.validate(body);
+        const citaId = body.IDCita;
 
-        if (bodyError) return respondError(req, res, 400, bodyError.message);
-
+        /*
         //Verificar ID de la cita
-        const [cita, errorCitas] = await CitaService.getCitaById(body.IDCita);
+        const [cita, errorCitas] = await CitaService.getCitaById(citaId);
         if (errorCitas) return respondError(req, res, 404, "No Existe Cita Asociada Con Ese ID Para Retroalimentacion, Revise ID de Cita");
+        
+        //Visita realizada
+        const updateCitaAndHandleError = async (citaId) => {
+            const [cita, updateError] = await CitaService.updateCita(citaId, cita);
+            if (updateError) {
+              respondError(req, res, 400, "No se pudo actualizar la cita");
+            }
+            return cita;
+        };
+        cita.visitRealizated = "Si";
+        const updateCita = await updateCitaAndHandleError(citaId, cita);
+        */
+        //Errores
+        const { error: bodyError } = feedbackBodySchema.validate(body);
+        if (bodyError) return respondError(req, res, 400, bodyError.message);
 
         //Imagenes
         /*for (const file of req.files) {
@@ -61,12 +78,8 @@ async function createFeedback(req, res) {
         if (!newFeedback) {
             return respondError(req, res, 400, "No se creo la Retroalimentación");
         }
-
-        cita.visitRealizated = "Si";
-        const { updateCita, updateError } = await CitaService.updateCita(body.IDCita, cita);
-        if (updateError) return respondError(req, res, 400, "No se pudo actualizar la cita");
-
-        respondSuccess(req, res, 201, newFeedback);
+        
+        respondSuccess(req, res, 201, ["La Retroalimentacion fue creada con exito", newFeedback]);
     } catch (error) {
         handleError(error, "feedback.controller -> createFeedback");
         respondError(req, res, 500, "No se creo la Retroalimentación");
@@ -79,14 +92,14 @@ async function createFeedback(req, res) {
  */
 async function getFeedbackById(req, res) {
     try {
-        const { id } = req.params;
-        const { error: idError } = feedbackIdSchema.validate(id);
-        if (idError) return respondError(req, res, 400, idError.message);
+        const { params } = req;
+        const { error: paramsError } = feedbackIdSchema.validate(params.id);
+        if (paramsError) return respondError(req, res, 400, paramsError.message);
 
-        const [feedback, errorFeedback] = await FeedbackService.getFeedbackById(id);
+        const [feedback, errorFeedback] = await FeedbackService.getFeedbackById(params.id);
         if (errorFeedback) return respondError(req, res, 404, errorFeedback);
 
-        respondSuccess(req, res, 200, feedback);
+        respondSuccess(req, res, 200, ["La Retroalimentacion Solicitada es: ", feedback]);
     } catch (error) {
         handleError(error, "feedback.controller -> getFeedbackById");
         respondError(req, res, 400, "No se pudo obtener la Retroalimentación");
@@ -99,17 +112,22 @@ async function getFeedbackById(req, res) {
  */
 async function updateFeedback(req, res) {
     try {
-        const { id } = req.params;
-        const { body } = req;
-        const { error: bodyError } = feedbackBodySchema.validate(body);
-        if (bodyError) return respondError(req, res, 400, bodyError.message);
-        const { error: idError } = feedbackIdSchema.validate(id);
-        if (idError) return respondError(req, res, 400, idError.message);
+        const { params, body } = req;
+        const { error: paramsError } = feedbackIdSchema.validate(params.id);
+        if (paramsError) return respondError(req, res, 400, paramsError.message);
+        
+        /*if (body.fechaVisita) {
+            const aux = new Date();
+            const fechaActual = aux.toLocaleDateString();
+            const fechaInput = body.fechaVisita;
+            let fecha1 = fechaActual.split("-");
+            let fecha2 = fechaInput.split("/");
+        }
 
         //Verificar ID de la cita
         const [cita, errorCitas] = await CitaService.getCitaById(body.IDCita);
         if (errorCitas) return respondError(req, res, 404, "No Existe Cita Asociada Con Ese ID Para Retroalimentacion, Revise ID de Cita");
-
+        */
         /*//Imagenes
         for (const file of req.files) {
             switch (file.fieldname) {
@@ -120,10 +138,13 @@ async function updateFeedback(req, res) {
             }
         }*/
 
-        const [updatedFeedback, errorUpdateFeedback] = await FeedbackService.updateFeedback(id, body);
-        if (errorUpdateFeedback) return respondError(req, res, 404, errorUpdateFeedback);
+        const { error: bodyError } = feedbackBodySchema.validate(body);
+        if (bodyError) return respondError(req, res, 400, bodyError.message);
 
-        respondSuccess(req, res, 200, updatedFeedback);
+        const [feedback, feedbackError] = await FeedbackService.updateFeedback(params.id, body);
+        if (feedbackError) return respondError(req, res, 404, feedbackError);
+
+        respondSuccess(req, res, 200, ["Retroalimentacion Actualizada con exito", feedback]);
     } catch (error) {
         handleError(error, "feedback.controller -> updateFeedback");
         respondError(req, res, 400, "No se pudo actualizar la Retroalimentación");
@@ -150,10 +171,20 @@ async function deleteFeedback(req, res) {
     }
 }
 
+function handleMissingId(req, res) {
+    respondError(req, res, 400, 'El ID de la Retroalimentacion es requerido');
+}
+   
+function handleId(req, res) {
+    respondError(req, res, 400, 'No se debe proporcionar un ID');
+}
+
 module.exports = {
     getFeedback,
     createFeedback,
     getFeedbackById,
     updateFeedback,
     deleteFeedback,
+    handleMissingId,
+    handleId,
 };

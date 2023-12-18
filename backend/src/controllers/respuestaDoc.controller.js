@@ -35,12 +35,18 @@ async function getRespuestasDoc(req, res) {
 async function createRespuestaDoc(req, res) {
     try {
         const { body } = req;
+        console.log(body);
         const { error: bodyError } = respuestaDocBodySchema.validate(body);
         if (bodyError) return respondError(req, res, 400, bodyError.message);
 
         const [newRespuestaDoc, respuestaDocError] = await RespuestaDocService.createRespuestaDoc(body);
 
-        if (respuestaDocError) return respondError(req, res, 400, respuestaDocError);
+        if (respuestaDocError) {
+            console.log(respuestaDocError);
+            return respondError(req, res, 400, respuestaDocError);
+        }
+
+        // if (respuestaDocError) return respondError(req, res, 400, respuestaDocError);
         if (!newRespuestaDoc) {
             return respondError(req, res, 400, 'No se creo la respuesta');
         }
@@ -96,6 +102,7 @@ async function updateRespuestaDoc(req, res) {
     }
 }
 
+
 /**
  * Elimina una respuestaDoc por su id
  *  
@@ -122,7 +129,7 @@ async function deleteRespuestaDoc(req, res) {
 async function getRespuestaDocByRut(req, res) {
     try {
         const { params } = req;
-        const { error: rutError } = Joi.string().regex(/^\d{1,2}\.\d{3}\.\d{3}[-][0-9kK]{1}$/).validate(params.rut);
+        const { error: rutError } = Joi.string().regex(/^(\d{1,2}\.\d{3}\.\d{3}-[0-9kK]|[\d]{8}-[0-9kK]|[\d]{9}[0-9kK]?)$/).validate(params.rut);
 
         if (rutError) return respondError(req, res, 400, "RUT inválido");
 

@@ -1,10 +1,12 @@
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { login } from '../services/auth.service';
-import { Button, TextField, Box } from '@mui/material'
+import { Button, TextField, Box, Alert } from '@mui/material'
 
 function LoginForm() {
   const navigate = useNavigate();
+  const [loginError, setLoginError] = useState(null);
 
   const {
     register,
@@ -15,12 +17,19 @@ function LoginForm() {
   const onSubmit = (data) => {
     login(data).then(() => {
       navigate('/');
-      console.log(data);
+    }).catch((error) => {
+      if (error.response && error.response.status === 400) {
+        setLoginError('El correo y/o contraseña son incorrectos');
+      } else {
+        setLoginError('Correo y/o contraseña son incorrectos');//*
+      }
     });
   };
 
   return (
-    <Box component="form" sx={{ mr: '0' }} onSubmit={handleSubmit(onSubmit)}>
+    <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+      {loginError && <Alert severity="error">{loginError}</Alert>}
+
       <Box position="relative" width="100%" sx={{ mt: '24%' }}>
         <h2>Inicia Sesión</h2>
         <TextField

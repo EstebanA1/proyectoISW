@@ -1,4 +1,3 @@
-
 import axios from './root.service';
 
 export const getSolicitudes = async () => {

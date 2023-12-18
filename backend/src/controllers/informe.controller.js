@@ -1,3 +1,5 @@
+/* eslint-disable quotes */
+/* eslint-disable require-jsdoc */
 /* eslint-disable brace-style */
 /* eslint-disable spaced-comment */
 /* eslint-disable no-unused-vars */
@@ -38,14 +40,14 @@ async function getInforme(req, res) {
 async function createInforme(req, res) {
     try {
         const { body } = req;
+
         const { error: bodyError } = informeBodySchema.validate(body);
-
         if (bodyError) return respondError(req, res, 400, bodyError.message);
-
+/*
         //Verificar ID de la retroalimentacion
         const [feedback, errorFeedback] = await FeedbackService.getFeedbackById(body.IDFeedback);
         if (errorFeedback) return respondError(req, res, 404, "No Existe Retroalimentacion Asociada Con Ese ID Para Informe, Revise ID de Cita");
-
+*/
         const [newInforme, informeError] = await InformeService.createInforme(body);
 
         if (informeError) return respondError(req, res, 400, informeError);
@@ -67,11 +69,11 @@ async function createInforme(req, res) {
  */
 async function getInformeById(req, res) {
     try {
-        const { id } = req.params;
-        const { error: idError } = informeIdSchema.validate(id);
-        if (idError) return respondError(req, res, 400, idError.message);
+        const { params } = req;
+        const { error: paramsError } = informeIdSchema.validate(params.id);
+        if (paramsError) return respondError(req, res, 400, paramsError.message);
 
-        const [informe, errorInforme] = await InformeService.getInformeById(id);
+        const [informe, errorInforme] = await InformeService.getInformeById(params.id);
         if (errorInforme) return respondError(req, res, 404, errorInforme);
 
         respondSuccess(req, res, 200, informe);
@@ -87,18 +89,17 @@ async function getInformeById(req, res) {
  */
 async function updateInforme(req, res) {
     try {
-        const { id } = req.params;
-        const { body } = req;
+        const { params, body } = req;
+        const { error: paramsError } = informeIdSchema.validate(params.id);
+        if (paramsError) return respondError(req, res, 400, paramsError.message);
         const { error: bodyError } = informeBodySchema.validate(body);
         if (bodyError) return respondError(req, res, 400, bodyError.message);
-        const { error: idError } = informeIdSchema.validate(id);
-        if (idError) return respondError(req, res, 400, idError.message);
-
+/*
         //Verificar ID de la retroalimentacion
         const [feedback, errorFeedback] = await FeedbackService.getFeedbackById(body.IDFeedback);
         if (errorFeedback) return respondError(req, res, 404, "No Existe Retroalimentacion Asociada Con Ese ID Para Informe, Revise ID de Cita");
-
-        const [updatedInforme, errorUpdateInforme] = await InformeService.updateInforme(id, body);
+*/
+        const [updatedInforme, errorUpdateInforme] = await InformeService.updateInforme(params.id, body);
         if (errorUpdateInforme) return respondError(req, res, 404, errorUpdateInforme);
 
         respondSuccess(req, res, 200, updatedInforme);
@@ -128,10 +129,20 @@ async function deleteInforme(req, res) {
     }
 }
 
+function handleMissingId(req, res) {
+    respondError(req, res, 400, 'El ID de la Retroalimentacion es requerido');
+}
+   
+function handleId(req, res) {
+    respondError(req, res, 400, 'No se debe proporcionar un ID');
+}
+
 module.exports = {
     getInforme,
     createInforme,
     getInformeById,
     updateInforme,
     deleteInforme,
+    handleMissingId,
+    handleId,
 };

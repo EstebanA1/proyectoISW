@@ -18,9 +18,15 @@ export const login = async ({ email, password }) => {
       cookies.set('jwt-auth', data.data.accessToken, { path: '/' });
     }
   } catch (error) {
-    console.log(error);
+    if (error instanceof Error) {
+      throw new Error(error.message); // Propagamos el mensaje de error
+    } else {
+      console.log(error);
+      throw new Error('Correo y/o contraseña incorrectos');
+    }
   }
 };
+
 
 export const logout = () => {
   localStorage.removeItem('user');

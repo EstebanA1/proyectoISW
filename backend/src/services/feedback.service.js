@@ -1,10 +1,12 @@
+/* eslint-disable max-len */
+/* eslint-disable quotes */
 /* eslint-disable no-unused-vars */
 "use strict";
 
 const Feedback = require("../models/feedback.model");
 const { handleError } = require("../utils/errorHandler");
+const Joi = require("joi");
 const multer = require("multer");
-const mongoose = require("mongoose");
 
 /**
  * Obtener Feedbacks de Visitas a Terreno
@@ -12,9 +14,9 @@ const mongoose = require("mongoose");
  */
 async function getFeedback() {
     try {
-        const feedbacks = await Feedback.find();
-        if (!feedbacks) return [null, "No hay Retroalimentaciones de Visitas a Terreno"];
-        return [feedbacks, null];
+        const feedback = await Feedback.find().exec();
+        if (!feedback) return [null, "No hay Retroalimentaciones de Visitas a Terreno"];
+        return [feedback, null];
     } catch (error) {
         handleError(error, "feedback.service -> getFeedbacks");
     }
@@ -27,7 +29,7 @@ async function getFeedback() {
  */
 async function createFeedback(feedback) {
     try {
-        const { IDCita, solicitante, fechaVisita, comentarios, estado, imagenes } = feedback;
+        const { IDCita, solicitante, fechaVisita, comentarios, informe, detalles, estado, imagenes } = feedback;
 
         const feedbackFound = await Feedback.findOne({ IDCita: feedback.IDCita });
         if (feedbackFound) return [null, "La Retroalimentación de Visita a Terreno ya existe"];
@@ -37,6 +39,8 @@ async function createFeedback(feedback) {
             solicitante,
             fechaVisita,
             comentarios,
+            informe,
+            detalles,
             estado,
             imagenes,
         });
@@ -76,7 +80,7 @@ async function updateFeedback(id, feedback) {
         const feedbackFound = await Feedback.findById(id);
         if (!feedbackFound) return [null, "La Retroalimentación de Visita a Terreno no existe"];
         
-        const { IDCita, solicitante, fechaVisita, comentarios, estado, imagenes } = feedback;
+        const { IDCita, solicitante, fechaVisita, comentarios, informe, detalles, estado, imagenes } = feedback;
 
         const updatedFeedback = await Feedback.findByIdAndUpdate(
             id,
@@ -85,6 +89,8 @@ async function updateFeedback(id, feedback) {
                 solicitante,
                 fechaVisita,
                 comentarios,
+                informe,
+                detalles,
                 estado,
                 imagenes,
             },

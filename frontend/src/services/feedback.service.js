@@ -58,8 +58,9 @@ export const updateFeedback = async (id, feedback) => {
             solicitante: feedback.solicitante,
             fechaVisita: feedback.fechaVisita,
             comentarios: feedback.comentarios,
-            imagenes: feedback.imagenes,
+            detalles: feedback.detalles,
             estado: feedback.estado,
+            imagenes: feedback.imagenes,
         }
 
 
