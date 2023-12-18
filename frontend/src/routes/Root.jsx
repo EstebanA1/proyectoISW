@@ -4,6 +4,7 @@ import { AuthProvider } from '../context/AuthContext';
 import { Button, Box, ThemeProvider, createTheme } from "@mui/material"
 import React, { useState } from 'react';
 import HomeIcon from '@mui/icons-material/Home';
+import { useAuth } from '../context/AuthContext';
 
 const theme = createTheme({
   palette: {
@@ -65,8 +66,15 @@ function PageRoot() {
     navigate('/auth');
   };
 
+  const { user } = useAuth();
+  let isAdmin = false;
+
+  if (user.roles) {
+    isAdmin = user.roles.some(role => role.name === "Administrador");
+  }
+  
   return (
-    <ThemeProvider theme={theme}>
+<ThemeProvider theme={theme}>
       <div className='botones'>
         <Box sx={{
           marginTop: 2,
@@ -88,12 +96,13 @@ function PageRoot() {
             >
               <HomeIcon />
             </Button>
+
             <Button
               sx={{ ml: 2 }}
               style={citasButtonStyle}
               onMouseOver={() => handleMouseOver(setCitasButtonStyle)}
               onMouseOut={() => handleMouseOut(setCitasButtonStyle)}
-              onClick={() => navigate('/citas')}
+              onClick={() => isAdmin ? navigate('/citas') : null}
             >
               Citas
             </Button>
@@ -108,7 +117,28 @@ function PageRoot() {
               Retroalimentaciones
             </Button>
 
+            <Button
+              sx={{ ml: 2 }}
+              style={citasButtonStyle}
+              onMouseOver={() => handleMouseOver(setCitasButtonStyle)}
+              onMouseOut={() => handleMouseOut(setCitasButtonStyle)}
+              onClick={() => navigate('/solicitud')}
+            >
+              Solicitudes
+            </Button>
+
+            <Button
+              sx={{ ml: 2 }}
+              style={citasButtonStyle}
+              onMouseOver={() => handleMouseOver(setCitasButtonStyle)}
+              onMouseOut={() => handleMouseOut(setCitasButtonStyle)}
+              onClick={() => navigate('/respuesta')}
+            >
+              Respuestas
+            </Button>
+
           </Box>
+
           <Button
             sx={{ marginRight: 2 }}
             style={logoutButtonStyle}

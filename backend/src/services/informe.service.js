@@ -30,16 +30,33 @@ async function getInforme() {
  */
 async function createInforme(informe) {
     try {
+<<<<<<< HEAD
         const { IDFeedback, solicitante, TipoObra, ubicacion, D, observaciones, estado } = informe;
+=======
+        const { IDFeedback, Titulo, solicitante, TipoObra, A, A_1, B, B_1, C, C_1, C_2, D, D_1, E, E_1, estado } = informe;
+>>>>>>> 1eb032b186e9d443674fbc002e38e9bb8944509f
 
         const informeFound = await Informe.findOne({ IDFeedback: informe.IDFeedback });
         if (informeFound) return [null, "El Informe de Visita a Terreno ya existe"];
 
         const newInforme = new Informe({
             IDFeedback,
+<<<<<<< HEAD
             solicitante,
             TipoObra,
             ubicacion,
+=======
+            Titulo,
+            solicitante,
+            TipoObra,
+            A,
+            A_1,
+            B,
+            B_1,
+            C,
+            C_1,
+            C_2,
+>>>>>>> 1eb032b186e9d443674fbc002e38e9bb8944509f
             D,
             observaciones,
             estado,
@@ -81,15 +98,32 @@ async function updateInforme(id, informe) {
         const informeFound = await Informe.findById(id);
         if (!informeFound) return [null, "El Informe de Visita a Terreno no existe"];
 
+<<<<<<< HEAD
         const { IDFeedback, solicitante, TipoObra, ubicacion, D, observaciones, estado } = informe;
+=======
+        const { IDFeedback, Titulo, solicitante, TipoObra, A, A_1, B, B_1, C, C_1, C_2, D, D_1, E, E_1, estado } = informe;
+>>>>>>> 1eb032b186e9d443674fbc002e38e9bb8944509f
 
         const updatedInforme = await Informe.findByIdAndUpdate(
             id,
             {
                 IDFeedback,
+<<<<<<< HEAD
                 solicitante,
                 TipoObra,
                 ubicacion,
+=======
+                Titulo,
+                solicitante,
+                TipoObra,
+                A,
+                A_1,
+                B,
+                B_1,
+                C,
+                C_1,
+                C_2,
+>>>>>>> 1eb032b186e9d443674fbc002e38e9bb8944509f
                 D,
                 observaciones,
                 estado,

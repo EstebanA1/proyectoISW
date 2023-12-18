@@ -41,7 +41,7 @@
 }
 
 .lineaNegra {
-  border-bottom: 4px solid black;
+  border-bottom: 3px solid #4c4c4c;
   height: 1px;
   width: 100%;
   margin-bottom: 20px;
@@ -131,14 +131,14 @@ li {
 }
 
 span {
- color: #000000;
- font-weight: bold;
- font-size: 18px; 
+  color: #000000;
+  font-weight: bold;
+  font-size: 18px;
 }
 
 .my-error2 {
- color: red;
- position: absolute;
- left: 102%;
- white-space: nowrap;
+  color: red;
+  position: absolute;
+  left: 102%;
+  white-space: nowrap;
 }

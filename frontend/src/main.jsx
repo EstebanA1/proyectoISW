@@ -12,6 +12,11 @@ import CreateCita from './routes/Citas/CreateCita.jsx';
 import DetailsCita from './routes/Citas/DetailsCita.jsx';
 import UpdateCita from './routes/Citas/UpdateCita.jsx';
 import ListadoCita from './routes/Citas/ListadoCitas.jsx';
+// Solicitud
+import Solicitud from './routes/Solicitud/Solicitud.jsx';
+import CreateSolicitud from './routes/Solicitud/CreateSolicitud.jsx';
+import DeleteSolicitud from './routes/Solicitud/DeleteSolicitud.jsx';
+import UpdateSolicitud from './routes/Solicitud/UpdateSolicitud.jsx';
 
 //Feedback
 import Feedback from './routes/Feedback/Feedback.jsx';
@@ -19,6 +24,15 @@ import DetailsFeedback from './routes/Feedback/DetailsFeedback.jsx';
 import CreateFeedback from './routes/Feedback/CreateFeedback.jsx';
 import DeleteFeedback from './routes/Feedback/DeleteFeedback.jsx';
 import UpdateFeedback from './routes/Feedback/UpdateFeedback.jsx';
+
+//Respuestas
+
+import RespuestaDoc from './routes/Respuestas/RespuestaDoc.jsx';
+import CreateRespuesta from './routes/Respuestas/CreateRespuesta.jsx';
+import DetailsRespuesta from './routes/Respuestas/DetailsRespuesta.jsx';
+import UpdateRespuesta from './routes/Respuestas/UpdateRespuesta.jsx';
+import DeleteRespuesta from './routes/Respuestas/DeleteRespuesta.jsx';
+
 
 import { SnackbarProvider } from 'notistack';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
@@ -79,6 +93,51 @@ const router = createBrowserRouter([
         path: '/feedback/update/:id',
         element: <UpdateFeedback />,
       },
+
+      //Solicitud
+
+      {
+        path: '/solicitud',
+        element: <Solicitud />,
+      },
+      {
+        path: '/solicitud/create/',
+       element: <CreateSolicitud/>,
+       },
+       {
+        path: '/solicitud/create/:id',
+       element: <CreateSolicitud/>,
+       },
+        {
+          path: '/solicitud/delete/:id',
+          element: <DeleteSolicitud/>,
+        },
+        {
+          path: '/solicitud/update/:id',
+          element: <UpdateSolicitud/>,
+        },
+      
+      //Respuestas
+      {
+        path: '/respuesta',
+        element: <RespuestaDoc />,
+      },
+      {
+        path: '/respuesta/create',
+        element: <CreateRespuesta />,
+      },
+      {
+        path: '/respuesta/:id',
+        element: <DetailsRespuesta />,
+      },
+      {
+        path: '/respuesta/update/:id',
+        element: <UpdateRespuesta />,
+      },
+      {
+        path: '/respuesta/delete/:id',
+        element: <DeleteRespuesta />,
+      },
     ],
   },
   {
@@ -86,6 +145,7 @@ const router = createBrowserRouter([
     element: <Login />,
   },
 ]);
+
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <SnackbarProvider

@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 /* eslint-disable prefer-const */
 /* eslint-disable quotes */
 /* eslint-disable require-jsdoc */
+=======
+>>>>>>> 1eb032b186e9d443674fbc002e38e9bb8944509f
 /* eslint-disable arrow-parens */
 /* eslint-disable max-len */
 /* eslint-disable spaced-comment */
@@ -11,6 +14,7 @@ const { respondSuccess, respondError } = require("../utils/resHandler");
 const FeedbackService = require("../services/feedback.service");
 const { handleError } = require("../utils/errorHandler");
 const { feedbackBodySchema, feedbackIdSchema } = require("../schema/feedback.schema");
+const Joi = require("joi");
 
 const CitaService = require("../services/citas.service");
 
@@ -62,14 +66,32 @@ async function createFeedback(req, res) {
         const { error: bodyError } = feedbackBodySchema.validate(body);
         if (bodyError) return respondError(req, res, 400, bodyError.message);
 
+        //Imagenes
+        /*for (const file of req.files) {
+            switch (file.fieldname) {
+              case "imagenes":
+                body.imagenes = "../../uploads/" + file.filename;
+                break;
+            }
+        }//*/
+
         const [newFeedback, feedbackError] = await FeedbackService.createFeedback(body);
 
         if (feedbackError) return respondError(req, res, 400, feedbackError);
         if (!newFeedback) {
             return respondError(req, res, 400, "No se creo la Retroalimentación");
         }
+<<<<<<< HEAD
         
         respondSuccess(req, res, 201, ["La Retroalimentacion fue creada con exito", newFeedback]);
+=======
+
+        cita.visitRealizated = "Si";
+        const { updateCita, updateError } = await CitaService.updateCita(body.IDCita, cita);
+        if (updateError) return respondError(req, res, 400, "No se pudo actualizar la cita");
+
+        respondSuccess(req, res, 201, newFeedback);
+>>>>>>> 1eb032b186e9d443674fbc002e38e9bb8944509f
     } catch (error) {
         handleError(error, "feedback.controller -> createFeedback");
         respondError(req, res, 500, "No se creo la Retroalimentación");
@@ -128,8 +150,23 @@ async function updateFeedback(req, res) {
             }
         }*/
 
+<<<<<<< HEAD
         const { error: bodyError } = feedbackBodySchema.validate(body);
         if (bodyError) return respondError(req, res, 400, bodyError.message);
+=======
+        /*//Imagenes
+        for (const file of req.files) {
+            switch (file.fieldname) {
+              case "imagenes":
+                body.imagenes = body.imagenes || [];
+                body.imagenes.push("../../uploads/" + file.filename);
+                break;
+            }
+        }*/
+
+        const [updatedFeedback, errorUpdateFeedback] = await FeedbackService.updateFeedback(id, body);
+        if (errorUpdateFeedback) return respondError(req, res, 404, errorUpdateFeedback);
+>>>>>>> 1eb032b186e9d443674fbc002e38e9bb8944509f
 
         const [feedback, feedbackError] = await FeedbackService.updateFeedback(params.id, body);
         if (feedbackError) return respondError(req, res, 404, feedbackError);
@@ -175,6 +212,9 @@ module.exports = {
     getFeedbackById,
     updateFeedback,
     deleteFeedback,
+<<<<<<< HEAD
     handleMissingId,
     handleId,
+=======
+>>>>>>> 1eb032b186e9d443674fbc002e38e9bb8944509f
 };

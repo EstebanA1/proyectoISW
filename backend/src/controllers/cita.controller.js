@@ -113,12 +113,16 @@ async function updateCita(req, res) {
  let fecha1 = fechaActual.split("-");
  let fecha2 = fechaInput.split("/");
 
+<<<<<<< HEAD
  }
 
  const { error: bodyError } = citaModBodySchema.validate(body);
  if (bodyError) return respondError(req, res, 400, bodyError.message);
 
  const [cita, citaError] = await CitaService.updateCita(params.id, body);
+=======
+        }
+>>>>>>> 1eb032b186e9d443674fbc002e38e9bb8944509f
 
  if (citaError) return respondError(req, res, 404, citaError);
 

@@ -25,11 +25,6 @@ const solicitudBodySchema = Joi.object({
         "any.required": "El rut de la solicitud es obligatorio.",
         "string.base": "El rut de la solicitud debe ser de tipo string.",
     }),
-    firma: Joi.string().required().messages({
-        "string.empty": "La firma de la solicitud no puede estar vacío.",
-        "any.required": "La firma de la solicitud es obligatorio.",
-        "string.base": "La firma de la solicitud debe ser de tipo string.",
-    }),
     estadoDeRespuesta: Joi.string().messages({
         "string.base": "El estado de la visita debe ser de tipo string.",
         "any.only": "El estado proporcionado debe ser Pendiente, Aprobado o Rechazado.",
@@ -69,11 +64,6 @@ const solicitudModBodySchema = Joi.object({
         "string.empty": "El rut de la solicitud no puede estar vacío.",
         "any.required": "El rut de la solicitud es obligatorio.",
         "string.base": "El rut de la solicitud debe ser de tipo string.",
-    }),
-    firma: Joi.string().required().messages({
-        "string.empty": "La firma de la solicitud no puede estar vacío.",
-        "any.required": "La firma de la solicitud es obligatorio.",
-        "string.base": "La firma de la solicitud debe ser de tipo string.",
     }),
     estadoDeRespuesta: Joi.string().valid(...ESTADOS).messages({
         "string.base": "El estado de la visita debe ser de tipo string.",

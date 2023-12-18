@@ -8,8 +8,11 @@
 const Joi = require("joi");
 const ESTADOS = require("../constants/estados.constants");
 const TYPES = require("../constants/tipoCitas.constants");
+<<<<<<< HEAD
 const XRegExp = require('xregexp');
 const unicodeWord1 = XRegExp('^[\\p{L} ]+$');
+=======
+>>>>>>> 1eb032b186e9d443674fbc002e38e9bb8944509f
 
 /**
  * Esquema de validación para el cuerpo de la solicitud del feedback.
@@ -38,6 +41,7 @@ const feedbackBodySchema = Joi.object({
         "any.required": "Los comentarios de la retroalimentación es obligatorio.",
         "string.base": "Los comentarios de la retroalimentación debe ser de tipo string.",
     }),
+<<<<<<< HEAD
     informe: Joi.string().messages({
         "string.base": "El informe de la retroalimentación debe ser de tipo string.",
     }),
@@ -56,6 +60,19 @@ const feedbackBodySchema = Joi.object({
         "string.empty": "Las imagenes de la retroalimentación no puede estar vacío.",
         "string.base": "Las imagenes de la retroalimentación debe ser de tipo string.",
     }),
+=======
+    estado: Joi.string().valid(...ESTADOS).required().messages({
+        "string.empty": "El estado de la retroalimentación no puede estar vacío.",
+        "any.required": "El estado de la retroalimentación es obligatorio.",
+        "string.base": "El estado de la retroalimentación debe ser de tipo string.",
+        "any.only": "El estado proporcionado debe ser Rechazado, Pendiente o Aprobado.",
+    }),
+    imagenes: Joi.string().required().messages({
+        "string.empty": "Las imagenes de la retroalimentación no puede estar vacío.",
+        "any.required": "Las imagenes de la retroalimentación es obligatorio.",
+        "string.base": "Las imagenes de la retroalimentación debe ser de tipo string.",
+    }),
+>>>>>>> 1eb032b186e9d443674fbc002e38e9bb8944509f
 }).messages({
     "object.unknown": "No se permiten propiedades adicionales.",
 });
@@ -81,9 +98,16 @@ const feedbackIdSchema = Joi.string()
  * @constant {Object}
  */
 const informeBodySchema = Joi.object({
+<<<<<<< HEAD
     IDFeedback: Joi.string().messages({
         "string.empty": "El id del Feedback no puede estar vacia.",
         "string.base": "El id del Feedback debe ser de tipo string.",
+=======
+    IDFeedback: Joi.string().required().messages({
+        "string.empty": "El ID de la retroalimentación no puede estar vacío.",
+        "any.required": "El ID de la retroalimentación es obligatorio.",
+        "string.base": "El ID de la retroalimentación debe ser de tipo string.",
+>>>>>>> 1eb032b186e9d443674fbc002e38e9bb8944509f
     }),
     solicitante: Joi.string().pattern(unicodeWord1).required().messages({
         "string.empty": "El solicitante del informe no puede estar vacío.",
@@ -95,7 +119,14 @@ const informeBodySchema = Joi.object({
         "string.empty": "El tipo de obra del informe no puede estar vacío.",
         "any.required": "El tipo de obra del informe es obligatorio.",
         "string.base": "El tipo de obra del informe debe ser de tipo string.",
+<<<<<<< HEAD
         "any.only": "El tipo de obra proporcionado debe ser Ampliación o Construcción.",
+=======
+        "any.only": "El tipo de obra proporcionado debe ser Edificación, Movimiento de tierra, Instalación de servicios o Demolición.",
+    }),
+    A: Joi.string().messages({
+        "string.base": "El 1 del informe debe ser de tipo string.",
+>>>>>>> 1eb032b186e9d443674fbc002e38e9bb8944509f
     }),
     ubicacion: Joi.string().required().messages({
         "string.empty": "La Ubicacion del informe no puede estar vacío.",

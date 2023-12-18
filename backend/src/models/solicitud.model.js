@@ -20,10 +20,6 @@ const solicitudSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    firma: {
-        type: String,
-        required: true,
-    },
     fecha: {
         type: String,
         default: FechaActual.getDate() + "/" + (FechaActual.getMonth() + 1) + "/" + FechaActual.getFullYear(),

@@ -27,7 +27,7 @@ async function login(user) {
       .populate("roles")
       .exec();
     if (!userFound) {
-      return [null, null, "El usuario y/o contraseña son incorrectos"];
+      return [null, null, "El correo y/o contraseña son incorrectos"];
     }
 
     const matchPassword = await User.comparePassword(
@@ -36,7 +36,7 @@ async function login(user) {
     );
 
     if (!matchPassword) {
-      return [null, null, "El usuario y/o contraseña son incorrectos"];
+      return [null, null, "El correo y/o contraseña son incorrectos"];
     }
 
     const accessToken = jwt.sign(
