@@ -83,8 +83,8 @@ const Citas = () => {
  }}
  >
  <MenuItem value=""><em>Ninguno</em></MenuItem>
- <MenuItem value="Ampliaci贸n">Ampliaci贸n</MenuItem>
- <MenuItem value="Construcci贸n">Construcci贸n</MenuItem>
+ <MenuItem value="Ampliación">Ampliación</MenuItem>
+ <MenuItem value="Construcción">Construcción</MenuItem>
  </Select>
  </Grid>
 
@@ -104,7 +104,7 @@ const Citas = () => {
  }
  }}
  />
- <Button type="button" variant="contained" sx={{ mr: '6%', ml: 2, height: 35 }} onClick={() => router(`/citas/create/`)}><AddIcon /></Button>
+<Button type="button" variant="contained" sx={{ mr: '6%', ml: 2, height: 35 }} onClick={() => router('/citas/create/')}><AddIcon /></Button>
  </Grid>
  <br /><br /><br />
  </Grid>
@@ -147,8 +147,8 @@ const Citas = () => {
  <h5>{cita.date}</h5>
 
  </div>
- <Button sx={{ ml: 1, mb: 3, mt: -1 }} type="button" variant="contained" onClick={() => router(`/citas/${cita._id}`)}><InfoIcon /></Button>
- <Button sx={{ ml: 1, mb: 3, mt: -1 }} type="button" variant="contained" onClick={() => router(`/citas/update/${cita._id}`)}><EditIcon /></Button>
+<Button sx={{ ml: 1, mb: 3, mt: -1 }} type="button" variant="contained" onClick={() => router(`/citas/${cita._id}`)}><InfoIcon /></Button>
+<Button sx={{ ml: 1, mb: 3, mt: -1 }} type="button" variant="contained" onClick={() => router(`/citas/update/${cita._id}`)}><EditIcon /></Button>
  <Button sx={{ ml: 1, mb: 3, mt: -1 }} type="button" variant="contained" onClick={() => handleDelete(cita._id, enqueueSnackbar, router)}><DeleteIcon /></Button>
  <Button sx={{ ml: 1, mb: 3, mt: -1 }} type="button" variant="contained" onClick={() => router(`/feedback/create`)}>Crear Retroalimentacion</Button>
  <div class="lineaNegra"></div>

@@ -8,6 +8,7 @@ import AddIcon from "@mui/icons-material/LibraryAdd";
 import InfoIcon from "@mui/icons-material/Visibility";
 import { getRespuestas } from "../../services/respuestaDoc.service";
 import { useParams } from "react-router-dom";
+import { Box } from '@mui/system';
 
 const Respuestas = () => {
  const router = useNavigate();
@@ -23,6 +24,8 @@ const Respuestas = () => {
  
  return (
  <>
+
+
  <Grid
  sx={{
  display: "flex",
@@ -63,6 +66,24 @@ const Respuestas = () => {
     <AddIcon />
 </Button>
  </Grid>
+ <Box sx={{
+ overflowY: 'auto',
+ mt: 3,
+ '&::-webkit-scrollbar': {
+ width: '10px',
+ },
+ '&::-webkit-scrollbar-track': {
+ backgroundColor: '#f1f1f1',
+ },
+ '&::-webkit-scrollbar-thumb': {
+ backgroundColor: '#888',
+ },
+ '&::-webkit-scrollbar-thumb:hover': {
+ backgroundColor: '#555',
+ }
+ }}>
+ <Box sx={{ mr: 2 }}>
+
 {respuesta.filter((respuesta) => respuesta.nombre.toLowerCase().includes(searchTerm.toLowerCase())).map((respuesta, index) => (
     <div key={respuesta._id}>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -78,6 +99,8 @@ const Respuestas = () => {
     </div>
 ))}
  <br />
+    </Box>
+    </Box>
  </Grid>
  </>
  );
