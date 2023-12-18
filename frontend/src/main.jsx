@@ -27,6 +27,15 @@ import UpdateFeedback from './routes/Feedback/UpdateFeedback.jsx';
 import CreateInforme from './routes/Feedback/Informe/CreateInforme.jsx';
 import UpdateInforme from './routes/Feedback/Informe/UpdateInforme.jsx';
 
+//Respuestas
+
+import RespuestaDoc from './routes/Respuestas/RespuestaDoc.jsx';
+import CreateRespuesta from './routes/Respuestas/CreateRespuesta.jsx';
+import DetailsRespuesta from './routes/Respuestas/DetailsRespuesta.jsx';
+import UpdateRespuesta from './routes/Respuestas/UpdateRespuesta.jsx';
+import DeleteRespuesta from './routes/Respuestas/DeleteRespuesta.jsx';
+
+
 import { SnackbarProvider } from 'notistack';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './index.css';
@@ -139,6 +148,27 @@ const router = createBrowserRouter([
       {
         path: '/informe/update/:id',
         element: <UpdateInforme />,
+      },
+      //Respuestas
+      {
+        path: '/respuesta',
+        element: <RespuestaDoc />,
+      },
+      {
+        path: '/respuesta/create',
+        element: <CreateRespuesta />,
+      },
+      {
+        path: '/respuesta/:id',
+        element: <DetailsRespuesta />,
+      },
+      {
+        path: '/respuesta/update/:id',
+        element: <UpdateRespuesta />,
+      },
+      {
+        path: '/respuesta/delete/:id',
+        element: <DeleteRespuesta />,
       },
     ],
   },

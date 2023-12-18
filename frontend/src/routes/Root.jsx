@@ -126,6 +126,17 @@ function PageRoot() {
             >
               Solicitudes
             </Button>
+
+            <Button
+              sx={{ ml: 2 }}
+              style={citasButtonStyle}
+              onMouseOver={() => handleMouseOver(setCitasButtonStyle)}
+              onMouseOut={() => handleMouseOut(setCitasButtonStyle)}
+              onClick={() => navigate('/respuesta')}
+            >
+              Respuestas
+            </Button>
+
           </Box>
 
           <Button

@@ -1,7 +1,9 @@
 "use strict";
 
+const Joi = require("joi");
+
 const RespuestaDoc = require("../models/respuestaDoc.model");
-const handleError = require("../utils/errorHandler");
+const { handleError } = require("../utils/errorHandler");
 
 async function getRespuestasDoc() {
     try {
@@ -15,7 +17,7 @@ async function getRespuestasDoc() {
 
 async function createRespuestaDoc(respuestaDoc) {
     try {
-        const { nombre, rut, firma, fecha, logo, descripcion } = respuestaDoc;
+        const { nombre, rut, estado, descripcion, fecha } = respuestaDoc;
 
         const respuestaDocFound = await RespuestaDoc.findOne({ nombre: respuestaDoc.nombre });
         if (respuestaDocFound) return [null, "La respuesta ya existe"];
@@ -23,10 +25,9 @@ async function createRespuestaDoc(respuestaDoc) {
         const newRespuestaDoc = new RespuestaDoc({
             nombre,
             rut,
-            firma,
+            estado,
+            descripcion,
             fecha,
-            logo,
-            descripcion
         });
         await newRespuestaDoc.save();
 
@@ -41,18 +42,22 @@ async function updateRespuestaDoc(respuestaDocId, respuestaDoc) {
         const respuestaDocFound = await RespuestaDoc.findById(respuestaDocId);
         if (!respuestaDocFound) return [null, "La respuesta no existe"];
 
-        const { nombre, rut, firma, fecha, logo, descripcion } = respuestaDoc;
+        const { nombre, rut, estado, fecha, descripcion } = respuestaDoc;
 
-        await RespuestaDoc.findByIdAndUpdate(respuestaDocId, {
-            nombre,
-            rut,
-            firma,
-            fecha,
-            logo,
-            descripcion,
-        });
+        const respuestaUpdated = await RespuestaDoc.findByIdAndUpdate(
+            respuestaDocId,
+            {
+                nombre,
+                rut,
+                estado,
+                fecha,
+                descripcion,
+            },
+            {
+                new: true,
+            });
 
-        return [true, null];
+        return [respuestaUpdated, null];
     } catch (error) {
         handleError(error, "respuestaDoc.service -> updateRespuestaDoc");
     }
