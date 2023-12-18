@@ -15,7 +15,7 @@ const { handleError } = require("../utils/errorHandler");
  */
 async function getInforme() {
     try {
-        const informe = await Informe.find();
+        const informe = await Informe.find().exec();
         if (!informe) return [null, "No hay Informes de Visitas a Terreno"];
         return [informe, null];
     } catch (error) {
@@ -30,27 +30,18 @@ async function getInforme() {
  */
 async function createInforme(informe) {
     try {
-        const { IDFeedback, Titulo, solicitante, TipoObra, A, A_1, B, B_1, C, C_1, C_2, D, D_1, E, E_1, estado } = informe;
+        const { IDFeedback, solicitante, TipoObra, ubicacion, D, observaciones, estado } = informe;
 
         const informeFound = await Informe.findOne({ IDFeedback: informe.IDFeedback });
         if (informeFound) return [null, "El Informe de Visita a Terreno ya existe"];
 
         const newInforme = new Informe({
             IDFeedback,
-            Titulo,
             solicitante,
             TipoObra,
-            A,
-            A_1,
-            B,
-            B_1,
-            C,
-            C_1,
-            C_2,
+            ubicacion,
             D,
-            D_1,
-            E,
-            E_1,
+            observaciones,
             estado,
         });
         await newInforme.save();
@@ -90,26 +81,17 @@ async function updateInforme(id, informe) {
         const informeFound = await Informe.findById(id);
         if (!informeFound) return [null, "El Informe de Visita a Terreno no existe"];
 
-        const { IDFeedback, Titulo, solicitante, TipoObra, A, A_1, B, B_1, C, C_1, C_2, D, D_1, E, E_1, estado } = informe;
+        const { IDFeedback, solicitante, TipoObra, ubicacion, D, observaciones, estado } = informe;
 
         const updatedInforme = await Informe.findByIdAndUpdate(
             id,
             {
                 IDFeedback,
-                Titulo,
                 solicitante,
                 TipoObra,
-                A,
-                A_1,
-                B,
-                B_1,
-                C,
-                C_1,
-                C_2,
+                ubicacion,
                 D,
-                D_1,
-                E,
-                E_1,
+                observaciones,
                 estado,
             },
             { new: true }

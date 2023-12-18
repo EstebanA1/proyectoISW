@@ -28,5 +28,12 @@ router.get('/:id', authorizationMiddleware.isAdminEncargado, InformeController.g
 router.put('/:id', authorizationMiddleware.isEncargadoVis, InformeController.updateInforme);
 router.delete('/:id', authorizationMiddleware.isAdminEncargado, InformeController.deleteInforme);
 
+// Muestran mensajes cuando se necesita enviar ID pero esta vacio
+router.delete('/', authorizationMiddleware.isEncargadoVis, InformeController.handleMissingId);
+router.put('/', authorizationMiddleware.isEncargadoVis, InformeController.handleMissingId);
+
+// Muestra mensaje cuando no haya que usar un ID pero se haya enviado
+router.post('/:id', authorizationMiddleware.isEncargadoVis, InformeController.handleId);
+
 
 module.exports = router;

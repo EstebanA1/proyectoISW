@@ -27,8 +27,8 @@ export const handleDelete = async (id, enqueueSnackbar, router) => {
 
 export const DetailsCita = () => {
     const { id } = useParams();
-    const [cita, setCita] = useState([]);
     const router = useNavigate();
+    const [cita, setCita] = useState([]);
     const { enqueueSnackbar } = useSnackbar();
 
     useEffect(() => {
