@@ -71,8 +71,8 @@ export default function RespuestaForm({ respuesta }) {
             required: "El nombre es requerido",
             minLength: {value: 3, message: "El nombre debe tener al menos 3 caracteres"},
             pattern: {
-              value: /^[a-zA-Z\s]*$/,
-              message: "El nombre solo debe contener letras",
+              value: /^[A-Za-z\s]+(\s[A-Za-z]\d+)?$/,
+              message: 'El nombre debe contener solo letras'
             },
           })}
         />
@@ -86,7 +86,6 @@ export default function RespuestaForm({ respuesta }) {
               color: "red",
             }}
           >
-            {" "}
             {errors.nombre.message}
           </p>
         )}
@@ -100,7 +99,6 @@ export default function RespuestaForm({ respuesta }) {
               color: "red",
             }}
           >
-            {" "}
             {errors.nombre.message}
           </p>
         )}
@@ -114,7 +112,6 @@ export default function RespuestaForm({ respuesta }) {
               color: "red",
             }}
           >
-            {" "}
             {errors.nombre.message}
           </p>
         )}
@@ -145,7 +142,6 @@ export default function RespuestaForm({ respuesta }) {
               color: "red",
             }}
           >
-            {" "}
             {errors.rut.message}
           </p>
         )}
@@ -200,7 +196,6 @@ export default function RespuestaForm({ respuesta }) {
               color: "red",
             }}
           >
-            {" "}
             {errors.descripcion.message}
           </p>
         )}
@@ -214,7 +209,6 @@ export default function RespuestaForm({ respuesta }) {
               color: "red",
             }}
           >
-            {" "}
             {errors.descripcion.message}
           </p>
         )}
@@ -240,7 +234,6 @@ export default function RespuestaForm({ respuesta }) {
               color: "red",
             }}
           >
-            {" "}
             {errors.fecha.message}
           </p>
         )}

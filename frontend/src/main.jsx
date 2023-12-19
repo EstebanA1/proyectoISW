@@ -131,6 +131,10 @@ const router = createBrowserRouter([
         element: <CreateRespuesta />,
       },
       {
+        path: '/respuesta/create/:id',
+        element: <CreateRespuesta />,
+      },
+      {
         path: '/respuesta/:id',
         element: <DetailsRespuesta />,
       },
@@ -142,6 +146,8 @@ const router = createBrowserRouter([
         path: '/respuesta/delete/:id',
         element: <DeleteRespuesta />,
       },
+
+
       // {
       //   path: '/respuesta/rut/:rut',
       //   element: <DetailsRut />,

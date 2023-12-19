@@ -6,6 +6,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/LibraryAdd";
 import InfoIcon from "@mui/icons-material/Visibility";
+import { getRespuesta, getRespuestas } from "../../services/respuestaDoc.service";
 
 const Solicitudes = () => {
     const router = useNavigate();
@@ -53,7 +54,6 @@ const Solicitudes = () => {
             Agregar Solicitud
             </Button>
         </Grid>
-    
         <div className="Listado">
             {solicitudes.map((solicitud) => (
             <div key={solicitud._id}>
@@ -88,11 +88,52 @@ const Solicitudes = () => {
                     <DeleteIcon />
                 </Button>
 
+                <Button
+                    type="button"
+                    variant="contained"
+                    onClick={() => router(`/respuesta/create/${solicitud._id}`)} // Ajusta la ruta según sea necesario
+                >
+                    Crear Respuesta   
+                </Button>
+
                 {/* Otros botones o acciones que quieras incluir */}
             </div>
             ))}
             <br />
         </div>
+
+        <Grid
+        sx={{
+          display: "flex",
+          alignItems: "right",
+          justifyContent: "flex-end",
+          mr: 2,
+          ml: "85%",
+        }}
+      >
+        <input
+          type="text"
+          placeholder="Ingrese Rut"
+          onChange={(event) => setSearchTerm(event.target.value)}
+          style={{
+            backgroundColor: "lightgray",
+            borderColor: "white",
+            borderRadius: "5px",
+            color: "black",
+            ":focus": {
+              backgroundColor: "white",
+            },
+          }}
+        />
+        <Button
+          type="button"
+          variant="contained"
+          sx={{ mr: 2, ml: 2 }}
+          onClick={() => router(`/respuesta/${respuesta._id}`)}
+        >
+          Buscar
+        </Button>
+      </Grid>
         </>
     );
 };

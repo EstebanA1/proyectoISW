@@ -60,6 +60,7 @@ const DetailsSolicitud = () => {
                     <Button type="button" variant="contained" sx={{ mr: 2, mt: 1 }} onClick={() => router('/solicitud')}><ArrowBackIos /></Button>
                     <Button type="button" variant="contained" sx={{ mr: 2, mt: 1 }} onClick={() => router(`/solicitud/update/${cita._id}`)}><EditIcon /></Button>
                     <Button type="button" variant="contained" sx={{ mr: 2, mt: 1 }} onClick={handleDelete}><DeleteIcon /></Button>
+                    <Button type="button" variant="contained" sx={{ mr: 2, mt: 1 }} onClick={() => router('/solicitud/create/')}>Enviar Nueva Solicitud</Button>
                 </div>
             </Grid>
         </>
