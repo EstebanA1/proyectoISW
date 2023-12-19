@@ -4,13 +4,10 @@ import { Grid, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import AddIcon from "@mui/icons-material/LibraryAdd";
-import InfoIcon from "@mui/icons-material/Visibility";
-import { getRespuesta, getRespuestas } from "../../services/respuestaDoc.service";
 
 const Solicitudes = () => {
     const router = useNavigate();
-    const [solicitudes, setSolicitudes] = useState([]);
+    const [solicitud, setSolicitudes] = useState([]);
 
     useEffect(() => {
         getSolicitudes().then((res) => {
@@ -21,8 +18,8 @@ const Solicitudes = () => {
     }, []);
 
     useEffect(() => {
-        console.log(solicitudes);
-    }, [solicitudes]);
+        console.log(solicitud);
+    }, [solicitud]);
 
     return (
         <>
@@ -55,25 +52,28 @@ const Solicitudes = () => {
             </Button>
         </Grid>
         <div className="Listado">
-            {solicitudes.map((solicitud) => (
+            {solicitud.map((solicitud) => (
             <div key={solicitud._id}>
-                <h3>{solicitud.nombre}</h3>
-                <p>{solicitud.tipo}</p>
-                <p>{solicitud.rut}</p>
+                <h3>Nombre: {solicitud.nombre}</h3>
+                <p>Tipo: {solicitud.tipo}</p>
+                <p>Rut: {solicitud.rut}</p>
+                <p>Fecha: {solicitud.fecha}</p>
+                <p>Estado: {solicitud.estado}</p>
+                <p>Estado de Respuesta: {solicitud.estadoDeRespuesta}</p>
 
-                <Button
+{/*                 <Button
                     type="button"
                     variant="contained"
-                    onClick={() => router(`/solicitudes/${solicitud._id}`)} // Ajusta la ruta según sea necesario
+                    onClick={() => router(`/solicitud/${solicitud._id}`)} // Ajusta la ruta según sea necesario
                 >
                     Ver Solicitud
                     <InfoIcon />
-                </Button>
+                </Button> */}
 
                 <Button
                     type="button"
                     variant="contained"
-                    onClick={() => router(`/solicitudes/editar/${solicitud._id}`)} // Ajusta la ruta según sea necesario
+                    onClick={() => router(`/solicitud/update/${solicitud._id}`)} // Ajusta la ruta según sea necesario
                 >
                     Editar
                     <EditIcon />
@@ -82,7 +82,7 @@ const Solicitudes = () => {
                 <Button
                     type="button"
                     variant="contained"
-                    onClick={() => router(`/solicitudes/eliminar/${solicitud._id}`)} // Ajusta la ruta según sea necesario
+                    onClick={() => router(`/solicitud/delete/${solicitud._id}`)} // Ajusta la ruta según sea necesario
                 >
                     Eliminar
                     <DeleteIcon />

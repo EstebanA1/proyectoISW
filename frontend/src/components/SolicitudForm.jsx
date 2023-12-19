@@ -1,152 +1,199 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { createSolicitud, updateSolicitud } from '../services/solicitud.service';
+import { createSolicitud, updateSolicitud } from "../services/solicitud.service";
 import { useNavigate, useParams } from 'react-router-dom';
-import { Button, TextField, Box, Select, MenuItem, FormControl, InputLabel, Grid } from '@mui/material';
+import { Button, TextField, Box, Select, MenuItem, FormControl, InputLabel, Grid } from '@mui/material'
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useSnackbar } from 'notistack';
+import { Controller } from 'react-hook-form';
 
-export default function SolicitudForm({ solicitud: solicitudProp }) {
-    const router = useNavigate();
-    const { id } = useParams();
-    const { enqueueSnackbar } = useSnackbar();
+export default function SolicitudForm({ solicitud }) {
+ const router = useNavigate();
+ const { id } = useParams();
+ const today = new Date();
+ const formattedDate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+ const { enqueueSnackbar } = useSnackbar();
+ const [error] = useState({
+ error: false,
+ message: ''
+ })
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-        setValue,
-    } = useForm();
+ const {
+ register,
+ handleSubmit,
+ formState: { errors },
+ setValue,
+ control,
+ } = useForm(
+ { defaultValues: solicitud ? solicitud : {} }
+ );
 
-    useEffect(() => {
-        if (solicitudProp) {
-            Object.keys(solicitudProp).forEach(key => {
-                setValue(key, solicitudProp[key]);
-            });
-        }
-    }, [solicitudProp, setValue]);
+ useEffect(() => {
+ setValue('fecha', formattedDate);
+ }, [solicitud, setValue]);
 
-    const onSubmit = async (data) => {
-        const formData = new FormData();
 
-        for (const key in data) {
-            formData.append(key, data[key]);
-        }
+ const onSubmit = async (data) => {
+    console.log("data: ", data);
+if (solicitud) {
+ const res = await updateSolicitud(id, data);
+ enqueueSnackbar('Solicitud actualizada con éxito', { variant: 'success' });
+ } else {
+ const res = await createSolicitud(data);
+ console.log("res: ", res);
+ enqueueSnackbar('Solicitud creada con éxito', { variant: 'success' });
+ }
+ router('/solicitud');
+ }
 
-        try {
-           // if (id) {
-           //     await updateSolicitud(id, formData);
-            //    enqueueSnackbar('Solicitud actualizada con éxito', { variant: 'success' });
-          //  } else {
-                await createSolicitud(formData);
-                enqueueSnackbar('Solicitud creada con éxito', { variant: 'success' });
-          //  }
-            router('/solicitud');
-        } catch (error) {
-            console.error('Error al crear el registro:', error.response);
-            enqueueSnackbar('Error al crear la Solicitud', { variant: 'error' });
-        }
-    };
+ return (
+ <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+ <Box position="relative" width="100%">
+ <TextField
+ id="nombre"
+ label="Nombre"
+ variant="filled"
+ autoComplete="off"
+ fullWidth
+ {...register('nombre', { required: 'El nombre es requerido', minLength: { value: 3, message: 'El nombre debe tener al menos 3 caracteres' } })}
+ />
+ {errors.nombre && errors.nombre.type !== "minLength" && <p style={{ position: 'absolute', right: '-88.8%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.nombre.message}</p>}
+ {errors.nombre && errors.nombre.type === "minLength" && <p style={{ position: 'absolute', right: '-157.2%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.nombre.message}</p>}
+ </Box>
 
-    const handleFileChange = (event) => {
-        const selectedFile = event.target.files[0];
-        setValue('archivoPDF', selectedFile);
-    };
+ <Box position="relative" width="100%">
+ <TextField
+ id="rut"
+ label="Rut"
+ variant="filled"
+ autoComplete="off"
+ fullWidth
+ {...register('rut', {
+ required: 'El rut es requerido',
+ pattern: {
+ value: /^[0-9]{1,2}.[0-9]{3}.[0-9]{3}-[0-9kK]{1}$/,
+ message: 'El formato debe ser XX.XXX.XXX-X'
+ }
+ })}
+ />
+ {errors.rut && errors.rut.type === "pattern" && <p style={{ position: 'absolute', right: '-88.8%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.rut.message}</p>}
+ {errors.rut && errors.rut.type !== "pattern" && <p style={{ position: 'absolute', right: '-88.8%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.rut.message}</p>}
+ </Box>
 
-    return (
-        <Box component="form" onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
-            <Box position="relative" width="100%">
-                <TextField
-                    id="nombre"
-                    label="Nombre"
+ {solicitud && 
+    <>
+        <div> 
+            <FormControl variant="filled" fullWidth >
+                <InputLabel id="estado-label">Estado de Respuesta</InputLabel>
+                <Select
+                    id="estadoDeRespuesta"
+                    label="Estado de respuesta"
                     variant="filled"
                     autoComplete="off"
+                    error={error.error}
                     fullWidth
-                    {...register('nombre', { required: 'El nombre es requerido', minLength: { value: 3, message: 'El nombre debe tener al menos 3 caracteres' } })}
-                />
-                {errors.nombre && <p style={{ color: 'red' }}>{errors.nombre.message}</p>}
-            </Box>
+                    defaultValue={solicitud.estadoDeRespuesta}
+                    {...register('estadoDeRespuesta', { required: true })}
+                >
+                    <MenuItem value="Pendiente">Pendiente</MenuItem>
+                    <MenuItem value="Aprobado">Aprobado</MenuItem>
+                    <MenuItem value="Rechazado">Rechazado</MenuItem>
+                </Select>
+            </FormControl>
+        </div>
+    </>
+}
 
-            <Box position="relative" width="100%">
-                <TextField
-                    id="rut"
-                    label="Rut"
+{solicitud && 
+    <>
+        <div> 
+            <FormControl variant="filled" fullWidth >
+                <InputLabel id="estado-label">Estado</InputLabel>
+                <Select
+                    id="estado"
+                    label="Estado"
                     variant="filled"
                     autoComplete="off"
+                    error={error.error}
                     fullWidth
-                    {...register('rut', {
-                        required: 'El rut es requerido',
-                        pattern: {
-                            value: /^[0-9]{1,2}.[0-9]{3}.[0-9]{3}-[0-9kK]{1}$/,
-                            message: 'El rut debe tener el formato XX.XXX.XXX-X',
-                        },
-                    })}
-                />
-                {errors.rut && <p style={{ color: 'red' }}>{errors.rut.message}</p>}
-            </Box>
-
-            <Box position="relative" width="100%">
-                <TextField
-                    id="fecha"
-                    label="Fecha"
-                    variant="filled"
-                    autoComplete="off"
-                    fullWidth
-                    type='date'
-                    {...register('fecha', { required: 'La fecha es requerida' })}
-                />
-                {errors.fecha && <p style={{ color: 'red' }}>{errors.fecha.message}</p>}
-            </Box>
-
-            <Box position="relative" width="100%">
-                <FormControl variant="filled" fullWidth>
+                    defaultValue={solicitud.estado}
+                    {...register('estado', { required: true })}
+                >
+                    <MenuItem value="Pendiente">Pendiente</MenuItem>
+                    <MenuItem value="Aprobado">Aprobado</MenuItem>
+                    <MenuItem value="Rechazado">Rechazado</MenuItem>
+                </Select>
+            </FormControl>
+        </div>
+    </>
+}
+                    
+<div>
+                <FormControl variant="filled" style={{ position: 'relative' }} fullWidth>
                     <InputLabel id="tipo-label">Tipo de solicitud</InputLabel>
-                    <Select
-                        id="tipo"
-                        labelId="tipo-label"
-                        {...register('tipo', { required: 'Debe elegir una opción' })}
-                    >
-                        <MenuItem value="Construcción">Construcción</MenuItem>
-                        <MenuItem value="Ampliación">Ampliación</MenuItem>
-                    </Select>
-                    {errors.tipo && <p style={{ color: 'red' }}>{errors.tipo.message}</p>}
+                    <Controller
+                        name="tipo"
+                        control={control}
+                        defaultValue={solicitud && solicitud.tipo ? solicitud.tipo : ''}
+                        rules={{ required: 'El tipo es obligatorio' }}
+                        render={({ field }) => (
+                            <Select
+                                id="tipo"
+                                label="Tipo de solicitud"
+                                variant="filled"
+                                autoComplete='off'
+                                error={error.error}
+                                fullWidth
+                                {...field}
+                            >
+                                <MenuItem value="Ampliación">Ampliación</MenuItem>
+                                <MenuItem value="Construcción">Construcción</MenuItem>
+                            </Select>
+                        )}
+                    />
+                    {errors.tipo && <p className="my-error2">{errors.tipo.message}</p>}
                 </FormControl>
-            </Box>
+            </div>
 
-            <Box position="relative" width="100%">
-                <input
-                    type="file"
-                    accept=".pdf"
-                    onChange={handleFileChange}
-                    style={{ display: 'none' }}
-                    id="archivoPDF"
-                    {...register('archivoPDF')}
-                />
-                <label htmlFor="archivoPDF" style={{ backgroundColor: 'blue', color: 'white', padding: '10px', borderRadius: '4px', cursor: 'pointer' }}>
-                    Subir archivo (PDF)
-                </label>
-            </Box>
+ <Box position="relative" width="100%">
+ <TextField
+ id="fecha"
+ label="Fecha"
+ variant="filled"
+ autoComplete="off"
+ fullWidth
+ type='date'
+ {...register('fecha', { required: 'La fecha es requerida' })}
+ />
+ {errors.fecha && <p style={{ position: 'absolute', right: '-88.8%', top: '25%', transform: 'translateY(-50%)', color: 'red' }}> {errors.fecha.message}</p>}
+ </Box>
 
-            <br />
-            <Grid container spacing={2}>
-                <Grid item xs={6}>
-                    <Button type="submit" variant="contained" startIcon={<SaveIcon />} fullWidth>
-                        Guardar
-                    </Button>
-                </Grid>
-                <Grid item xs={6}>
-                    <Button
-                        type="button"
-                        variant="contained"
-                        startIcon={<CancelIcon />}
-                        fullWidth
-                        onClick={() => router('/solicitud')}
-                    >
-                        Cancelar
-                    </Button>
-                </Grid>
-            </Grid>
-        </Box>
-    );
+ {error.exampleRequired && <span>Este campo es obligatorio</span>}
+ <br />
+ <Grid container spacing={2}>
+ <Grid item xs={6}>
+ <Button
+ type="submit"
+ variant="contained"
+ startIcon={<SaveIcon />}
+ fullWidth
+ >
+ Guardar
+ </Button>
+ </Grid>
+ <Grid item xs={6}>
+ <Button
+ type="button"
+ variant="contained"
+ startIcon={<CancelIcon />}
+ fullWidth
+ onClick={() => router('/solicitud')}
+ >
+ Cancelar
+ </Button>
+ </Grid>
+ </Grid>
+ </Box>
+ )
 }

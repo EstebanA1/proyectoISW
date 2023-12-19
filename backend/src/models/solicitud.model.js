@@ -33,8 +33,7 @@ const solicitudSchema = new mongoose.Schema({
         default: "Pendiente",
     },
      archivoPDF: {
-        type: Buffer,
-        required: true, 
+        type: String,
     }, 
 });
 
