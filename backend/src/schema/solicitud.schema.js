@@ -30,7 +30,7 @@ const solicitudBodySchema = Joi.object({
         "any.required": "El rut de la solicitud es obligatorio.",
         "string.base": "El rut de la solicitud debe ser de tipo string.",
     }),
-    fecha: Joi.string().regex(/^\d{2}\/\d{2}\/\d{4}$/).required().messages({
+    fecha: Joi.string().required().messages({
         "string.empty": "La fetcha de la respuesta no puede estar vacío.",
         "any.required": "La fetcha de la respuesta es obligatorio.",
         "string.base": "La fetcha de la respuesta debe ser de tipo string.",
@@ -75,7 +75,7 @@ const solicitudModBodySchema = Joi.object({
         "any.required": "El rut de la solicitud es obligatorio.",
         "string.base": "El rut de la solicitud debe ser de tipo string.",
     }),
-    fecha: Joi.string().regex(/^\d{2}\/\d{2}\/\d{4}$/).required().messages({
+    fecha: Joi.string().required().messages({
         "string.empty": "La fetcha de la respuesta no puede estar vacío.",
         "any.required": "La fetcha de la respuesta es obligatorio.",
         "string.base": "La fetcha de la respuesta debe ser de tipo string.",

@@ -36,9 +36,9 @@ async function createSolicitud(req, res) {
         const {error: bodyError} = solicitudBodySchema.validate(body);
         if (bodyError) return respondError(req, res, 400, bodyError.message);
 
-        for (const file of req.files) {
+        /* for (const file of req.files) {
                 body.archivoPDF = "uploads/" + file.filename;
-        }
+        } */
 
         const [newSolicitud, solicitudError] = await SolicitudService.createSolicitud(body);
 
