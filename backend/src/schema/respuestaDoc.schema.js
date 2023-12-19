@@ -15,7 +15,7 @@ const respuestaDocBodySchema = Joi.object({
         "string.base": "El nombre del solcitante debe ser de tipo string.",
         "string.pattern.base": "El nombre del solicitante debe contener solo letras.",
     }),
-    rut: Joi.string().required().regexregex(/^\d{1,2}\.\d{3}\.\d{3}[-][0-9kK]{1}$/).messages({
+    rut: Joi.string().required().regex(/^\d{1,2}\.\d{3}\.\d{3}[-][0-9kK]{1}$/).messages({
         "string.empty": "El rut del solicitante no puede estar vacío.",
         "any.required": "El rut del solicitante es obligatorio.",
         "string.base": "El rut del solcitante debe ser de tipo string.",

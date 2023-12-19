@@ -71,7 +71,7 @@ export default function RespuestaForm({ respuesta }) {
             required: "El nombre es requerido",
             minLength: {value: 3, message: "El nombre debe tener al menos 3 caracteres"},
             pattern: {
-              value: /^[a-zA-Z ]*$/,
+              value: /^[a-zA-Z\s]*$/,
               message: "El nombre solo debe contener letras",
             },
           })}
