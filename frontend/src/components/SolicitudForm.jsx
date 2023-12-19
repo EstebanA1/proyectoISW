@@ -36,14 +36,14 @@ export default function SolicitudForm({ solicitud }) {
 
  const onSubmit = async (data) => {
     console.log("data: ", data);
-if (solicitud) {
- const res = await updateSolicitud(id, data);
- enqueueSnackbar('Solicitud actualizada con éxito', { variant: 'success' });
- } else {
+// if (solicitud) {
+//  const res = await updateSolicitud(id, data);
+//  enqueueSnackbar('Solicitud actualizada con éxito', { variant: 'success' });
+//  } else {
  const res = await createSolicitud(data);
  console.log("res: ", res);
  enqueueSnackbar('Solicitud creada con éxito', { variant: 'success' });
- }
+//  }
  router('/solicitud');
  }
 
