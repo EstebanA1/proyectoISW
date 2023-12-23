@@ -21,13 +21,17 @@ const { handleError } = require("../utils/errorHandler");
  */
 async function login(user) {
   try {
-    const { email, password } = user;
+    const { email, password, rut } = user;
+    let userFound;
 
-    const userFound = await User.findOne({ email: email })
-      .populate("roles")
-      .exec();
+    if (email === null) {
+      userFound = await User.findOne({ rut: rut }).populate("roles").exec();
+    } else {
+      userFound = await User.findOne({ email: email }).populate("roles").exec();
+    }
+
     if (!userFound) {
-      return [null, null, "El correo y/o contraseña son incorrectos"];
+      return [null, null, "Los datos ingresados son incorrectos"];
     }
 
     const matchPassword = await User.comparePassword(
@@ -36,7 +40,7 @@ async function login(user) {
     );
 
     if (!matchPassword) {
-      return [null, null, "El correo y/o contraseña son incorrectos"];
+      return [null, null, "Los datos ingresados son incorrectos"];
     }
 
     const accessToken = jwt.sign(
