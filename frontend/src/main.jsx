@@ -6,12 +6,17 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import Root from './routes/Root.jsx';
 import ErrorPage from './routes/ErrorPage.jsx';
+
+// Login
 import Login from './routes/Login.jsx';
+
+// Citas
 import Citas from './routes/Citas/Citas.jsx';
 import CreateCita from './routes/Citas/CreateCita.jsx';
 import DetailsCita from './routes/Citas/DetailsCita.jsx';
 import UpdateCita from './routes/Citas/UpdateCita.jsx';
 import ListadoCita from './routes/Citas/ListadoCitas.jsx';
+
 // Solicitud
 import Solicitud from './routes/Solicitud/Solicitud.jsx';
 import CreateSolicitud from './routes/Solicitud/CreateSolicitud.jsx';
@@ -26,14 +31,11 @@ import DeleteFeedback from './routes/Feedback/DeleteFeedback.jsx';
 import UpdateFeedback from './routes/Feedback/UpdateFeedback.jsx';
 
 //Respuestas
-
 import RespuestaDoc from './routes/Respuestas/RespuestaDoc.jsx';
 import CreateRespuesta from './routes/Respuestas/CreateRespuesta.jsx';
 import DetailsRespuesta from './routes/Respuestas/DetailsRespuesta.jsx';
 import UpdateRespuesta from './routes/Respuestas/UpdateRespuesta.jsx';
 import DeleteRespuesta from './routes/Respuestas/DeleteRespuesta.jsx';
-
-//Rut
 
 // import DetailsRut from './routes/Respuestas/DetailsRut.jsx';
 
@@ -53,6 +55,18 @@ const router = createBrowserRouter([
         path: '/',
         element: <App />,
       },
+
+      // Login
+      {
+        path: '/auth',
+        element: <Login />,
+      },
+      {
+        path: 'authSol',
+        element: <Login />,
+      },
+
+      // Citas
       {
         path: '/citas',
         element: <Citas />,
@@ -77,6 +91,8 @@ const router = createBrowserRouter([
         path: '/citas/update/:id',
         element: <UpdateCita />,
       },
+
+      //Feedback
       {
         path: '/feedback',
         element: <Feedback />,
@@ -99,28 +115,27 @@ const router = createBrowserRouter([
       },
 
       //Solicitud
-
       {
         path: '/solicitud',
         element: <Solicitud />,
       },
       {
         path: '/solicitud/create/',
-       element: <CreateSolicitud/>,
-       },
-       {
+        element: <CreateSolicitud />,
+      },
+      {
         path: '/solicitud/create/:id',
-       element: <CreateSolicitud/>,
-       },
-        {
-          path: '/solicitud/delete/:id',
-          element: <DeleteSolicitud/>,
-        },
-        {
-          path: '/solicitud/update/:id',
-          element: <UpdateSolicitud/>,
-        },
-      
+        element: <CreateSolicitud />,
+      },
+      {
+        path: '/solicitud/delete/:id',
+        element: <DeleteSolicitud />,
+      },
+      {
+        path: '/solicitud/update/:id',
+        element: <UpdateSolicitud />,
+      },
+
       //Respuestas
       {
         path: '/respuesta',
@@ -147,16 +162,11 @@ const router = createBrowserRouter([
         element: <DeleteRespuesta />,
       },
 
-
       // {
       //   path: '/respuesta/rut/:rut',
       //   element: <DetailsRut />,
       // },
     ],
-  },
-  {
-    path: '/auth',
-    element: <Login />,
   },
 ]);
 
