@@ -67,14 +67,23 @@ function PageRoot() {
   };
 
   const { user } = useAuth();
+  let isAutenticated = false;
   let isAdmin = false;
 
-  if (user.roles) {
-    isAdmin = user.roles.some(role => role.name === "Administrador");
+  if (user) {
+    if (user.roles) {
+      isAdmin = user.roles.some(role => role.name === "Administrador");
+    }
+    if (user.roles) {
+      isEncargado = user.roles.some(role => role.name === "Encargado");
+    }
+    if (user.roles) {
+      isSolicitante = user.roles.some(role => role.name === "Solicitante");
+    }
   }
-  
+
   return (
-<ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
       <div className='botones'>
         <Box sx={{
           marginTop: 2,
@@ -97,57 +106,62 @@ function PageRoot() {
               <HomeIcon />
             </Button>
 
-            <Button
-              sx={{ ml: 2 }}
-              style={citasButtonStyle}
-              onMouseOver={() => handleMouseOver(setCitasButtonStyle)}
-              onMouseOut={() => handleMouseOut(setCitasButtonStyle)}
-              onClick={() => isAdmin ? navigate('/citas') : null}
-            >
-              Citas
-            </Button>
+            {isAutenticated && (
+              <>
+                <Button
+                  sx={{ ml: 2 }}
+                  style={citasButtonStyle}
+                  onMouseOver={() => handleMouseOver(setCitasButtonStyle)}
+                  onMouseOut={() => handleMouseOut(setCitasButtonStyle)}
+                  onClick={() => isAdmin ? navigate('/citas') : null}
+                >
+                  Citas
+                </Button>
 
-            <Button
-              sx={{ ml: 2 }}
-              style={citasButtonStyle}
-              onMouseOver={() => handleMouseOver(setCitasButtonStyle)}
-              onMouseOut={() => handleMouseOut(setCitasButtonStyle)}
-              onClick={() => navigate('/feedback')}
-            >
-              Retroalimentaciones
-            </Button>
+                <Button
+                  sx={{ ml: 2 }}
+                  style={citasButtonStyle}
+                  onMouseOver={() => handleMouseOver(setCitasButtonStyle)}
+                  onMouseOut={() => handleMouseOut(setCitasButtonStyle)}
+                  onClick={() => navigate('/feedback')}
+                >
+                  Retroalimentaciones
+                </Button>
 
-            <Button
-              sx={{ ml: 2 }}
-              style={citasButtonStyle}
-              onMouseOver={() => handleMouseOver(setCitasButtonStyle)}
-              onMouseOut={() => handleMouseOut(setCitasButtonStyle)}
-              onClick={() => navigate('/solicitud')}
-            >
-              Solicitudes
-            </Button>
+                <Button
+                  sx={{ ml: 2 }}
+                  style={citasButtonStyle}
+                  onMouseOver={() => handleMouseOver(setCitasButtonStyle)}
+                  onMouseOut={() => handleMouseOut(setCitasButtonStyle)}
+                  onClick={() => navigate('/solicitud')}
+                >
+                  Solicitudes
+                </Button>
 
-            <Button
-              sx={{ ml: 2 }}
-              style={citasButtonStyle}
-              onMouseOver={() => handleMouseOver(setCitasButtonStyle)}
-              onMouseOut={() => handleMouseOut(setCitasButtonStyle)}
-              onClick={() => navigate('/respuesta')}
-            >
-              Respuestas
-            </Button>
-
+                <Button
+                  sx={{ ml: 2 }}
+                  style={citasButtonStyle}
+                  onMouseOver={() => handleMouseOver(setCitasButtonStyle)}
+                  onMouseOut={() => handleMouseOut(setCitasButtonStyle)}
+                  onClick={() => navigate('/respuesta')}
+                >
+                  Respuestas
+                </Button>
+              </>
+            )}
           </Box>
 
-          <Button
-            sx={{ marginRight: 2 }}
-            style={logoutButtonStyle}
-            onMouseOver={() => handleMouseOver(setLogoutButtonStyle)}
-            onMouseOut={() => handleMouseOut(setLogoutButtonStyle)}
-            onClick={handleLogout}
-          >
-            Cerrar sesión
-          </Button>
+          <Box>
+            <Button
+              sx={{ marginRight: 2 }}
+              style={logoutButtonStyle}
+              onMouseOver={() => handleMouseOver(setLogoutButtonStyle)}
+              onMouseOut={() => handleMouseOut(setLogoutButtonStyle)}
+              onClick={handleLogout}
+            >
+              {isAutenticated ? 'Cerrar sesión' : 'Ingresar'}</Button>
+          </Box>
+
         </Box>
         <Children />
       </div>

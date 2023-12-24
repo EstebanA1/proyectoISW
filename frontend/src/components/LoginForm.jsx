@@ -40,7 +40,7 @@ const handleChange = () => {
  <Box component="form" width='30%' onSubmit={handleSubmit(onSubmit)}>
  {loginError && <Alert severity="error">{loginError}</Alert>}
 
- <Box position="relative" width="100%" sx={{ mt: '24%' }}>
+ <Box position="relative" width="100%" sx={{ mt: '10%' }}>
  <h2>Inicia Sesión</h2>
  <TextField
  id={isAuthSol ? "rut" : "email"}
@@ -58,9 +58,9 @@ const handleChange = () => {
  })}
  />
  {errors.email && errors.email.type === "required" && <p style={{ position: 'absolute', right: '-37%', top: '60%', transform: 'translateY(-50%)', color: 'red' }}> {errors.email.message}</p>}
- {errors.email && errors.email.type === "pattern" && <p style={{ position: 'absolute', right: '-31.9%', top: '60%', transform: 'translateY(-50%)', color: 'red' }}> {errors.email.message}</p>}
- {errors.rut && errors.rut.type === "required" && isAuthSol && <p style={{ position: 'absolute', right: '-37%', top: '60%', transform: 'translateY(-50%)', color: 'red' }}> {errors.rut.message}</p>}
- {errors.rut && errors.rut.type === "pattern" && isAuthSol && <p style={{ position: 'absolute', right: '-31.9%', top: '60%', transform: 'translateY(-50%)', color: 'red' }}> {errors.rut.message}</p>}
+ {errors.email && errors.email.type === "pattern" && <p style={{ position: 'absolute', right: '-32.1%', top: '60%', transform: 'translateY(-50%)', color: 'red' }}> {errors.email.message}</p>}
+ {errors.rut && errors.rut.type === "required" && isAuthSol && <p style={{ position: 'absolute', right: '-32.8%', top: '60%', transform: 'translateY(-50%)', color: 'red' }}> {errors.rut.message}</p>}
+ {errors.rut && errors.rut.type === "pattern" && isAuthSol && <p style={{ position: 'absolute', right: '-60%', top: '60%', transform: 'translateY(-50%)', color: 'red' }}> {errors.rut.message}</p>}
  </Box>
  <Box position="relative" width="100%" >
  <TextField
@@ -80,13 +80,12 @@ const handleChange = () => {
  justifyContent: 'space-between',
  mt: '5%',
  }}>
-
+ <Button variant="outlined" sx={{borderColor: 'transparent'}}>Crear cuenta</Button>
  <Button variant="contained" type="submit">Continuar</Button>
- <Button variant="contained" onClick={handleButtonClick}>
- {isAuthSol ? "Ingresar como interno" : "Ingresar como solicitante"}</Button>
-
 
  </Grid>
+ <Button variant="contained" onClick={handleButtonClick} sx={{mt:2, width:'100%'}}>
+ {isAuthSol ? "Ingresar como interno" : "Ingresar como solicitante"}</Button>
  </Box>
  );
 }
