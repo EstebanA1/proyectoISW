@@ -110,12 +110,12 @@ async function deleteUser(req, res) {
     const user = await UserService.deleteUser(params.id);
     !user
       ? respondError(
-          req,
-          res,
-          404,
-          "No se encontro el usuario solicitado",
-          "Verifique el id ingresado",
-        )
+        req,
+        res,
+        404,
+        "No se encontro el usuario solicitado",
+        "Verifique el id ingresado",
+      )
       : respondSuccess(req, res, 200, user);
   } catch (error) {
     handleError(error, "user.controller -> deleteUser");

@@ -10,6 +10,9 @@ import ErrorPage from './routes/ErrorPage.jsx';
 // Login
 import Login from './routes/Login.jsx';
 
+// Sing up
+import SignInUser from './routes/SignInUser.jsx';
+
 // Citas
 import Citas from './routes/Citas/Citas.jsx';
 import CreateCita from './routes/Citas/CreateCita.jsx';
@@ -62,8 +65,14 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: 'authSol',
+        path: '/authSol',
         element: <Login />,
+      },
+
+      // Sing up
+      {
+        path: '/createUser',
+        element: <SignInUser />,
       },
 
       // Citas

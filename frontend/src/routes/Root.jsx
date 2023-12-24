@@ -68,18 +68,14 @@ function PageRoot() {
 
   const { user } = useAuth();
   let isAutenticated = false;
-  let isAdmin = false;
+  // let isAdmin = false;
 
   if (user) {
-    if (user.roles) {
-      isAdmin = user.roles.some(role => role.name === "Administrador");
-    }
-    if (user.roles) {
-      isEncargado = user.roles.some(role => role.name === "Encargado");
-    }
-    if (user.roles) {
-      isSolicitante = user.roles.some(role => role.name === "Solicitante");
-    }
+    isAutenticated = true;
+    // if (user.roles) {
+    //   isAdmin = user.roles.some(role => role.name === "Administrador");
+    // }
+
   }
 
   return (
@@ -113,7 +109,7 @@ function PageRoot() {
                   style={citasButtonStyle}
                   onMouseOver={() => handleMouseOver(setCitasButtonStyle)}
                   onMouseOut={() => handleMouseOut(setCitasButtonStyle)}
-                  onClick={() => isAdmin ? navigate('/citas') : null}
+                  onClick={() => navigate('/citas')}
                 >
                   Citas
                 </Button>
