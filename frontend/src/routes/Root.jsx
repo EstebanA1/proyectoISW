@@ -104,6 +104,17 @@ function PageRoot() {
 
             {isAutenticated && (
               <>
+
+                <Button
+                  sx={{ ml: 2 }}
+                  style={citasButtonStyle}
+                  onMouseOver={() => handleMouseOver(setCitasButtonStyle)}
+                  onMouseOut={() => handleMouseOut(setCitasButtonStyle)}
+                  onClick={() => navigate('/solicitud')}
+                >
+                  Solicitudes
+                </Button>
+
                 <Button
                   sx={{ ml: 2 }}
                   style={citasButtonStyle}
@@ -122,16 +133,6 @@ function PageRoot() {
                   onClick={() => navigate('/feedback')}
                 >
                   Retroalimentaciones
-                </Button>
-
-                <Button
-                  sx={{ ml: 2 }}
-                  style={citasButtonStyle}
-                  onMouseOver={() => handleMouseOver(setCitasButtonStyle)}
-                  onMouseOut={() => handleMouseOut(setCitasButtonStyle)}
-                  onClick={() => navigate('/solicitud')}
-                >
-                  Solicitudes
                 </Button>
 
                 <Button

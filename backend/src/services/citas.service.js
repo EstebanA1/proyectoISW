@@ -1,12 +1,7 @@
 "use strict";
-// Importa el modelo de datos 'Cita'
 const Cita = require("../models/cita.model.js");
 const { handleError } = require("../utils/errorHandler");
 
-/**
- * Obtiene todas las citas de la base de datos
- * @returns {Promise} Promesa con el objeto de los citas
- */
 async function getCitas() {
     try {
         const citas = await Cita.find()
@@ -19,22 +14,14 @@ async function getCitas() {
     }
 }
 
-/**
- * Crea una nueva cita en la base de datos
- * @param {Object} cita Objeto de usuario
- * @returns {Promise} Promesa con el objeto de cita creado
- */
 async function createCita(cita) {
     try {
         const { name, typeOfRequest, address, date, hour, status, visitRealizated, ID_Solicitud } = cita;
 
-        // Buscar todas las citas existentes que contengan el mismo nombre y tipo
         const citasFound = await Cita.find({ name: new RegExp('^' + name + ' [AC][0-9]+$'), typeOfRequest });
 
-        // Contar las citas encontradas y agregar 1 para la nueva cita
         const count = citasFound.length + 1;
 
-        // Generar el nombre de la nueva cita
         const newName = name + ' ' + (typeOfRequest === 'Ampliación' ? 'A' : 'C') + count;
 
         const newCita = new Cita({
@@ -56,11 +43,6 @@ async function createCita(cita) {
 }
 
 
-/**
- * Obtiene una cita por su id de la base de datos
- * @param {string} Id de la cita
- * @returns {Promise} Promesa con el objeto de cita
-*/
 async function getCitaById(id) {
 
     try {
@@ -73,13 +55,6 @@ async function getCitaById(id) {
     }
 }
 
-
-/**
- * Actualiza una cita por su id en la base de datos
- * @param {string} id Id del cita
- * @param {Object} cita Objeto de cita
- * @returns {Promise} Promesa con el objeto de cita actualizado
- */
 async function updateCita(id, cita) {
     try {
 
@@ -109,11 +84,6 @@ async function updateCita(id, cita) {
     }
 }
 
-/**
- * Elimina una cita por su id de la base de datos
- * @param {string} Id de la cita
- * @returns {Promise} Promesa con el objeto de la cita eliminada
- */
 async function deleteCita(id) {
     try {
         return await Cita.findByIdAndDelete(id);
