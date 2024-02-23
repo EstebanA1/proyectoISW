@@ -9,68 +9,76 @@ const { handleError } = require("../utils/errorHandler");
  * @returns {Promise} Promesa con el objeto de los usuarios
  */
 async function getUsers() {
-  try {
-    const users = await User.find()
-      .select("-password")
-      .populate("roles")
-      .exec();
-    if (!users) return [null, "No hay usuarios"];
+ try {
+ const users = await User.find()
+ .select("-password")
+ .populate("roles")
+ .exec();
+ if (!users) return [null, "No hay usuarios"];
 
-    return [users, null];
-  } catch (error) {
-    handleError(error, "user.service -> getUsers");
-  }
+ return [users, null];
+ } catch (error) {
+ handleError(error, "user.service -> getUsers");
+ }
 }
 
 /**
  * Crea un nuevo usuario en la base de datos
  * @param {Object} user Objeto de usuario
  * @returns {Promise} Promesa con el objeto de usuario creado
- */
+*/
 async function createUser(user) {
-  try {
-    const { username, email, rut, password, roles } = user;
+ try {
+ const { username, email, rut, password, roles } = user;
 
-    const userFound = await User.findOne({ email: user.email });
-    if (userFound) return [null, "El usuario ya existe"];
+ let userFound;
+ if (roles.includes("Solicitante")) {
+ userFound = await User.findOne({ rut });
+ } else {
+ userFound = await User.findOne({ email });
+ }
 
-    const rolesFound = await Role.find({ name: { $in: roles } });
-    if (rolesFound.length === 0) return [null, "El rol no existe"];
-    const myRole = rolesFound.map((role) => role._id);
+ if (userFound) return [null, "El usuario ya existe"];
 
-    const newUser = new User({
-      username,
-      email,
-      rut,
-      password: await User.encryptPassword(password),
-      roles: myRole,
-    });
-    await newUser.save();
+ const rolesFound = await Role.find({ name: { $in: roles } });
+ if (rolesFound.length === 0) return [null, "El rol no existe"];
+ const myRole = rolesFound.map((role) => role._id);
+ const newUser = new User({
+ username,
+ email: email || "",
+ rut: rut || "",
+ password: await User.encryptPassword(password),
+ roles: myRole,
+ });
 
-    return [newUser, null];
-  } catch (error) {
-    handleError(error, "user.service -> createUser");
-  }
+ await newUser.save();
+
+ return [newUser, null];
+ } catch (error) {
+ handleError(error, "user.service -> createUser");
+ return [null, error];
+ }
 }
 
 /**
+ * 
  * Obtiene un usuario por su id de la base de datos
  * @param {string} Id del usuario
  * @returns {Promise} Promesa con el objeto de usuario
  */
 async function getUserById(id) {
-  try {
-    const user = await User.findById({ _id: id })
-      .select("-password")
-      .populate("roles")
-      .exec();
+ try {
+ const user = await User.findById({ _id: id })
+ .select("-password")
+ .populate("roles")
+ .exec();
 
-    if (!user) return [null, "El usuario no existe"];
+ if (!user) return [null, "El usuario no existe"];
 
-    return [user, null];
-  } catch (error) {
-    handleError(error, "user.service -> getUserById");
-  }
+ return [user, null];
+ } catch (error) {
+ handleError(error, "user.service -> getUserById");
+ }
 }
 
 /**
@@ -80,41 +88,41 @@ async function getUserById(id) {
  * @returns {Promise} Promesa con el objeto de usuario actualizado
  */
 async function updateUser(id, user) {
-  try {
-    const userFound = await User.findById(id);
-    if (!userFound) return [null, "El usuario no existe"];
+ try {
+ const userFound = await User.findById(id);
+ if (!userFound) return [null, "El usuario no existe"];
 
-    const { username, email, password, newPassword, roles } = user;
+ const { username, email, password, newPassword, roles } = user;
 
-    const matchPassword = await User.comparePassword(
-      password,
-      userFound.password,
-    );
+ const matchPassword = await User.comparePassword(
+ password,
+ userFound.password,
+ );
 
-    if (!matchPassword) {
-      return [null, "La contraseña no coincide"];
-    }
+ if (!matchPassword) {
+ return [null, "La contraseña no coincide"];
+ }
 
-    const rolesFound = await Role.find({ name: { $in: roles } });
-    if (rolesFound.length === 0) return [null, "El rol no existe"];
+ const rolesFound = await Role.find({ name: { $in: roles } });
+ if (rolesFound.length === 0) return [null, "El rol no existe"];
 
-    const myRole = rolesFound.map((role) => role._id);
+ const myRole = rolesFound.map((role) => role._id);
 
-    const userUpdated = await User.findByIdAndUpdate(
-      id,
-      {
-        username,
-        email,
-        password: await User.encryptPassword(newPassword || password),
-        roles: myRole,
-      },
-      { new: true },
-    );
+ const userUpdated = await User.findByIdAndUpdate(
+ id,
+ {
+ username,
+ email,
+ password: await User.encryptPassword(newPassword || password),
+ roles: myRole,
+ },
+ { new: true },
+ );
 
-    return [userUpdated, null];
-  } catch (error) {
-    handleError(error, "user.service -> updateUser");
-  }
+ return [userUpdated, null];
+ } catch (error) {
+ handleError(error, "user.service -> updateUser");
+ }
 }
 
 /**
@@ -123,17 +131,17 @@ async function updateUser(id, user) {
  * @returns {Promise} Promesa con el objeto de usuario eliminado
  */
 async function deleteUser(id) {
-  try {
-    return await User.findByIdAndDelete(id);
-  } catch (error) {
-    handleError(error, "user.service -> deleteUser");
-  }
+ try {
+ return await User.findByIdAndDelete(id);
+ } catch (error) {
+ handleError(error, "user.service -> deleteUser");
+ }
 }
 
 module.exports = {
-  getUsers,
-  createUser,
-  getUserById,
-  updateUser,
-  deleteUser,
+ getUsers,
+ createUser,
+ getUserById,
+ updateUser,
+ deleteUser,
 };

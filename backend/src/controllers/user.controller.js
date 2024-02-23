@@ -41,9 +41,9 @@ async function createUser(req, res) {
     if (!newUser) {
       return respondError(req, res, 400, "No se creo el usuario");
     }
-
     respondSuccess(req, res, 201, newUser);
   } catch (error) {
+    console.log('Error en createUser:', error);
     handleError(error, "user.controller -> createUser");
     respondError(req, res, 500, "No se creo el usuario");
   }
